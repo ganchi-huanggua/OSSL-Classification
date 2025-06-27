@@ -1,0 +1,629 @@
+[2025-06-26 17:12:21,972] ************************************************************************
+
+
+[2025-06-26 17:12:21,972] data_root=/home/lhz/data | split_root=random_splits | out=outputs/dataset_cifar100_lbl_percent_50_novel_percent_50_26-06-25_1712_split_id_split_70058 | num_workers=16 | dataset=cifar100 | lbl_percent=50 | novel_percent=50 | epochs=50 | batch_size=256 | test_batch_size=128 | lr=0.0025 | resume= | seed=-1 | no_class=10 | split_id=split_70058 | ssl_indexes=random_splits/cifar100_50_50_split_70058.pkl | rho=0.3,0.9 | warmup=0 | no_progress=False | chosen_neighbors=100 | entropy_q=0.3 | temparature=0.3 | knn_weight=0.2 | exp_name=dataset_cifar100_lbl_percent_50_novel_percent_50_26-06-25_1712_split_id_split_70058 | img_size=224
+[2025-06-26 17:12:21,972] 
+
+************************************************************************
+
+[2025-06-26 17:12:28,126] Pretrained clip model parameters will be saved in ../pretrained/ViT-B-16.pt
+[2025-06-26 17:12:33,246] Initializing a generic context
+[2025-06-26 17:12:33,248] Initial context: "X X X X X X X X X X X X X X X X"
+[2025-06-26 17:12:33,248] Number of context words (tokens): 16
+[2025-06-26 17:12:33,311] data_root=/home/lhz/data/cifar100 | split_root=random_splits | out=outputs/dataset_cifar100_lbl_percent_50_novel_percent_50_26-06-25_1712_split_id_split_70058 | num_workers=16 | dataset=cifar100 | lbl_percent=50 | novel_percent=50 | epochs=50 | batch_size=256 | test_batch_size=128 | lr=0.0025 | resume= | seed=-1 | no_class=100 | split_id=split_70058 | ssl_indexes=random_splits/cifar100_50_50_split_70058.pkl | rho=0.3,0.9 | warmup=0 | no_progress=False | chosen_neighbors=100 | entropy_q=0.3 | temparature=0.3 | knn_weight=0.2 | exp_name=dataset_cifar100_lbl_percent_50_novel_percent_50_26-06-25_1712_split_id_split_70058 | img_size=224 | n_gpu=1 | dtype=torch.float32 | no_known=50 | classname=['apple', 'aquarium_fish', 'baby', 'bear', 'beaver', 'bed', 'bee', 'beetle', 'bicycle', 'bottle', 'bowl', 'boy', 'bridge', 'bus', 'butterfly', 'camel', 'can', 'castle', 'caterpillar', 'cattle', 'chair', 'chimpanzee', 'clock', 'cloud', 'cockroach', 'couch', 'crab', 'crocodile', 'cup', 'dinosaur', 'dolphin', 'elephant', 'flatfish', 'forest', 'fox', 'girl', 'hamster', 'house', 'kangaroo', 'keyboard', 'lamp', 'lawn_mower', 'leopard', 'lion', 'lizard', 'lobster', 'man', 'maple_tree', 'motorcycle', 'mountain', 'mouse', 'mushroom', 'oak_tree', 'orange', 'orchid', 'otter', 'palm_tree', 'pear', 'pickup_truck', 'pine_tree', 'plain', 'plate', 'poppy', 'porcupine', 'possum', 'rabbit', 'raccoon', 'ray', 'road', 'rocket', 'rose', 'sea', 'seal', 'shark', 'shrew', 'skunk', 'skyscraper', 'snail', 'snake', 'spider', 'squirrel', 'streetcar', 'sunflower', 'sweet_pepper', 'table', 'tank', 'telephone', 'television', 'tiger', 'tractor', 'train', 'trout', 'tulip', 'turtle', 'wardrobe', 'whale', 'willow_tree', 'wolf', 'woman', 'worm'] | iteration=195 | rho_start=0.3 | rho_end=0.9
+[2025-06-26 17:12:33,313] using device: 0
+[2025-06-26 17:12:39,319] Known Class Conf: 26.127077102661133
+[2025-06-26 17:12:39,320] Novel Class Conf: 26.23762321472168
+[2025-06-26 17:12:39,342] updated params: ['prompt_learner.ctx']
+train epoch: 1/  50. itr:    1/ 195. btime: 5.719s. loss: 3.8434. lr: 0.002500
+[2025-06-26 17:12:41,766] Known Class Conf: 25.30228042602539
+[2025-06-26 17:12:41,767] Novel Class Conf: 25.150615692138672
+train epoch: 1/  50. itr:    6/ 195. btime: 1.358s. loss: 2.7051. lr: 0.002498
+[2025-06-26 17:12:44,046] Known Class Conf: 26.27423858642578
+[2025-06-26 17:12:44,046] Novel Class Conf: 26.3399715423584
+train epoch: 1/  50. itr:   11/ 195. btime: 0.948s. loss: 2.4876. lr: 0.002497
+[2025-06-26 17:12:46,218] Known Class Conf: 26.20496368408203
+[2025-06-26 17:12:46,219] Novel Class Conf: 26.388229370117188
+train epoch: 1/  50. itr:   16/ 195. btime: 0.787s. loss: 2.3673. lr: 0.002496
+[2025-06-26 17:12:48,604] Known Class Conf: 26.04012107849121
+[2025-06-26 17:12:48,604] Novel Class Conf: 26.276439666748047
+train epoch: 1/  50. itr:   21/ 195. btime: 0.713s. loss: 2.3083. lr: 0.002495
+[2025-06-26 17:12:50,797] Known Class Conf: 25.17676544189453
+[2025-06-26 17:12:50,797] Novel Class Conf: 25.318683624267578
+train epoch: 1/  50. itr:   26/ 195. btime: 0.661s. loss: 2.2223. lr: 0.002493
+[2025-06-26 17:12:53,078] Known Class Conf: 25.857126235961914
+[2025-06-26 17:12:53,079] Novel Class Conf: 24.906105041503906
+train epoch: 1/  50. itr:   31/ 195. btime: 0.628s. loss: 2.1629. lr: 0.002492
+[2025-06-26 17:12:55,282] Known Class Conf: 24.992170333862305
+[2025-06-26 17:12:55,282] Novel Class Conf: 24.60610580444336
+train epoch: 1/  50. itr:   36/ 195. btime: 0.602s. loss: 2.1309. lr: 0.002491
+[2025-06-26 17:12:57,590] Known Class Conf: 27.492841720581055
+[2025-06-26 17:12:57,591] Novel Class Conf: 26.410083770751953
+train epoch: 1/  50. itr:   41/ 195. btime: 0.585s. loss: 2.0883. lr: 0.002489
+[2025-06-26 17:12:59,857] Known Class Conf: 26.429616928100586
+[2025-06-26 17:12:59,858] Novel Class Conf: 24.660966873168945
+train epoch: 1/  50. itr:   46/ 195. btime: 0.570s. loss: 2.0454. lr: 0.002488
+[2025-06-26 17:13:02,161] Known Class Conf: 25.489118576049805
+[2025-06-26 17:13:02,162] Novel Class Conf: 24.769628524780273
+train epoch: 1/  50. itr:   51/ 195. btime: 0.560s. loss: 2.0184. lr: 0.002487
+[2025-06-26 17:13:04,356] Known Class Conf: 25.63226890563965
+[2025-06-26 17:13:04,356] Novel Class Conf: 24.449234008789062
+train epoch: 1/  50. itr:   56/ 195. btime: 0.549s. loss: 1.9923. lr: 0.002486
+[2025-06-26 17:13:06,712] Known Class Conf: 26.85167694091797
+[2025-06-26 17:13:06,712] Novel Class Conf: 24.849750518798828
+train epoch: 1/  50. itr:   61/ 195. btime: 0.542s. loss: 1.9502. lr: 0.002484
+[2025-06-26 17:13:08,918] Known Class Conf: 26.073402404785156
+[2025-06-26 17:13:08,918] Novel Class Conf: 24.569122314453125
+train epoch: 1/  50. itr:   66/ 195. btime: 0.535s. loss: 1.9253. lr: 0.002483
+[2025-06-26 17:13:11,241] Known Class Conf: 26.15510368347168
+[2025-06-26 17:13:11,242] Novel Class Conf: 24.680944442749023
+train epoch: 1/  50. itr:   71/ 195. btime: 0.530s. loss: 1.9146. lr: 0.002482
+[2025-06-26 17:13:13,443] Known Class Conf: 26.514057159423828
+[2025-06-26 17:13:13,444] Novel Class Conf: 24.936260223388672
+train epoch: 1/  50. itr:   76/ 195. btime: 0.524s. loss: 1.8888. lr: 0.002481
+[2025-06-26 17:13:15,796] Known Class Conf: 27.580074310302734
+[2025-06-26 17:13:15,797] Novel Class Conf: 25.785612106323242
+train epoch: 1/  50. itr:   81/ 195. btime: 0.521s. loss: 1.8670. lr: 0.002479
+[2025-06-26 17:13:18,055] Known Class Conf: 26.859445571899414
+[2025-06-26 17:13:18,056] Novel Class Conf: 25.494810104370117
+train epoch: 1/  50. itr:   86/ 195. btime: 0.517s. loss: 1.8518. lr: 0.002478
+[2025-06-26 17:13:20,383] Known Class Conf: 26.139110565185547
+[2025-06-26 17:13:20,383] Novel Class Conf: 24.729793548583984
+train epoch: 1/  50. itr:   91/ 195. btime: 0.514s. loss: 1.8319. lr: 0.002477
+[2025-06-26 17:13:22,664] Known Class Conf: 24.947969436645508
+[2025-06-26 17:13:22,665] Novel Class Conf: 23.434494018554688
+train epoch: 1/  50. itr:   96/ 195. btime: 0.511s. loss: 1.8168. lr: 0.002475
+[2025-06-26 17:13:24,985] Known Class Conf: 25.551513671875
+[2025-06-26 17:13:24,985] Novel Class Conf: 23.778085708618164
+train epoch: 1/  50. itr:  101/ 195. btime: 0.509s. loss: 1.8045. lr: 0.002474
+[2025-06-26 17:13:27,230] Known Class Conf: 25.955392837524414
+[2025-06-26 17:13:27,231] Novel Class Conf: 24.496620178222656
+train epoch: 1/  50. itr:  106/ 195. btime: 0.506s. loss: 1.7945. lr: 0.002473
+[2025-06-26 17:13:29,573] Known Class Conf: 26.108139038085938
+[2025-06-26 17:13:29,574] Novel Class Conf: 24.665428161621094
+train epoch: 1/  50. itr:  111/ 195. btime: 0.504s. loss: 1.7871. lr: 0.002472
+[2025-06-26 17:13:31,781] Known Class Conf: 27.356510162353516
+[2025-06-26 17:13:31,782] Novel Class Conf: 25.44864273071289
+train epoch: 1/  50. itr:  116/ 195. btime: 0.501s. loss: 1.7793. lr: 0.002470
+[2025-06-26 17:13:34,179] Known Class Conf: 26.728307723999023
+[2025-06-26 17:13:34,179] Novel Class Conf: 25.290149688720703
+train epoch: 1/  50. itr:  121/ 195. btime: 0.500s. loss: 1.7663. lr: 0.002469
+[2025-06-26 17:13:36,394] Known Class Conf: 26.61026382446289
+[2025-06-26 17:13:36,394] Novel Class Conf: 25.364177703857422
+train epoch: 1/  50. itr:  126/ 195. btime: 0.498s. loss: 1.7578. lr: 0.002468
+[2025-06-26 17:13:38,749] Known Class Conf: 26.99892807006836
+[2025-06-26 17:13:38,750] Novel Class Conf: 25.834712982177734
+train epoch: 1/  50. itr:  131/ 195. btime: 0.497s. loss: 1.7474. lr: 0.002466
+[2025-06-26 17:13:40,983] Known Class Conf: 27.746034622192383
+[2025-06-26 17:13:40,983] Novel Class Conf: 25.90241241455078
+train epoch: 1/  50. itr:  136/ 195. btime: 0.495s. loss: 1.7382. lr: 0.002465
+[2025-06-26 17:13:43,292] Known Class Conf: 27.425098419189453
+[2025-06-26 17:13:43,293] Novel Class Conf: 26.4877986907959
+train epoch: 1/  50. itr:  141/ 195. btime: 0.494s. loss: 1.7320. lr: 0.002464
+[2025-06-26 17:13:45,542] Known Class Conf: 27.791622161865234
+[2025-06-26 17:13:45,543] Novel Class Conf: 25.897314071655273
+train epoch: 1/  50. itr:  146/ 195. btime: 0.493s. loss: 1.7228. lr: 0.002463
+[2025-06-26 17:13:47,898] Known Class Conf: 26.852203369140625
+[2025-06-26 17:13:47,898] Novel Class Conf: 25.505796432495117
+train epoch: 1/  50. itr:  151/ 195. btime: 0.492s. loss: 1.7168. lr: 0.002461
+[2025-06-26 17:13:50,147] Known Class Conf: 26.347171783447266
+[2025-06-26 17:13:50,148] Novel Class Conf: 25.13515853881836
+train epoch: 1/  50. itr:  156/ 195. btime: 0.491s. loss: 1.7063. lr: 0.002460
+[2025-06-26 17:13:52,527] Known Class Conf: 25.45619773864746
+[2025-06-26 17:13:52,528] Novel Class Conf: 24.451946258544922
+train epoch: 1/  50. itr:  161/ 195. btime: 0.490s. loss: 1.7008. lr: 0.002459
+[2025-06-26 17:13:54,749] Known Class Conf: 26.05181121826172
+[2025-06-26 17:13:54,750] Novel Class Conf: 23.987478256225586
+train epoch: 1/  50. itr:  166/ 195. btime: 0.489s. loss: 1.6998. lr: 0.002457
+[2025-06-26 17:13:57,070] Known Class Conf: 24.372861862182617
+[2025-06-26 17:13:57,070] Novel Class Conf: 22.997900009155273
+train epoch: 1/  50. itr:  171/ 195. btime: 0.488s. loss: 1.6976. lr: 0.002456
+[2025-06-26 17:13:59,276] Known Class Conf: 26.260066986083984
+[2025-06-26 17:13:59,276] Novel Class Conf: 24.444320678710938
+train epoch: 1/  50. itr:  176/ 195. btime: 0.487s. loss: 1.6932. lr: 0.002455
+[2025-06-26 17:14:01,612] Known Class Conf: 27.514074325561523
+[2025-06-26 17:14:01,612] Novel Class Conf: 25.32686424255371
+train epoch: 1/  50. itr:  181/ 195. btime: 0.486s. loss: 1.6860. lr: 0.002454
+[2025-06-26 17:14:03,820] Known Class Conf: 26.677593231201172
+[2025-06-26 17:14:03,821] Novel Class Conf: 25.07183074951172
+train epoch: 1/  50. itr:  186/ 195. btime: 0.485s. loss: 1.6839. lr: 0.002452
+[2025-06-26 17:14:06,172] Known Class Conf: 27.643747329711914
+[2025-06-26 17:14:06,173] Novel Class Conf: 25.341197967529297
+train epoch: 1/  50. itr:  191/ 195. btime: 0.485s. loss: 1.6811. lr: 0.002451
+Total train time: 91.928s
+Total test time: 17.591s
+Total test time: 17.279s
+Total test time: 32.805s
+[2025-06-26 17:15:16,021] epoch: 1, acc-known-trans: 81.08
+[2025-06-26 17:15:16,021] epoch: 1, acc-novel-trans: 6.84, nmi-novel: 0.5601016741411111
+[2025-06-26 17:15:16,021] epoch: 1, acc-all-trans: 43.95, nmi-all: 0.6463487059591848, best-acc: 43.95, best-acc-novel: 6.84
+[2025-06-26 17:15:22,558] Known Class Conf: 27.81746482849121
+[2025-06-26 17:15:22,562] Novel Class Conf: 26.39259910583496
+train epoch: 2/  50. itr:    1/ 195. btime: 4.998s. loss: 1.4524. lr: 0.002450
+[2025-06-26 17:15:24,929] Known Class Conf: 26.269556045532227
+[2025-06-26 17:15:24,930] Novel Class Conf: 24.88404083251953
+train epoch: 2/  50. itr:    6/ 195. btime: 1.228s. loss: 1.4006. lr: 0.002448
+[2025-06-26 17:15:27,375] Known Class Conf: 25.318897247314453
+[2025-06-26 17:15:27,376] Novel Class Conf: 23.58555793762207
+train epoch: 2/  50. itr:   11/ 195. btime: 0.892s. loss: 1.4266. lr: 0.002447
+[2025-06-26 17:15:29,607] Known Class Conf: 24.509782791137695
+[2025-06-26 17:15:29,607] Novel Class Conf: 23.221651077270508
+train epoch: 2/  50. itr:   16/ 195. btime: 0.753s. loss: 1.3834. lr: 0.002446
+[2025-06-26 17:15:32,013] Known Class Conf: 24.71965789794922
+[2025-06-26 17:15:32,013] Novel Class Conf: 23.47759246826172
+train epoch: 2/  50. itr:   21/ 195. btime: 0.688s. loss: 1.3751. lr: 0.002445
+[2025-06-26 17:15:34,210] Known Class Conf: 26.70326805114746
+[2025-06-26 17:15:34,211] Novel Class Conf: 24.19147300720215
+train epoch: 2/  50. itr:   26/ 195. btime: 0.640s. loss: 1.3893. lr: 0.002443
+[2025-06-26 17:15:36,571] Known Class Conf: 28.62331771850586
+[2025-06-26 17:15:36,571] Novel Class Conf: 26.783538818359375
+train epoch: 2/  50. itr:   31/ 195. btime: 0.613s. loss: 1.4240. lr: 0.002442
+[2025-06-26 17:15:38,788] Known Class Conf: 27.332557678222656
+[2025-06-26 17:15:38,788] Novel Class Conf: 26.170499801635742
+train epoch: 2/  50. itr:   36/ 195. btime: 0.590s. loss: 1.4126. lr: 0.002441
+[2025-06-26 17:15:41,210] Known Class Conf: 27.200149536132812
+[2025-06-26 17:15:41,210] Novel Class Conf: 24.80745506286621
+train epoch: 2/  50. itr:   41/ 195. btime: 0.577s. loss: 1.4180. lr: 0.002439
+[2025-06-26 17:15:43,458] Known Class Conf: 26.237932205200195
+[2025-06-26 17:15:43,459] Novel Class Conf: 24.75079345703125
+train epoch: 2/  50. itr:   46/ 195. btime: 0.563s. loss: 1.4186. lr: 0.002438
+[2025-06-26 17:15:45,892] Known Class Conf: 25.854768753051758
+[2025-06-26 17:15:45,892] Novel Class Conf: 24.410728454589844
+train epoch: 2/  50. itr:   51/ 195. btime: 0.555s. loss: 1.4267. lr: 0.002437
+[2025-06-26 17:15:48,183] Known Class Conf: 25.606447219848633
+[2025-06-26 17:15:48,184] Novel Class Conf: 24.683198928833008
+train epoch: 2/  50. itr:   56/ 195. btime: 0.547s. loss: 1.4418. lr: 0.002436
+[2025-06-26 17:15:50,534] Known Class Conf: 26.153444290161133
+[2025-06-26 17:15:50,534] Novel Class Conf: 25.191577911376953
+train epoch: 2/  50. itr:   61/ 195. btime: 0.540s. loss: 1.4373. lr: 0.002434
+[2025-06-26 17:15:52,789] Known Class Conf: 27.177213668823242
+[2025-06-26 17:15:52,790] Novel Class Conf: 25.746868133544922
+train epoch: 2/  50. itr:   66/ 195. btime: 0.534s. loss: 1.4360. lr: 0.002433
+[2025-06-26 17:15:55,085] Known Class Conf: 27.825429916381836
+[2025-06-26 17:15:55,085] Novel Class Conf: 25.293155670166016
+train epoch: 2/  50. itr:   71/ 195. btime: 0.528s. loss: 1.4264. lr: 0.002432
+[2025-06-26 17:15:57,296] Known Class Conf: 27.760028839111328
+[2025-06-26 17:15:57,297] Novel Class Conf: 25.165700912475586
+train epoch: 2/  50. itr:   76/ 195. btime: 0.523s. loss: 1.4364. lr: 0.002431
+[2025-06-26 17:15:59,714] Known Class Conf: 26.637678146362305
+[2025-06-26 17:15:59,715] Novel Class Conf: 24.848127365112305
+train epoch: 2/  50. itr:   81/ 195. btime: 0.520s. loss: 1.4430. lr: 0.002429
+[2025-06-26 17:16:01,953] Known Class Conf: 26.45390510559082
+[2025-06-26 17:16:01,953] Novel Class Conf: 24.563133239746094
+train epoch: 2/  50. itr:   86/ 195. btime: 0.516s. loss: 1.4533. lr: 0.002428
+[2025-06-26 17:16:04,318] Known Class Conf: 26.146587371826172
+[2025-06-26 17:16:04,319] Novel Class Conf: 24.0568790435791
+train epoch: 2/  50. itr:   91/ 195. btime: 0.514s. loss: 1.4417. lr: 0.002427
+[2025-06-26 17:16:06,640] Known Class Conf: 27.11821937561035
+[2025-06-26 17:16:06,641] Novel Class Conf: 25.56832504272461
+train epoch: 2/  50. itr:   96/ 195. btime: 0.511s. loss: 1.4401. lr: 0.002425
+[2025-06-26 17:16:09,008] Known Class Conf: 25.61805534362793
+[2025-06-26 17:16:09,008] Novel Class Conf: 24.62517738342285
+train epoch: 2/  50. itr:  101/ 195. btime: 0.509s. loss: 1.4485. lr: 0.002424
+[2025-06-26 17:16:11,252] Known Class Conf: 25.9106388092041
+[2025-06-26 17:16:11,252] Novel Class Conf: 23.977676391601562
+train epoch: 2/  50. itr:  106/ 195. btime: 0.506s. loss: 1.4546. lr: 0.002423
+[2025-06-26 17:16:13,630] Known Class Conf: 27.005876541137695
+[2025-06-26 17:16:13,631] Novel Class Conf: 25.391864776611328
+train epoch: 2/  50. itr:  111/ 195. btime: 0.505s. loss: 1.4540. lr: 0.002422
+[2025-06-26 17:16:15,893] Known Class Conf: 27.407320022583008
+[2025-06-26 17:16:15,894] Novel Class Conf: 25.407617568969727
+train epoch: 2/  50. itr:  116/ 195. btime: 0.503s. loss: 1.4567. lr: 0.002420
+[2025-06-26 17:16:18,259] Known Class Conf: 25.612478256225586
+[2025-06-26 17:16:18,259] Novel Class Conf: 24.21292495727539
+train epoch: 2/  50. itr:  121/ 195. btime: 0.502s. loss: 1.4559. lr: 0.002419
+[2025-06-26 17:16:20,578] Known Class Conf: 25.400371551513672
+[2025-06-26 17:16:20,579] Novel Class Conf: 23.289710998535156
+train epoch: 2/  50. itr:  126/ 195. btime: 0.500s. loss: 1.4508. lr: 0.002418
+[2025-06-26 17:16:23,018] Known Class Conf: 26.270700454711914
+[2025-06-26 17:16:23,019] Novel Class Conf: 24.437965393066406
+train epoch: 2/  50. itr:  131/ 195. btime: 0.500s. loss: 1.4505. lr: 0.002416
+[2025-06-26 17:16:25,297] Known Class Conf: 27.745832443237305
+[2025-06-26 17:16:25,297] Novel Class Conf: 25.443532943725586
+train epoch: 2/  50. itr:  136/ 195. btime: 0.498s. loss: 1.4479. lr: 0.002415
+[2025-06-26 17:16:27,692] Known Class Conf: 27.264902114868164
+[2025-06-26 17:16:27,692] Novel Class Conf: 24.85625648498535
+train epoch: 2/  50. itr:  141/ 195. btime: 0.497s. loss: 1.4450. lr: 0.002414
+[2025-06-26 17:16:29,948] Known Class Conf: 26.239749908447266
+[2025-06-26 17:16:29,948] Novel Class Conf: 24.579917907714844
+train epoch: 2/  50. itr:  146/ 195. btime: 0.496s. loss: 1.4473. lr: 0.002413
+[2025-06-26 17:16:32,307] Known Class Conf: 25.926210403442383
+[2025-06-26 17:16:32,307] Novel Class Conf: 24.708232879638672
+train epoch: 2/  50. itr:  151/ 195. btime: 0.495s. loss: 1.4475. lr: 0.002411
+[2025-06-26 17:16:34,554] Known Class Conf: 26.239059448242188
+[2025-06-26 17:16:34,555] Novel Class Conf: 24.870952606201172
+train epoch: 2/  50. itr:  156/ 195. btime: 0.494s. loss: 1.4457. lr: 0.002410
+[2025-06-26 17:16:36,920] Known Class Conf: 26.147871017456055
+[2025-06-26 17:16:36,920] Novel Class Conf: 25.46281623840332
+train epoch: 2/  50. itr:  161/ 195. btime: 0.493s. loss: 1.4447. lr: 0.002409
+[2025-06-26 17:16:39,181] Known Class Conf: 27.749610900878906
+[2025-06-26 17:16:39,181] Novel Class Conf: 25.535552978515625
+train epoch: 2/  50. itr:  166/ 195. btime: 0.492s. loss: 1.4472. lr: 0.002407
+[2025-06-26 17:16:41,489] Known Class Conf: 26.670103073120117
+[2025-06-26 17:16:41,489] Novel Class Conf: 25.177379608154297
+train epoch: 2/  50. itr:  171/ 195. btime: 0.491s. loss: 1.4487. lr: 0.002406
+[2025-06-26 17:16:43,739] Known Class Conf: 24.77614402770996
+[2025-06-26 17:16:43,739] Novel Class Conf: 23.963871002197266
+train epoch: 2/  50. itr:  176/ 195. btime: 0.490s. loss: 1.4421. lr: 0.002405
+[2025-06-26 17:16:46,092] Known Class Conf: 25.37770652770996
+[2025-06-26 17:16:46,093] Novel Class Conf: 24.44850730895996
+train epoch: 2/  50. itr:  181/ 195. btime: 0.489s. loss: 1.4402. lr: 0.002404
+[2025-06-26 17:16:48,296] Known Class Conf: 26.738224029541016
+[2025-06-26 17:16:48,296] Novel Class Conf: 24.40253257751465
+train epoch: 2/  50. itr:  186/ 195. btime: 0.488s. loss: 1.4401. lr: 0.002402
+[2025-06-26 17:16:50,613] Known Class Conf: 26.66731071472168
+[2025-06-26 17:16:50,613] Novel Class Conf: 23.20712661743164
+train epoch: 2/  50. itr:  191/ 195. btime: 0.487s. loss: 1.4399. lr: 0.002401
+Total train time: 92.394s
+Total test time: 17.760s
+Total test time: 17.269s
+Total test time: 32.882s
+[2025-06-26 17:18:00,665] epoch: 2, acc-known-trans: 82.56
+[2025-06-26 17:18:00,665] epoch: 2, acc-novel-trans: 4.72, nmi-novel: 0.5602001218980249
+[2025-06-26 17:18:00,665] epoch: 2, acc-all-trans: 43.71, nmi-all: 0.6489196325028143, best-acc: 43.95, best-acc-novel: 6.84
+[2025-06-26 17:18:09,980] Known Class Conf: 25.430498123168945
+[2025-06-26 17:18:09,981] Novel Class Conf: 23.50881576538086
+train epoch: 3/  50. itr:    1/ 195. btime: 5.574s. loss: 1.4943. lr: 0.002400
+[2025-06-26 17:18:12,377] Known Class Conf: 24.980152130126953
+[2025-06-26 17:18:12,377] Novel Class Conf: 23.345083236694336
+train epoch: 3/  50. itr:    6/ 195. btime: 1.328s. loss: 1.4816. lr: 0.002398
+[2025-06-26 17:18:14,719] Known Class Conf: 25.742673873901367
+[2025-06-26 17:18:14,720] Novel Class Conf: 24.403038024902344
+train epoch: 3/  50. itr:   11/ 195. btime: 0.937s. loss: 1.4311. lr: 0.002397
+[2025-06-26 17:18:16,946] Known Class Conf: 25.33678436279297
+[2025-06-26 17:18:16,947] Novel Class Conf: 23.474956512451172
+train epoch: 3/  50. itr:   16/ 195. btime: 0.784s. loss: 1.3796. lr: 0.002396
+[2025-06-26 17:18:19,398] Known Class Conf: 25.297107696533203
+[2025-06-26 17:18:19,399] Novel Class Conf: 23.53498077392578
+train epoch: 3/  50. itr:   21/ 195. btime: 0.714s. loss: 1.3729. lr: 0.002395
+[2025-06-26 17:18:21,642] Known Class Conf: 24.816177368164062
+[2025-06-26 17:18:21,643] Novel Class Conf: 23.396440505981445
+train epoch: 3/  50. itr:   26/ 195. btime: 0.663s. loss: 1.4076. lr: 0.002393
+[2025-06-26 17:18:24,009] Known Class Conf: 25.687211990356445
+[2025-06-26 17:18:24,009] Novel Class Conf: 24.07239532470703
+train epoch: 3/  50. itr:   31/ 195. btime: 0.632s. loss: 1.4211. lr: 0.002392
+[2025-06-26 17:18:26,222] Known Class Conf: 25.800703048706055
+[2025-06-26 17:18:26,223] Novel Class Conf: 24.269451141357422
+train epoch: 3/  50. itr:   36/ 195. btime: 0.606s. loss: 1.4175. lr: 0.002391
+[2025-06-26 17:18:28,577] Known Class Conf: 26.378793716430664
+[2025-06-26 17:18:28,577] Novel Class Conf: 24.563993453979492
+train epoch: 3/  50. itr:   41/ 195. btime: 0.589s. loss: 1.4045. lr: 0.002389
+[2025-06-26 17:18:30,866] Known Class Conf: 27.258853912353516
+[2025-06-26 17:18:30,867] Novel Class Conf: 24.78996467590332
+train epoch: 3/  50. itr:   46/ 195. btime: 0.575s. loss: 1.3989. lr: 0.002388
+[2025-06-26 17:18:33,243] Known Class Conf: 26.483625411987305
+[2025-06-26 17:18:33,244] Novel Class Conf: 24.50619888305664
+train epoch: 3/  50. itr:   51/ 195. btime: 0.565s. loss: 1.3926. lr: 0.002387
+[2025-06-26 17:18:35,480] Known Class Conf: 25.129064559936523
+[2025-06-26 17:18:35,481] Novel Class Conf: 23.542701721191406
+train epoch: 3/  50. itr:   56/ 195. btime: 0.555s. loss: 1.3898. lr: 0.002386
+[2025-06-26 17:18:37,854] Known Class Conf: 25.998109817504883
+[2025-06-26 17:18:37,855] Novel Class Conf: 23.882678985595703
+train epoch: 3/  50. itr:   61/ 195. btime: 0.548s. loss: 1.3849. lr: 0.002384
+[2025-06-26 17:18:40,148] Known Class Conf: 25.64728355407715
+[2025-06-26 17:18:40,148] Novel Class Conf: 23.903457641601562
+train epoch: 3/  50. itr:   66/ 195. btime: 0.541s. loss: 1.3941. lr: 0.002383
+[2025-06-26 17:18:42,479] Known Class Conf: 25.476116180419922
+[2025-06-26 17:18:42,493] Novel Class Conf: 24.07691764831543
+train epoch: 3/  50. itr:   71/ 195. btime: 0.536s. loss: 1.3878. lr: 0.002382
+[2025-06-26 17:18:44,706] Known Class Conf: 25.27317237854004
+[2025-06-26 17:18:44,706] Novel Class Conf: 23.504505157470703
+train epoch: 3/  50. itr:   76/ 195. btime: 0.530s. loss: 1.3956. lr: 0.002381
+[2025-06-26 17:18:47,071] Known Class Conf: 25.266284942626953
+[2025-06-26 17:18:47,072] Novel Class Conf: 24.002748489379883
+train epoch: 3/  50. itr:   81/ 195. btime: 0.527s. loss: 1.4039. lr: 0.002379
+[2025-06-26 17:18:49,350] Known Class Conf: 26.13936424255371
+[2025-06-26 17:18:49,351] Novel Class Conf: 24.376392364501953
+train epoch: 3/  50. itr:   86/ 195. btime: 0.523s. loss: 1.4031. lr: 0.002378
+[2025-06-26 17:18:51,722] Known Class Conf: 26.790542602539062
+[2025-06-26 17:18:51,723] Novel Class Conf: 24.6457462310791
+train epoch: 3/  50. itr:   91/ 195. btime: 0.520s. loss: 1.3994. lr: 0.002377
+[2025-06-26 17:18:53,969] Known Class Conf: 25.328815460205078
+[2025-06-26 17:18:53,970] Novel Class Conf: 23.802165985107422
+train epoch: 3/  50. itr:   96/ 195. btime: 0.516s. loss: 1.4045. lr: 0.002375
+[2025-06-26 17:18:56,399] Known Class Conf: 26.43675994873047
+[2025-06-26 17:18:56,400] Novel Class Conf: 23.732200622558594
+train epoch: 3/  50. itr:  101/ 195. btime: 0.515s. loss: 1.4030. lr: 0.002374
+[2025-06-26 17:18:58,660] Known Class Conf: 25.582225799560547
+[2025-06-26 17:18:58,661] Novel Class Conf: 23.79413604736328
+train epoch: 3/  50. itr:  106/ 195. btime: 0.512s. loss: 1.4007. lr: 0.002373
+[2025-06-26 17:19:01,060] Known Class Conf: 26.473739624023438
+[2025-06-26 17:19:01,060] Novel Class Conf: 24.341543197631836
+train epoch: 3/  50. itr:  111/ 195. btime: 0.510s. loss: 1.3999. lr: 0.002372
+[2025-06-26 17:19:03,353] Known Class Conf: 27.103517532348633
+[2025-06-26 17:19:03,353] Novel Class Conf: 24.986289978027344
+train epoch: 3/  50. itr:  116/ 195. btime: 0.508s. loss: 1.3997. lr: 0.002370
+[2025-06-26 17:19:05,745] Known Class Conf: 27.08302116394043
+[2025-06-26 17:19:05,746] Novel Class Conf: 25.242597579956055
+train epoch: 3/  50. itr:  121/ 195. btime: 0.507s. loss: 1.3994. lr: 0.002369
+[2025-06-26 17:19:08,006] Known Class Conf: 27.33135986328125
+[2025-06-26 17:19:08,006] Novel Class Conf: 24.943721771240234
+train epoch: 3/  50. itr:  126/ 195. btime: 0.505s. loss: 1.4003. lr: 0.002368
+[2025-06-26 17:19:10,431] Known Class Conf: 27.29534912109375
+[2025-06-26 17:19:10,431] Novel Class Conf: 25.078676223754883
+train epoch: 3/  50. itr:  131/ 195. btime: 0.504s. loss: 1.4041. lr: 0.002366
+[2025-06-26 17:19:12,718] Known Class Conf: 26.20189094543457
+[2025-06-26 17:19:12,718] Novel Class Conf: 25.023876190185547
+train epoch: 3/  50. itr:  136/ 195. btime: 0.502s. loss: 1.4026. lr: 0.002365
+[2025-06-26 17:19:15,150] Known Class Conf: 25.867733001708984
+[2025-06-26 17:19:15,151] Novel Class Conf: 23.938369750976562
+train epoch: 3/  50. itr:  141/ 195. btime: 0.502s. loss: 1.4000. lr: 0.002364
+[2025-06-26 17:19:17,487] Known Class Conf: 25.928922653198242
+[2025-06-26 17:19:17,488] Novel Class Conf: 24.260961532592773
+train epoch: 3/  50. itr:  146/ 195. btime: 0.501s. loss: 1.4015. lr: 0.002363
+[2025-06-26 17:19:19,879] Known Class Conf: 26.522640228271484
+[2025-06-26 17:19:19,880] Novel Class Conf: 24.455286026000977
+train epoch: 3/  50. itr:  151/ 195. btime: 0.500s. loss: 1.4058. lr: 0.002361
+[2025-06-26 17:19:22,180] Known Class Conf: 26.178930282592773
+[2025-06-26 17:19:22,180] Novel Class Conf: 24.39209747314453
+train epoch: 3/  50. itr:  156/ 195. btime: 0.499s. loss: 1.4056. lr: 0.002360
+[2025-06-26 17:19:24,603] Known Class Conf: 26.32503318786621
+[2025-06-26 17:19:24,603] Novel Class Conf: 24.253040313720703
+train epoch: 3/  50. itr:  161/ 195. btime: 0.498s. loss: 1.4029. lr: 0.002359
+[2025-06-26 17:19:26,862] Known Class Conf: 25.80728530883789
+[2025-06-26 17:19:26,863] Novel Class Conf: 24.313278198242188
+train epoch: 3/  50. itr:  166/ 195. btime: 0.497s. loss: 1.4020. lr: 0.002357
+[2025-06-26 17:19:29,256] Known Class Conf: 25.092037200927734
+[2025-06-26 17:19:29,257] Novel Class Conf: 24.508419036865234
+train epoch: 3/  50. itr:  171/ 195. btime: 0.496s. loss: 1.4032. lr: 0.002356
+[2025-06-26 17:19:31,456] Known Class Conf: 26.30467987060547
+[2025-06-26 17:19:31,457] Novel Class Conf: 23.363811492919922
+train epoch: 3/  50. itr:  176/ 195. btime: 0.495s. loss: 1.3950. lr: 0.002355
+[2025-06-26 17:19:33,773] Known Class Conf: 26.074214935302734
+[2025-06-26 17:19:33,774] Novel Class Conf: 23.68550682067871
+train epoch: 3/  50. itr:  181/ 195. btime: 0.494s. loss: 1.3949. lr: 0.002354
+[2025-06-26 17:19:36,054] Known Class Conf: 25.034303665161133
+[2025-06-26 17:19:36,054] Novel Class Conf: 24.156572341918945
+train epoch: 3/  50. itr:  186/ 195. btime: 0.493s. loss: 1.3919. lr: 0.002352
+[2025-06-26 17:19:38,452] Known Class Conf: 25.953811645507812
+[2025-06-26 17:19:38,452] Novel Class Conf: 24.429031372070312
+train epoch: 3/  50. itr:  191/ 195. btime: 0.492s. loss: 1.3881. lr: 0.002351
+Total train time: 93.196s
+Total test time: 18.514s
+Total test time: 17.600s
+Total test time: 33.239s
+[2025-06-26 17:20:50,113] epoch: 3, acc-known-trans: 82.64
+[2025-06-26 17:20:50,114] epoch: 3, acc-novel-trans: 6.88, nmi-novel: 0.5548168099041748
+[2025-06-26 17:20:50,114] epoch: 3, acc-all-trans: 44.79, nmi-all: 0.6482281935277482, best-acc: 44.79, best-acc-novel: 6.88
+[2025-06-26 17:21:03,255] Known Class Conf: 27.16597557067871
+[2025-06-26 17:21:03,262] Novel Class Conf: 24.67632293701172
+train epoch: 4/  50. itr:    1/ 195. btime: 6.302s. loss: 1.2999. lr: 0.002350
+[2025-06-26 17:21:05,712] Known Class Conf: 25.661943435668945
+[2025-06-26 17:21:05,712] Novel Class Conf: 24.2841739654541
+train epoch: 4/  50. itr:    6/ 195. btime: 1.459s. loss: 1.3061. lr: 0.002348
+[2025-06-26 17:21:08,113] Known Class Conf: 25.508563995361328
+[2025-06-26 17:21:08,113] Novel Class Conf: 23.76991844177246
+train epoch: 4/  50. itr:   11/ 195. btime: 1.014s. loss: 1.3982. lr: 0.002347
+[2025-06-26 17:21:10,394] Known Class Conf: 26.233623504638672
+[2025-06-26 17:21:10,394] Novel Class Conf: 24.55536460876465
+train epoch: 4/  50. itr:   16/ 195. btime: 0.840s. loss: 1.4000. lr: 0.002346
+[2025-06-26 17:21:12,791] Known Class Conf: 25.458942413330078
+[2025-06-26 17:21:12,792] Novel Class Conf: 23.81696319580078
+train epoch: 4/  50. itr:   21/ 195. btime: 0.754s. loss: 1.4292. lr: 0.002345
+[2025-06-26 17:21:15,043] Known Class Conf: 26.76858139038086
+[2025-06-26 17:21:15,043] Novel Class Conf: 23.954944610595703
+train epoch: 4/  50. itr:   26/ 195. btime: 0.695s. loss: 1.4422. lr: 0.002343
+[2025-06-26 17:21:17,424] Known Class Conf: 26.62571907043457
+[2025-06-26 17:21:17,424] Novel Class Conf: 24.58920669555664
+train epoch: 4/  50. itr:   31/ 195. btime: 0.660s. loss: 1.4419. lr: 0.002342
+[2025-06-26 17:21:19,698] Known Class Conf: 25.910165786743164
+[2025-06-26 17:21:19,698] Novel Class Conf: 24.29766273498535
+train epoch: 4/  50. itr:   36/ 195. btime: 0.632s. loss: 1.4430. lr: 0.002341
+[2025-06-26 17:21:22,063] Known Class Conf: 25.690309524536133
+[2025-06-26 17:21:22,064] Novel Class Conf: 23.686521530151367
+train epoch: 4/  50. itr:   41/ 195. btime: 0.612s. loss: 1.4536. lr: 0.002339
+[2025-06-26 17:21:24,322] Known Class Conf: 25.331941604614258
+[2025-06-26 17:21:24,323] Novel Class Conf: 23.92958641052246
+train epoch: 4/  50. itr:   46/ 195. btime: 0.595s. loss: 1.4574. lr: 0.002338
+[2025-06-26 17:21:26,832] Known Class Conf: 25.589435577392578
+[2025-06-26 17:21:26,833] Novel Class Conf: 23.809431076049805
+train epoch: 4/  50. itr:   51/ 195. btime: 0.586s. loss: 1.4566. lr: 0.002337
+[2025-06-26 17:21:29,113] Known Class Conf: 26.16868782043457
+[2025-06-26 17:21:29,113] Novel Class Conf: 23.919092178344727
+train epoch: 4/  50. itr:   56/ 195. btime: 0.574s. loss: 1.4649. lr: 0.002336
+[2025-06-26 17:21:31,550] Known Class Conf: 25.8653564453125
+[2025-06-26 17:21:31,550] Novel Class Conf: 23.708444595336914
+train epoch: 4/  50. itr:   61/ 195. btime: 0.567s. loss: 1.4526. lr: 0.002334
+[2025-06-26 17:21:33,857] Known Class Conf: 25.50713539123535
+[2025-06-26 17:21:33,857] Novel Class Conf: 24.106517791748047
+train epoch: 4/  50. itr:   66/ 195. btime: 0.559s. loss: 1.4442. lr: 0.002333
+[2025-06-26 17:21:36,185] Known Class Conf: 26.519596099853516
+[2025-06-26 17:21:36,186] Novel Class Conf: 24.341535568237305
+train epoch: 4/  50. itr:   71/ 195. btime: 0.552s. loss: 1.4339. lr: 0.002332
+[2025-06-26 17:21:38,495] Known Class Conf: 26.205345153808594
+[2025-06-26 17:21:38,496] Novel Class Conf: 24.163402557373047
+train epoch: 4/  50. itr:   76/ 195. btime: 0.547s. loss: 1.4227. lr: 0.002331
+[2025-06-26 17:21:41,010] Known Class Conf: 26.159574508666992
+[2025-06-26 17:21:41,011] Novel Class Conf: 24.62110710144043
+train epoch: 4/  50. itr:   81/ 195. btime: 0.544s. loss: 1.4188. lr: 0.002329
+[2025-06-26 17:21:43,282] Known Class Conf: 27.034719467163086
+[2025-06-26 17:21:43,283] Novel Class Conf: 24.430503845214844
+train epoch: 4/  50. itr:   86/ 195. btime: 0.539s. loss: 1.4166. lr: 0.002328
+[2025-06-26 17:21:45,676] Known Class Conf: 26.37626838684082
+[2025-06-26 17:21:45,676] Novel Class Conf: 24.700178146362305
+train epoch: 4/  50. itr:   91/ 195. btime: 0.535s. loss: 1.4111. lr: 0.002327
+[2025-06-26 17:21:47,948] Known Class Conf: 26.493114471435547
+[2025-06-26 17:21:47,948] Novel Class Conf: 24.644868850708008
+train epoch: 4/  50. itr:   96/ 195. btime: 0.531s. loss: 1.4057. lr: 0.002325
+[2025-06-26 17:21:50,370] Known Class Conf: 25.712589263916016
+[2025-06-26 17:21:50,370] Novel Class Conf: 24.211458206176758
+train epoch: 4/  50. itr:  101/ 195. btime: 0.529s. loss: 1.3989. lr: 0.002324
+[2025-06-26 17:21:52,737] Known Class Conf: 26.240997314453125
+[2025-06-26 17:21:52,738] Novel Class Conf: 24.561071395874023
+train epoch: 4/  50. itr:  106/ 195. btime: 0.526s. loss: 1.3955. lr: 0.002323
+[2025-06-26 17:21:55,132] Known Class Conf: 26.765239715576172
+[2025-06-26 17:21:55,132] Novel Class Conf: 24.99835777282715
+train epoch: 4/  50. itr:  111/ 195. btime: 0.524s. loss: 1.3959. lr: 0.002322
+[2025-06-26 17:21:57,422] Known Class Conf: 26.938220977783203
+[2025-06-26 17:21:57,422] Novel Class Conf: 25.669221878051758
+train epoch: 4/  50. itr:  116/ 195. btime: 0.521s. loss: 1.3970. lr: 0.002320
+[2025-06-26 17:21:59,821] Known Class Conf: 26.76853370666504
+[2025-06-26 17:21:59,822] Novel Class Conf: 24.658294677734375
+train epoch: 4/  50. itr:  121/ 195. btime: 0.520s. loss: 1.3968. lr: 0.002319
+[2025-06-26 17:22:02,125] Known Class Conf: 26.811513900756836
+[2025-06-26 17:22:02,126] Novel Class Conf: 25.663789749145508
+train epoch: 4/  50. itr:  126/ 195. btime: 0.517s. loss: 1.3912. lr: 0.002318
+[2025-06-26 17:22:04,550] Known Class Conf: 28.29788589477539
+[2025-06-26 17:22:04,551] Novel Class Conf: 25.523542404174805
+train epoch: 4/  50. itr:  131/ 195. btime: 0.516s. loss: 1.3849. lr: 0.002316
+[2025-06-26 17:22:06,833] Known Class Conf: 27.036746978759766
+[2025-06-26 17:22:06,834] Novel Class Conf: 24.97289276123047
+train epoch: 4/  50. itr:  136/ 195. btime: 0.514s. loss: 1.3788. lr: 0.002315
+[2025-06-26 17:22:09,265] Known Class Conf: 26.53460693359375
+[2025-06-26 17:22:09,265] Novel Class Conf: 24.660646438598633
+train epoch: 4/  50. itr:  141/ 195. btime: 0.513s. loss: 1.3728. lr: 0.002314
+[2025-06-26 17:22:11,577] Known Class Conf: 27.051849365234375
+[2025-06-26 17:22:11,577] Novel Class Conf: 24.65823745727539
+train epoch: 4/  50. itr:  146/ 195. btime: 0.511s. loss: 1.3738. lr: 0.002313
+[2025-06-26 17:22:13,997] Known Class Conf: 26.631256103515625
+[2025-06-26 17:22:13,997] Novel Class Conf: 24.311508178710938
+train epoch: 4/  50. itr:  151/ 195. btime: 0.510s. loss: 1.3713. lr: 0.002311
+[2025-06-26 17:22:16,264] Known Class Conf: 27.018762588500977
+[2025-06-26 17:22:16,265] Novel Class Conf: 24.989521026611328
+train epoch: 4/  50. itr:  156/ 195. btime: 0.508s. loss: 1.3696. lr: 0.002310
+[2025-06-26 17:22:18,659] Known Class Conf: 26.555538177490234
+[2025-06-26 17:22:18,659] Novel Class Conf: 24.658004760742188
+train epoch: 4/  50. itr:  161/ 195. btime: 0.507s. loss: 1.3707. lr: 0.002309
+[2025-06-26 17:22:20,878] Known Class Conf: 27.20091438293457
+[2025-06-26 17:22:20,879] Novel Class Conf: 24.311525344848633
+train epoch: 4/  50. itr:  166/ 195. btime: 0.506s. loss: 1.3726. lr: 0.002307
+[2025-06-26 17:22:23,237] Known Class Conf: 26.620885848999023
+[2025-06-26 17:22:23,238] Novel Class Conf: 23.92574119567871
+train epoch: 4/  50. itr:  171/ 195. btime: 0.505s. loss: 1.3755. lr: 0.002306
+[2025-06-26 17:22:25,500] Known Class Conf: 25.5350341796875
+[2025-06-26 17:22:25,500] Novel Class Conf: 23.7431640625
+train epoch: 4/  50. itr:  176/ 195. btime: 0.503s. loss: 1.3727. lr: 0.002305
+[2025-06-26 17:22:27,867] Known Class Conf: 25.374557495117188
+[2025-06-26 17:22:27,868] Novel Class Conf: 23.758913040161133
+train epoch: 4/  50. itr:  181/ 195. btime: 0.502s. loss: 1.3720. lr: 0.002304
+[2025-06-26 17:22:30,089] Known Class Conf: 26.099157333374023
+[2025-06-26 17:22:30,089] Novel Class Conf: 24.21855354309082
+train epoch: 4/  50. itr:  186/ 195. btime: 0.501s. loss: 1.3663. lr: 0.002302
+[2025-06-26 17:22:32,466] Known Class Conf: 26.494813919067383
+[2025-06-26 17:22:32,467] Novel Class Conf: 24.47495460510254
+train epoch: 4/  50. itr:  191/ 195. btime: 0.500s. loss: 1.3666. lr: 0.002301
+Total train time: 94.486s
+Total test time: 18.137s
+Total test time: 17.831s
+Total test time: 33.453s
+[2025-06-26 17:23:44,076] epoch: 4, acc-known-trans: 83.24
+[2025-06-26 17:23:44,076] epoch: 4, acc-novel-trans: 8.16, nmi-novel: 0.558708146070981
+[2025-06-26 17:23:44,076] epoch: 4, acc-all-trans: 45.73, nmi-all: 0.6528895141485538, best-acc: 45.73, best-acc-novel: 8.16
+[2025-06-26 17:23:56,003] Known Class Conf: 26.126291275024414
+[2025-06-26 17:23:56,004] Novel Class Conf: 24.432912826538086
+train epoch: 5/  50. itr:    1/ 195. btime: 5.162s. loss: 1.0637. lr: 0.002300
+[2025-06-26 17:23:58,486] Known Class Conf: 26.168916702270508
+[2025-06-26 17:23:58,486] Novel Class Conf: 24.635700225830078
+train epoch: 5/  50. itr:    6/ 195. btime: 1.274s. loss: 1.2033. lr: 0.002298
+[2025-06-26 17:24:00,900] Known Class Conf: 25.167593002319336
+[2025-06-26 17:24:00,900] Novel Class Conf: 23.885452270507812
+train epoch: 5/  50. itr:   11/ 195. btime: 0.914s. loss: 1.3085. lr: 0.002297
+[2025-06-26 17:24:03,196] Known Class Conf: 26.451072692871094
+[2025-06-26 17:24:03,197] Novel Class Conf: 23.78031349182129
+train epoch: 5/  50. itr:   16/ 195. btime: 0.772s. loss: 1.3355. lr: 0.002296
+[2025-06-26 17:24:05,606] Known Class Conf: 26.36687660217285
+[2025-06-26 17:24:05,607] Novel Class Conf: 24.41156768798828
+train epoch: 5/  50. itr:   21/ 195. btime: 0.703s. loss: 1.3220. lr: 0.002295
+[2025-06-26 17:24:07,887] Known Class Conf: 25.791494369506836
+[2025-06-26 17:24:07,887] Novel Class Conf: 23.605741500854492
+train epoch: 5/  50. itr:   26/ 195. btime: 0.656s. loss: 1.3313. lr: 0.002293
+[2025-06-26 17:24:10,224] Known Class Conf: 25.63844108581543
+[2025-06-26 17:24:10,224] Novel Class Conf: 23.67835807800293
+train epoch: 5/  50. itr:   31/ 195. btime: 0.625s. loss: 1.3506. lr: 0.002292
+[2025-06-26 17:24:12,509] Known Class Conf: 26.417322158813477
+[2025-06-26 17:24:12,509] Novel Class Conf: 24.470996856689453
+train epoch: 5/  50. itr:   36/ 195. btime: 0.602s. loss: 1.3419. lr: 0.002291
+[2025-06-26 17:24:14,924] Known Class Conf: 26.362730026245117
+[2025-06-26 17:24:14,925] Novel Class Conf: 24.831241607666016
+train epoch: 5/  50. itr:   41/ 195. btime: 0.587s. loss: 1.3423. lr: 0.002289
+[2025-06-26 17:24:17,215] Known Class Conf: 26.200401306152344
+[2025-06-26 17:24:17,215] Novel Class Conf: 24.537761688232422
+train epoch: 5/  50. itr:   46/ 195. btime: 0.573s. loss: 1.3374. lr: 0.002288
+[2025-06-26 17:24:19,546] Known Class Conf: 25.078031539916992
+[2025-06-26 17:24:19,547] Novel Class Conf: 23.90435028076172
+train epoch: 5/  50. itr:   51/ 195. btime: 0.563s. loss: 1.3225. lr: 0.002287
+[2025-06-26 17:24:21,825] Known Class Conf: 26.350046157836914
+[2025-06-26 17:24:21,826] Novel Class Conf: 23.797414779663086
+train epoch: 5/  50. itr:   56/ 195. btime: 0.553s. loss: 1.3161. lr: 0.002286
+[2025-06-26 17:24:24,163] Known Class Conf: 26.219043731689453
+[2025-06-26 17:24:24,164] Novel Class Conf: 23.278371810913086
+train epoch: 5/  50. itr:   61/ 195. btime: 0.546s. loss: 1.3177. lr: 0.002284
+[2025-06-26 17:24:26,396] Known Class Conf: 25.84391975402832
+[2025-06-26 17:24:26,397] Novel Class Conf: 23.300067901611328
+train epoch: 5/  50. itr:   66/ 195. btime: 0.539s. loss: 1.3231. lr: 0.002283
+[2025-06-26 17:24:28,791] Known Class Conf: 25.085203170776367
+[2025-06-26 17:24:28,792] Novel Class Conf: 23.17453956604004
+train epoch: 5/  50. itr:   71/ 195. btime: 0.535s. loss: 1.3150. lr: 0.002282
+[2025-06-26 17:24:31,034] Known Class Conf: 26.18840789794922
+[2025-06-26 17:24:31,035] Novel Class Conf: 23.561023712158203
+train epoch: 5/  50. itr:   76/ 195. btime: 0.529s. loss: 1.3328. lr: 0.002281
+[2025-06-26 17:24:33,475] Known Class Conf: 26.27054214477539
+[2025-06-26 17:24:33,476] Novel Class Conf: 24.16442108154297
+train epoch: 5/  50. itr:   81/ 195. btime: 0.526s. loss: 1.3267. lr: 0.002279
+[2025-06-26 17:24:35,754] Known Class Conf: 26.403867721557617
+[2025-06-26 17:24:35,754] Novel Class Conf: 24.07703971862793
+train epoch: 5/  50. itr:   86/ 195. btime: 0.522s. loss: 1.3307. lr: 0.002278
+[2025-06-26 17:24:38,148] Known Class Conf: 26.33880043029785
+[2025-06-26 17:24:38,148] Novel Class Conf: 24.1562557220459
+train epoch: 5/  50. itr:   91/ 195. btime: 0.520s. loss: 1.3279. lr: 0.002277
+[2025-06-26 17:24:40,418] Known Class Conf: 26.172529220581055
+[2025-06-26 17:24:40,419] Novel Class Conf: 24.137954711914062
+train epoch: 5/  50. itr:   96/ 195. btime: 0.516s. loss: 1.3290. lr: 0.002275
+[2025-06-26 17:24:42,874] Known Class Conf: 26.138561248779297
+[2025-06-26 17:24:42,875] Novel Class Conf: 24.37259292602539
+train epoch: 5/  50. itr:  101/ 195. btime: 0.515s. loss: 1.3265. lr: 0.002274
+[2025-06-26 17:24:45,227] Known Class Conf: 26.10247230529785
+[2025-06-26 17:24:45,227] Novel Class Conf: 23.692655563354492
+train epoch: 5/  50. itr:  106/ 195. btime: 0.513s. loss: 1.3279. lr: 0.002273
+[2025-06-26 17:24:47,613] Known Class Conf: 26.24267578125
+[2025-06-26 17:24:47,613] Novel Class Conf: 23.555891036987305
+train epoch: 5/  50. itr:  111/ 195. btime: 0.511s. loss: 1.3313. lr: 0.002272
+[2025-06-26 17:24:49,919] Known Class Conf: 25.77495765686035
+[2025-06-26 17:24:49,919] Novel Class Conf: 23.51770782470703
+train epoch: 5/  50. itr:  116/ 195. btime: 0.509s. loss: 1.3332. lr: 0.002270
+[2025-06-26 17:24:52,371] Known Class Conf: 25.062633514404297
+[2025-06-26 17:24:52,372] Novel Class Conf: 23.290489196777344
+train epoch: 5/  50. itr:  121/ 195. btime: 0.509s. loss: 1.3301. lr: 0.002269
+[2025-06-26 17:24:54,603] Known Class Conf: 25.102115631103516
+[2025-06-26 17:24:54,603] Novel Class Conf: 23.410322189331055
+train epoch: 5/  50. itr:  126/ 195. btime: 0.506s. loss: 1.3289. lr: 0.002268
+[2025-06-26 17:24:56,947] Known Class Conf: 25.658924102783203
+[2025-06-26 17:24:56,948] Novel Class Conf: 23.925600051879883
+train epoch: 5/  50. itr:  131/ 195. btime: 0.505s. loss: 1.3252. lr: 0.002266
+[2025-06-26 17:24:59,178] Known Class Conf: 26.71110725402832
+[2025-06-26 17:24:59,179] Novel Class Conf: 24.157756805419922
+train epoch: 5/  50. itr:  136/ 195. btime: 0.502s. loss: 1.3239. lr: 0.002265
+[2025-06-26 17:25:01,594] Known Class Conf: 25.553524017333984
+[2025-06-26 17:25:01,594] Novel Class Conf: 24.01233673095703
+train epoch: 5/  50. itr:  141/ 195. btime: 0.502s. loss: 1.3231. lr: 0.002264
+[2025-06-26 17:25:03,842] Known Class Conf: 25.996490478515625
+[2025-06-26 17:25:03,842] Novel Class Conf: 24.37550926208496
+train epoch: 5/  50. itr:  146/ 195. btime: 0.500s. loss: 1.3195. lr: 0.002263
+[2025-06-26 17:25:06,252] Known Class Conf: 25.24917984008789
+[2025-06-26 17:25:06,253] Novel Class Conf: 23.606061935424805
+train epoch: 5/  50. itr:  151/ 195. btime: 0.499s. loss: 1.3191. lr: 0.002261
+[2025-06-26 17:25:08,491] Known Class Conf: 25.82547378540039
+[2025-06-26 17:25:08,492] Novel Class Conf: 23.667776107788086
+train epoch: 5/  50. itr:  156/ 195. btime: 0.498s. loss: 1.3148. lr: 0.002260
+[2025-06-26 17:25:10,894] Known Class Conf: 26.04129981994629
+[2025-06-26 17:25:10,894] Novel Class Conf: 24.099367141723633
+train epoch: 5/  50. itr:  161/ 195. btime: 0.497s. loss: 1.3208. lr: 0.002259
+[2025-06-26 17:25:13,170] Known Class Conf: 26.052045822143555
+[2025-06-26 17:25:13,171] Novel Class Conf: 25.23363494873047
+train epoch: 5/  50. itr:  166/ 195. btime: 0.496s. loss: 1.3200. lr: 0.002257
+[2025-06-26 17:25:15,511] Known Class Conf: 26.204288482666016
+[2025-06-26 17:25:15,511] Novel Class Conf: 24.32996368408203
+train epoch: 5/  50. itr:  171/ 195. btime: 0.495s. loss: 1.3197. lr: 0.002256
+[2025-06-26 17:25:17,739] Known Class Conf: 26.38467788696289
+[2025-06-26 17:25:17,739] Novel Class Conf: 24.50051498413086
+train epoch: 5/  50. itr:  176/ 195. btime: 0.494s. loss: 1.3216. lr: 0.002255
+[2025-06-26 17:25:20,109] Known Class Conf: 24.92815399169922
+[2025-06-26 17:25:20,110] Novel Class Conf: 22.93496322631836
+train epoch: 5/  50. itr:  181/ 195. btime: 0.493s. loss: 1.3183. lr: 0.002254
+[2025-06-26 17:25:22,351] Known Class Conf: 25.354360580444336
+[2025-06-26 17:25:22,351] Novel Class Conf: 23.657419204711914
+train epoch: 5/  50. itr:  186/ 195. btime: 0.492s. loss: 1.3201. lr: 0.002252
+[2025-06-26 17:25:24,787] Known Class Conf: 25.61441993713379
+[2025-06-26 17:25:24,787] Novel Class Conf: 23.776779174804688
+train epoch: 5/  50. itr:  191/ 195. btime: 0.492s. loss: 1.3190. lr: 0.002251
+Total train time: 93.274s

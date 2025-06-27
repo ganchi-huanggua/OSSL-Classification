@@ -1,0 +1,211 @@
+[2025-06-27 09:44:09,371] ************************************************************************
+
+
+[2025-06-27 09:44:09,371] data_root=/home/lhz/data | split_root=random_splits | out=outputs/dataset_cifar100_lbl_percent_50_novel_percent_50_27-06-25_0944_split_id_split_565 | num_workers=16 | dataset=cifar100 | lbl_percent=50 | novel_percent=50 | epochs=50 | batch_size=256 | test_batch_size=128 | lr=0.0025 | resume= | seed=-1 | no_class=10 | split_id=split_565 | ssl_indexes=random_splits/cifar100_50_50_split_70058.pkl | rho=0.3,0.9 | warmup=0 | no_progress=False | chosen_neighbors=100 | entropy_q=0.3 | temparature=0.3 | knn_weight=0.2 | exp_name=dataset_cifar100_lbl_percent_50_novel_percent_50_27-06-25_0944_split_id_split_565 | img_size=224
+[2025-06-27 09:44:09,371] 
+
+************************************************************************
+
+[2025-06-27 09:44:15,305] Pretrained clip model parameters will be saved in ../pretrained/ViT-B-16.pt
+[2025-06-27 09:44:19,538] Initializing a generic context
+[2025-06-27 09:44:19,542] Initial context: "X X X X X X X X X X X X X X X X"
+[2025-06-27 09:44:19,543] Number of context words (tokens): 16
+[2025-06-27 09:44:19,592] data_root=/home/lhz/data/cifar100 | split_root=random_splits | out=outputs/dataset_cifar100_lbl_percent_50_novel_percent_50_27-06-25_0944_split_id_split_565 | num_workers=16 | dataset=cifar100 | lbl_percent=50 | novel_percent=50 | epochs=50 | batch_size=256 | test_batch_size=128 | lr=0.0025 | resume= | seed=-1 | no_class=100 | split_id=split_565 | ssl_indexes=random_splits/cifar100_50_50_split_70058.pkl | rho=0.3,0.9 | warmup=0 | no_progress=False | chosen_neighbors=100 | entropy_q=0.3 | temparature=0.3 | knn_weight=0.2 | exp_name=dataset_cifar100_lbl_percent_50_novel_percent_50_27-06-25_0944_split_id_split_565 | img_size=224 | n_gpu=1 | dtype=torch.float32 | no_known=50 | classname=['apple', 'aquarium_fish', 'baby', 'bear', 'beaver', 'bed', 'bee', 'beetle', 'bicycle', 'bottle', 'bowl', 'boy', 'bridge', 'bus', 'butterfly', 'camel', 'can', 'castle', 'caterpillar', 'cattle', 'chair', 'chimpanzee', 'clock', 'cloud', 'cockroach', 'couch', 'crab', 'crocodile', 'cup', 'dinosaur', 'dolphin', 'elephant', 'flatfish', 'forest', 'fox', 'girl', 'hamster', 'house', 'kangaroo', 'keyboard', 'lamp', 'lawn_mower', 'leopard', 'lion', 'lizard', 'lobster', 'man', 'maple_tree', 'motorcycle', 'mountain', 'mouse', 'mushroom', 'oak_tree', 'orange', 'orchid', 'otter', 'palm_tree', 'pear', 'pickup_truck', 'pine_tree', 'plain', 'plate', 'poppy', 'porcupine', 'possum', 'rabbit', 'raccoon', 'ray', 'road', 'rocket', 'rose', 'sea', 'seal', 'shark', 'shrew', 'skunk', 'skyscraper', 'snail', 'snake', 'spider', 'squirrel', 'streetcar', 'sunflower', 'sweet_pepper', 'table', 'tank', 'telephone', 'television', 'tiger', 'tractor', 'train', 'trout', 'tulip', 'turtle', 'wardrobe', 'whale', 'willow_tree', 'wolf', 'woman', 'worm'] | iteration=195 | rho_start=0.3 | rho_end=0.9
+[2025-06-27 09:44:19,600] using device: 0
+[2025-06-27 09:44:26,342] Known Class Energy: -23.917509078979492
+[2025-06-27 09:44:26,343] Novel Class Energy: -22.81285285949707
+[2025-06-27 09:44:26,366] updated params: ['prompt_learner.ctx']
+train epoch: 1/  50. itr:    1/ 195. btime: 6.293s. loss: 3.7449. lr: 0.002500
+[2025-06-27 09:44:28,810] Known Class Energy: -24.284725189208984
+[2025-06-27 09:44:28,814] Novel Class Energy: -23.670202255249023
+train epoch: 1/  50. itr:    6/ 195. btime: 1.457s. loss: 2.6211. lr: 0.002498
+[2025-06-27 09:44:31,782] Known Class Energy: -23.81459617614746
+[2025-06-27 09:44:31,782] Novel Class Energy: -23.54153060913086
+train epoch: 1/  50. itr:   11/ 195. btime: 1.065s. loss: 2.5140. lr: 0.002497
+[2025-06-27 09:44:34,023] Known Class Energy: -23.199060440063477
+[2025-06-27 09:44:34,023] Novel Class Energy: -22.4837589263916
+train epoch: 1/  50. itr:   16/ 195. btime: 0.872s. loss: 2.3670. lr: 0.002496
+[2025-06-27 09:44:37,207] Known Class Energy: -24.246143341064453
+[2025-06-27 09:44:37,207] Novel Class Energy: -22.89196014404297
+train epoch: 1/  50. itr:   21/ 195. btime: 0.816s. loss: 2.2859. lr: 0.002495
+[2025-06-27 09:44:39,479] Known Class Energy: -24.34595489501953
+[2025-06-27 09:44:39,480] Novel Class Energy: -23.467445373535156
+train epoch: 1/  50. itr:   26/ 195. btime: 0.746s. loss: 2.2511. lr: 0.002493
+[2025-06-27 09:44:41,829] Known Class Energy: -24.57175064086914
+[2025-06-27 09:44:41,829] Novel Class Energy: -23.07262420654297
+train epoch: 1/  50. itr:   31/ 195. btime: 0.702s. loss: 2.2007. lr: 0.002492
+[2025-06-27 09:44:44,494] Known Class Energy: -23.161211013793945
+[2025-06-27 09:44:44,494] Novel Class Energy: -21.488096237182617
+train epoch: 1/  50. itr:   36/ 195. btime: 0.678s. loss: 2.1378. lr: 0.002491
+[2025-06-27 09:44:46,952] Known Class Energy: -25.69710350036621
+[2025-06-27 09:44:46,953] Novel Class Energy: -23.54050636291504
+train epoch: 1/  50. itr:   41/ 195. btime: 0.656s. loss: 2.1074. lr: 0.002489
+[2025-06-27 09:44:49,660] Known Class Energy: -20.88144874572754
+[2025-06-27 09:44:49,661] Novel Class Energy: -19.657590866088867
+train epoch: 1/  50. itr:   46/ 195. btime: 0.643s. loss: 2.0736. lr: 0.002488
+[2025-06-27 09:44:52,164] Known Class Energy: -23.597700119018555
+[2025-06-27 09:44:52,169] Novel Class Energy: -22.355093002319336
+train epoch: 1/  50. itr:   51/ 195. btime: 0.629s. loss: 2.0470. lr: 0.002487
+[2025-06-27 09:44:54,941] Known Class Energy: -24.151948928833008
+[2025-06-27 09:44:54,941] Novel Class Energy: -23.436914443969727
+train epoch: 1/  50. itr:   56/ 195. btime: 0.623s. loss: 2.0180. lr: 0.002486
+[2025-06-27 09:44:57,297] Known Class Energy: -23.565444946289062
+[2025-06-27 09:44:57,297] Novel Class Energy: -22.745685577392578
+train epoch: 1/  50. itr:   61/ 195. btime: 0.610s. loss: 1.9935. lr: 0.002484
+[2025-06-27 09:45:00,091] Known Class Energy: -21.374736785888672
+[2025-06-27 09:45:00,092] Novel Class Energy: -20.146211624145508
+train epoch: 1/  50. itr:   66/ 195. btime: 0.606s. loss: 1.9585. lr: 0.002483
+[2025-06-27 09:45:02,954] Known Class Energy: -20.104394912719727
+[2025-06-27 09:45:02,955] Novel Class Energy: -18.840381622314453
+train epoch: 1/  50. itr:   71/ 195. btime: 0.604s. loss: 1.9437. lr: 0.002482
+[2025-06-27 09:45:05,272] Known Class Energy: -22.747074127197266
+[2025-06-27 09:45:05,277] Novel Class Energy: -20.945228576660156
+train epoch: 1/  50. itr:   76/ 195. btime: 0.595s. loss: 1.9281. lr: 0.002481
+[2025-06-27 09:45:08,265] Known Class Energy: -24.19537353515625
+[2025-06-27 09:45:08,270] Novel Class Energy: -22.721920013427734
+train epoch: 1/  50. itr:   81/ 195. btime: 0.595s. loss: 1.9155. lr: 0.002479
+[2025-06-27 09:45:10,540] Known Class Energy: -23.004058837890625
+[2025-06-27 09:45:10,540] Novel Class Energy: -22.257190704345703
+train epoch: 1/  50. itr:   86/ 195. btime: 0.587s. loss: 1.9024. lr: 0.002478
+[2025-06-27 09:45:12,925] Known Class Energy: -21.593181610107422
+[2025-06-27 09:45:12,926] Novel Class Energy: -19.63689613342285
+train epoch: 1/  50. itr:   91/ 195. btime: 0.581s. loss: 1.8840. lr: 0.002477
+[2025-06-27 09:45:15,791] Known Class Energy: -22.184520721435547
+[2025-06-27 09:45:15,792] Novel Class Energy: -19.87026596069336
+train epoch: 1/  50. itr:   96/ 195. btime: 0.580s. loss: 1.8756. lr: 0.002475
+[2025-06-27 09:45:18,247] Known Class Energy: -21.57274627685547
+[2025-06-27 09:45:18,248] Novel Class Energy: -20.2631778717041
+train epoch: 1/  50. itr:  101/ 195. btime: 0.576s. loss: 1.8637. lr: 0.002474
+[2025-06-27 09:45:20,586] Known Class Energy: -22.678787231445312
+[2025-06-27 09:45:20,588] Novel Class Energy: -21.15924644470215
+train epoch: 1/  50. itr:  106/ 195. btime: 0.571s. loss: 1.8471. lr: 0.002473
+[2025-06-27 09:45:23,651] Known Class Energy: -23.46384620666504
+[2025-06-27 09:45:23,653] Novel Class Energy: -21.547929763793945
+train epoch: 1/  50. itr:  111/ 195. btime: 0.573s. loss: 1.8377. lr: 0.002472
+[2025-06-27 09:45:26,438] Known Class Energy: -23.10576057434082
+[2025-06-27 09:45:26,439] Novel Class Energy: -22.02573585510254
+train epoch: 1/  50. itr:  116/ 195. btime: 0.572s. loss: 1.8225. lr: 0.002470
+[2025-06-27 09:45:29,018] Known Class Energy: -24.14483642578125
+[2025-06-27 09:45:29,019] Novel Class Energy: -22.676467895507812
+train epoch: 1/  50. itr:  121/ 195. btime: 0.570s. loss: 1.8096. lr: 0.002469
+[2025-06-27 09:45:31,339] Known Class Energy: -22.9119930267334
+[2025-06-27 09:45:31,340] Novel Class Energy: -21.745452880859375
+train epoch: 1/  50. itr:  126/ 195. btime: 0.566s. loss: 1.8037. lr: 0.002468
+[2025-06-27 09:45:34,441] Known Class Energy: -23.253761291503906
+[2025-06-27 09:45:34,442] Novel Class Energy: -22.051437377929688
+train epoch: 1/  50. itr:  131/ 195. btime: 0.568s. loss: 1.7992. lr: 0.002466
+[2025-06-27 09:45:36,779] Known Class Energy: -25.768756866455078
+[2025-06-27 09:45:36,779] Novel Class Energy: -24.15175437927246
+train epoch: 1/  50. itr:  136/ 195. btime: 0.564s. loss: 1.7884. lr: 0.002465
+[2025-06-27 09:45:39,389] Known Class Energy: -23.7050724029541
+[2025-06-27 09:45:39,390] Novel Class Energy: -22.584636688232422
+train epoch: 1/  50. itr:  141/ 195. btime: 0.563s. loss: 1.7849. lr: 0.002464
+[2025-06-27 09:45:41,697] Known Class Energy: -24.02654266357422
+[2025-06-27 09:45:41,697] Novel Class Energy: -22.828454971313477
+train epoch: 1/  50. itr:  146/ 195. btime: 0.559s. loss: 1.7769. lr: 0.002463
+[2025-06-27 09:45:44,902] Known Class Energy: -24.2950496673584
+[2025-06-27 09:45:44,911] Novel Class Energy: -23.194801330566406
+train epoch: 1/  50. itr:  151/ 195. btime: 0.562s. loss: 1.7694. lr: 0.002461
+[2025-06-27 09:45:47,589] Known Class Energy: -24.234066009521484
+[2025-06-27 09:45:47,589] Novel Class Energy: -22.96294593811035
+train epoch: 1/  50. itr:  156/ 195. btime: 0.561s. loss: 1.7633. lr: 0.002460
+[2025-06-27 09:45:49,977] Known Class Energy: -23.22985076904297
+[2025-06-27 09:45:49,977] Novel Class Energy: -21.702041625976562
+train epoch: 1/  50. itr:  161/ 195. btime: 0.558s. loss: 1.7534. lr: 0.002459
+[2025-06-27 09:45:52,234] Known Class Energy: -24.503129959106445
+[2025-06-27 09:45:52,235] Novel Class Energy: -22.977994918823242
+train epoch: 1/  50. itr:  166/ 195. btime: 0.555s. loss: 1.7456. lr: 0.002457
+[2025-06-27 09:45:55,256] Known Class Energy: -24.077957153320312
+[2025-06-27 09:45:55,256] Novel Class Energy: -22.12250518798828
+train epoch: 1/  50. itr:  171/ 195. btime: 0.557s. loss: 1.7388. lr: 0.002456
+[2025-06-27 09:45:57,505] Known Class Energy: -24.385347366333008
+[2025-06-27 09:45:57,505] Novel Class Energy: -23.24734115600586
+train epoch: 1/  50. itr:  176/ 195. btime: 0.554s. loss: 1.7371. lr: 0.002455
+[2025-06-27 09:46:00,307] Known Class Energy: -23.85248565673828
+[2025-06-27 09:46:00,308] Novel Class Energy: -22.62242317199707
+train epoch: 1/  50. itr:  181/ 195. btime: 0.554s. loss: 1.7322. lr: 0.002454
+[2025-06-27 09:46:02,590] Known Class Energy: -22.463443756103516
+[2025-06-27 09:46:02,591] Novel Class Energy: -21.744142532348633
+train epoch: 1/  50. itr:  186/ 195. btime: 0.551s. loss: 1.7271. lr: 0.002452
+[2025-06-27 09:46:04,954] Known Class Energy: -25.453826904296875
+[2025-06-27 09:46:04,955] Novel Class Energy: -23.038593292236328
+train epoch: 1/  50. itr:  191/ 195. btime: 0.549s. loss: 1.7207. lr: 0.002451
+Total train time: 104.522s
+Total test time: 19.776s
+Total test time: 19.221s
+Total test time: 37.671s
+[2025-06-27 09:47:24,201] epoch: 1, acc-known-trans: 80.34
+[2025-06-27 09:47:24,201] epoch: 1, acc-novel-trans: 7.779999999999999, nmi-novel: 0.5851166509419877
+[2025-06-27 09:47:24,201] epoch: 1, acc-all-trans: 44.080000000000005, nmi-all: 0.6547591938646804, best-acc: 44.080000000000005, best-acc-novel: 7.779999999999999
+[2025-06-27 09:47:32,076] Known Class Energy: -23.399444580078125
+[2025-06-27 09:47:32,078] Novel Class Energy: -22.075620651245117
+train epoch: 2/  50. itr:    1/ 195. btime: 6.290s. loss: 1.4542. lr: 0.002450
+[2025-06-27 09:47:34,499] Known Class Energy: -24.300722122192383
+[2025-06-27 09:47:34,499] Novel Class Energy: -22.18408203125
+train epoch: 2/  50. itr:    6/ 195. btime: 1.451s. loss: 1.5775. lr: 0.002448
+[2025-06-27 09:47:37,131] Known Class Energy: -24.25472640991211
+[2025-06-27 09:47:37,132] Novel Class Energy: -22.177692413330078
+train epoch: 2/  50. itr:   11/ 195. btime: 1.031s. loss: 1.5112. lr: 0.002447
+[2025-06-27 09:47:39,858] Known Class Energy: -24.016830444335938
+[2025-06-27 09:47:39,859] Novel Class Energy: -22.468168258666992
+train epoch: 2/  50. itr:   16/ 195. btime: 0.879s. loss: 1.4929. lr: 0.002446
+[2025-06-27 09:47:42,357] Known Class Energy: -24.870180130004883
+[2025-06-27 09:47:42,358] Novel Class Energy: -23.27532196044922
+train epoch: 2/  50. itr:   21/ 195. btime: 0.789s. loss: 1.5173. lr: 0.002445
+[2025-06-27 09:47:45,080] Known Class Energy: -25.117307662963867
+[2025-06-27 09:47:45,081] Novel Class Energy: -23.450531005859375
+train epoch: 2/  50. itr:   26/ 195. btime: 0.742s. loss: 1.5153. lr: 0.002443
+[2025-06-27 09:47:47,523] Known Class Energy: -25.135986328125
+[2025-06-27 09:47:47,524] Novel Class Energy: -23.88372039794922
+train epoch: 2/  50. itr:   31/ 195. btime: 0.701s. loss: 1.4992. lr: 0.002442
+[2025-06-27 09:47:49,794] Known Class Energy: -24.40411376953125
+[2025-06-27 09:47:49,795] Novel Class Energy: -23.1312255859375
+train epoch: 2/  50. itr:   36/ 195. btime: 0.667s. loss: 1.4857. lr: 0.002441
+[2025-06-27 09:47:53,111] Known Class Energy: -25.40419578552246
+[2025-06-27 09:47:53,112] Novel Class Energy: -23.22378158569336
+train epoch: 2/  50. itr:   41/ 195. btime: 0.666s. loss: 1.4881. lr: 0.002439
+[2025-06-27 09:47:55,387] Known Class Energy: -24.478931427001953
+[2025-06-27 09:47:55,388] Novel Class Energy: -23.217866897583008
+train epoch: 2/  50. itr:   46/ 195. btime: 0.643s. loss: 1.4849. lr: 0.002438
+[2025-06-27 09:47:58,230] Known Class Energy: -24.69537353515625
+[2025-06-27 09:47:58,235] Novel Class Energy: -23.239913940429688
+train epoch: 2/  50. itr:   51/ 195. btime: 0.636s. loss: 1.4798. lr: 0.002437
+[2025-06-27 09:48:00,748] Known Class Energy: -26.060869216918945
+[2025-06-27 09:48:00,749] Novel Class Energy: -23.962392807006836
+train epoch: 2/  50. itr:   56/ 195. btime: 0.624s. loss: 1.4671. lr: 0.002436
+[2025-06-27 09:48:03,154] Known Class Energy: -23.786283493041992
+[2025-06-27 09:48:03,156] Novel Class Energy: -22.585050582885742
+train epoch: 2/  50. itr:   61/ 195. btime: 0.613s. loss: 1.4699. lr: 0.002434
+[2025-06-27 09:48:06,097] Known Class Energy: -24.565641403198242
+[2025-06-27 09:48:06,098] Novel Class Energy: -22.95631980895996
+train epoch: 2/  50. itr:   66/ 195. btime: 0.611s. loss: 1.4724. lr: 0.002433
+[2025-06-27 09:48:08,552] Known Class Energy: -24.41996192932129
+[2025-06-27 09:48:08,556] Novel Class Energy: -22.36061668395996
+train epoch: 2/  50. itr:   71/ 195. btime: 0.602s. loss: 1.4804. lr: 0.002432
+[2025-06-27 09:48:11,374] Known Class Energy: -23.97066307067871
+[2025-06-27 09:48:11,376] Novel Class Energy: -22.47997283935547
+train epoch: 2/  50. itr:   76/ 195. btime: 0.600s. loss: 1.4721. lr: 0.002431
+[2025-06-27 09:48:14,275] Known Class Energy: -24.676166534423828
+[2025-06-27 09:48:14,276] Novel Class Energy: -22.749725341796875
+train epoch: 2/  50. itr:   81/ 195. btime: 0.599s. loss: 1.4820. lr: 0.002429
+[2025-06-27 09:48:17,044] Known Class Energy: -25.394872665405273
+[2025-06-27 09:48:17,045] Novel Class Energy: -23.395845413208008
+train epoch: 2/  50. itr:   86/ 195. btime: 0.596s. loss: 1.4883. lr: 0.002428
+[2025-06-27 09:48:20,089] Known Class Energy: -24.248598098754883
+[2025-06-27 09:48:20,090] Novel Class Energy: -23.424440383911133
+train epoch: 2/  50. itr:   91/ 195. btime: 0.597s. loss: 1.4955. lr: 0.002427
+[2025-06-27 09:48:22,435] Known Class Energy: -24.520984649658203
+[2025-06-27 09:48:22,436] Novel Class Energy: -23.317398071289062
+train epoch: 2/  50. itr:   96/ 195. btime: 0.590s. loss: 1.4910. lr: 0.002425
+[2025-06-27 09:48:24,873] Known Class Energy: -24.80541229248047
+[2025-06-27 09:48:24,873] Novel Class Energy: -23.12941551208496
+train epoch: 2/  50. itr:  101/ 195. btime: 0.585s. loss: 1.4963. lr: 0.002424
+[2025-06-27 09:48:27,419] Known Class Energy: -24.792387008666992
+[2025-06-27 09:48:27,419] Novel Class Energy: -23.089704513549805
+train epoch: 2/  50. itr:  106/ 195. btime: 0.581s. loss: 1.4942. lr: 0.002423
+[2025-06-27 09:48:30,892] Known Class Energy: -25.474994659423828
+[2025-06-27 09:48:30,893] Novel Class Energy: -23.218820571899414
+train epoch: 2/  50. itr:  111/ 195. btime: 0.587s. loss: 1.4861. lr: 0.002422
+[2025-06-27 09:48:33,166] Known Class Energy: -24.19001579284668
+[2025-06-27 09:48:33,166] Novel Class Energy: -22.697572708129883
+train epoch: 2/  50. itr:  116/ 195. btime: 0.581s. loss: 1.4777. lr: 0.002420

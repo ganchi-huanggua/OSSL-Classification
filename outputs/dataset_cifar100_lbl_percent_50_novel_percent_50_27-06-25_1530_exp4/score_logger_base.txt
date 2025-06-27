@@ -1,0 +1,1019 @@
+[2025-06-27 15:30:48,514] ************************************************************************
+
+
+[2025-06-27 15:30:48,514] data_root=/home/lhz/data | split_root=random_splits | out=outputs/dataset_cifar100_lbl_percent_50_novel_percent_50_27-06-25_1530_split_id_split_8503 | num_workers=16 | dataset=cifar100 | lbl_percent=50 | novel_percent=50 | epochs=50 | batch_size=256 | test_batch_size=128 | lr=0.0025 | resume= | seed=-1 | no_class=10 | split_id=split_8503 | ssl_indexes=random_splits/cifar100_50_50_split_70058.pkl | rho=0.3,0.9 | warmup=0 | no_progress=False | chosen_neighbors=100 | entropy_q=0.3 | temparature=0.3 | knn_weight=0.2 | exp_name=dataset_cifar100_lbl_percent_50_novel_percent_50_27-06-25_1530_split_id_split_8503 | img_size=224
+[2025-06-27 15:30:48,515] 
+
+************************************************************************
+
+[2025-06-27 15:30:53,124] using device: 0
+[2025-06-27 15:30:54,645] Pretrained clip model parameters will be saved in ../pretrained/ViT-B-16.pt
+[2025-06-27 15:30:57,909] Initializing a generic context
+[2025-06-27 15:30:57,910] Initial context: "X X X X X X X X X X X X X X X X"
+[2025-06-27 15:30:57,910] Number of context words (tokens): 16
+[2025-06-27 15:30:58,518] data_root=/home/lhz/data/cifar100 | split_root=random_splits | out=outputs/dataset_cifar100_lbl_percent_50_novel_percent_50_27-06-25_1530_split_id_split_8503 | num_workers=16 | dataset=cifar100 | lbl_percent=50 | novel_percent=50 | epochs=50 | batch_size=256 | test_batch_size=128 | lr=0.0025 | resume= | seed=-1 | no_class=100 | split_id=split_8503 | ssl_indexes=random_splits/cifar100_50_50_split_70058.pkl | rho=0.3,0.9 | warmup=0 | no_progress=False | chosen_neighbors=100 | entropy_q=0.3 | temparature=0.3 | knn_weight=0.2 | exp_name=dataset_cifar100_lbl_percent_50_novel_percent_50_27-06-25_1530_split_id_split_8503 | img_size=224 | n_gpu=1 | dtype=torch.float32 | no_known=50 | classname=['apple', 'aquarium_fish', 'baby', 'bear', 'beaver', 'bed', 'bee', 'beetle', 'bicycle', 'bottle', 'bowl', 'boy', 'bridge', 'bus', 'butterfly', 'camel', 'can', 'castle', 'caterpillar', 'cattle', 'chair', 'chimpanzee', 'clock', 'cloud', 'cockroach', 'couch', 'crab', 'crocodile', 'cup', 'dinosaur', 'dolphin', 'elephant', 'flatfish', 'forest', 'fox', 'girl', 'hamster', 'house', 'kangaroo', 'keyboard', 'lamp', 'lawn_mower', 'leopard', 'lion', 'lizard', 'lobster', 'man', 'maple_tree', 'motorcycle', 'mountain', 'mouse', 'mushroom', 'oak_tree', 'orange', 'orchid', 'otter', 'palm_tree', 'pear', 'pickup_truck', 'pine_tree', 'plain', 'plate', 'poppy', 'porcupine', 'possum', 'rabbit', 'raccoon', 'ray', 'road', 'rocket', 'rose', 'sea', 'seal', 'shark', 'shrew', 'skunk', 'skyscraper', 'snail', 'snake', 'spider', 'squirrel', 'streetcar', 'sunflower', 'sweet_pepper', 'table', 'tank', 'telephone', 'television', 'tiger', 'tractor', 'train', 'trout', 'tulip', 'turtle', 'wardrobe', 'whale', 'willow_tree', 'wolf', 'woman', 'worm'] | iteration=195 | rho_start=0.3 | rho_end=0.9
+[2025-06-27 15:31:03,578] correct_pred_novel: 120, correct_pred_known: 15
+[2025-06-27 15:31:03,591] Known Class Discrepancy Energy: 1.1487551927566528
+[2025-06-27 15:31:03,592] Novel Class Discrepancy Energy: 0.4991012513637543
+[2025-06-27 15:31:03,592] Novel Detection ACC: 0.7031
+[2025-06-27 15:31:03,608] updated params: ['prompt_learner.ctx']
+train epoch: 1/  50. itr:    1/ 195. btime: 5.087s. loss: 3.6933. lr: 0.002500
+[2025-06-27 15:31:06,795] correct_pred_novel: 116, correct_pred_known: 21
+[2025-06-27 15:31:06,796] Known Class Discrepancy Energy: 1.329869031906128
+[2025-06-27 15:31:06,800] Novel Class Discrepancy Energy: 0.4921135902404785
+[2025-06-27 15:31:06,800] Novel Detection ACC: 0.7135
+train epoch: 1/  50. itr:    6/ 195. btime: 1.380s. loss: 2.6868. lr: 0.002498
+[2025-06-27 15:31:09,347] correct_pred_novel: 121, correct_pred_known: 18
+[2025-06-27 15:31:09,348] Known Class Discrepancy Energy: 1.1672093868255615
+[2025-06-27 15:31:09,348] Novel Class Discrepancy Energy: 0.49502459168434143
+[2025-06-27 15:31:09,348] Novel Detection ACC: 0.7240
+train epoch: 1/  50. itr:   11/ 195. btime: 0.985s. loss: 2.4851. lr: 0.002497
+[2025-06-27 15:31:11,963] correct_pred_novel: 117, correct_pred_known: 17
+[2025-06-27 15:31:11,964] Known Class Discrepancy Energy: 1.2223743200302124
+[2025-06-27 15:31:11,964] Novel Class Discrepancy Energy: 0.4257790744304657
+[2025-06-27 15:31:11,964] Novel Detection ACC: 0.6979
+train epoch: 1/  50. itr:   16/ 195. btime: 0.840s. loss: 2.3700. lr: 0.002496
+[2025-06-27 15:31:14,800] correct_pred_novel: 118, correct_pred_known: 17
+[2025-06-27 15:31:14,802] Known Class Discrepancy Energy: 1.1609677076339722
+[2025-06-27 15:31:14,802] Novel Class Discrepancy Energy: 0.6205331087112427
+[2025-06-27 15:31:14,802] Novel Detection ACC: 0.7031
+train epoch: 1/  50. itr:   21/ 195. btime: 0.775s. loss: 2.2615. lr: 0.002495
+[2025-06-27 15:31:17,268] correct_pred_novel: 123, correct_pred_known: 22
+[2025-06-27 15:31:17,269] Known Class Discrepancy Energy: 1.4112579822540283
+[2025-06-27 15:31:17,269] Novel Class Discrepancy Energy: 0.4160213768482208
+[2025-06-27 15:31:17,270] Novel Detection ACC: 0.7552
+train epoch: 1/  50. itr:   26/ 195. btime: 0.721s. loss: 2.1867. lr: 0.002493
+[2025-06-27 15:31:19,773] correct_pred_novel: 119, correct_pred_known: 26
+[2025-06-27 15:31:19,774] Known Class Discrepancy Energy: 1.343071460723877
+[2025-06-27 15:31:19,774] Novel Class Discrepancy Energy: 0.4211111068725586
+[2025-06-27 15:31:19,774] Novel Detection ACC: 0.7552
+train epoch: 1/  50. itr:   31/ 195. btime: 0.686s. loss: 2.1405. lr: 0.002492
+[2025-06-27 15:31:22,476] correct_pred_novel: 116, correct_pred_known: 15
+[2025-06-27 15:31:22,477] Known Class Discrepancy Energy: 1.1550283432006836
+[2025-06-27 15:31:22,477] Novel Class Discrepancy Energy: 0.5065476298332214
+[2025-06-27 15:31:22,477] Novel Detection ACC: 0.6823
+train epoch: 1/  50. itr:   36/ 195. btime: 0.666s. loss: 2.0825. lr: 0.002491
+[2025-06-27 15:31:24,966] correct_pred_novel: 119, correct_pred_known: 25
+[2025-06-27 15:31:24,967] Known Class Discrepancy Energy: 1.2810800075531006
+[2025-06-27 15:31:24,967] Novel Class Discrepancy Energy: 0.42232033610343933
+[2025-06-27 15:31:24,968] Novel Detection ACC: 0.7500
+train epoch: 1/  50. itr:   41/ 195. btime: 0.645s. loss: 2.0325. lr: 0.002489
+[2025-06-27 15:31:27,249] correct_pred_novel: 121, correct_pred_known: 12
+[2025-06-27 15:31:27,250] Known Class Discrepancy Energy: 1.0148015022277832
+[2025-06-27 15:31:27,253] Novel Class Discrepancy Energy: 0.5717987418174744
+[2025-06-27 15:31:27,255] Novel Detection ACC: 0.6927
+train epoch: 1/  50. itr:   46/ 195. btime: 0.625s. loss: 2.0018. lr: 0.002488
+[2025-06-27 15:31:29,932] correct_pred_novel: 105, correct_pred_known: 17
+[2025-06-27 15:31:29,933] Known Class Discrepancy Energy: 0.9165440201759338
+[2025-06-27 15:31:29,933] Novel Class Discrepancy Energy: 0.6121333241462708
+[2025-06-27 15:31:29,934] Novel Detection ACC: 0.6354
+train epoch: 1/  50. itr:   51/ 195. btime: 0.616s. loss: 1.9993. lr: 0.002487
+[2025-06-27 15:31:32,307] correct_pred_novel: 120, correct_pred_known: 22
+[2025-06-27 15:31:32,309] Known Class Discrepancy Energy: 1.4537593126296997
+[2025-06-27 15:31:32,309] Novel Class Discrepancy Energy: 0.6215978860855103
+[2025-06-27 15:31:32,309] Novel Detection ACC: 0.7396
+train epoch: 1/  50. itr:   56/ 195. btime: 0.603s. loss: 1.9719. lr: 0.002486
+[2025-06-27 15:31:34,972] correct_pred_novel: 125, correct_pred_known: 22
+[2025-06-27 15:31:34,976] Known Class Discrepancy Energy: 1.3647470474243164
+[2025-06-27 15:31:34,976] Novel Class Discrepancy Energy: 0.5279476046562195
+[2025-06-27 15:31:34,977] Novel Detection ACC: 0.7656
+train epoch: 1/  50. itr:   61/ 195. btime: 0.598s. loss: 1.9601. lr: 0.002484
+[2025-06-27 15:31:37,178] correct_pred_novel: 122, correct_pred_known: 15
+[2025-06-27 15:31:37,180] Known Class Discrepancy Energy: 1.1146864891052246
+[2025-06-27 15:31:37,180] Novel Class Discrepancy Energy: 0.5486034750938416
+[2025-06-27 15:31:37,180] Novel Detection ACC: 0.7135
+train epoch: 1/  50. itr:   66/ 195. btime: 0.586s. loss: 1.9483. lr: 0.002483
+[2025-06-27 15:31:39,853] correct_pred_novel: 128, correct_pred_known: 14
+[2025-06-27 15:31:39,854] Known Class Discrepancy Energy: 1.0146492719650269
+[2025-06-27 15:31:39,854] Novel Class Discrepancy Energy: 0.5102530121803284
+[2025-06-27 15:31:39,854] Novel Detection ACC: 0.7396
+train epoch: 1/  50. itr:   71/ 195. btime: 0.582s. loss: 1.9249. lr: 0.002482
+[2025-06-27 15:31:42,103] correct_pred_novel: 124, correct_pred_known: 16
+[2025-06-27 15:31:42,104] Known Class Discrepancy Energy: 1.1444662809371948
+[2025-06-27 15:31:42,105] Novel Class Discrepancy Energy: 0.4329879879951477
+[2025-06-27 15:31:42,105] Novel Detection ACC: 0.7292
+train epoch: 1/  50. itr:   76/ 195. btime: 0.574s. loss: 1.9150. lr: 0.002481
+[2025-06-27 15:31:44,463] correct_pred_novel: 114, correct_pred_known: 23
+[2025-06-27 15:31:44,464] Known Class Discrepancy Energy: 1.2109739780426025
+[2025-06-27 15:31:44,464] Novel Class Discrepancy Energy: 0.47413215041160583
+[2025-06-27 15:31:44,465] Novel Detection ACC: 0.7135
+train epoch: 1/  50. itr:   81/ 195. btime: 0.567s. loss: 1.8982. lr: 0.002479
+[2025-06-27 15:31:46,654] correct_pred_novel: 113, correct_pred_known: 17
+[2025-06-27 15:31:46,655] Known Class Discrepancy Energy: 0.948436975479126
+[2025-06-27 15:31:46,655] Novel Class Discrepancy Energy: 0.5051209330558777
+[2025-06-27 15:31:46,655] Novel Detection ACC: 0.6771
+train epoch: 1/  50. itr:   86/ 195. btime: 0.560s. loss: 1.8838. lr: 0.002478
+[2025-06-27 15:31:49,740] correct_pred_novel: 107, correct_pred_known: 19
+[2025-06-27 15:31:49,741] Known Class Discrepancy Energy: 1.07064950466156
+[2025-06-27 15:31:49,741] Novel Class Discrepancy Energy: 0.5568925142288208
+[2025-06-27 15:31:49,742] Novel Detection ACC: 0.6562
+train epoch: 1/  50. itr:   91/ 195. btime: 0.563s. loss: 1.8698. lr: 0.002477
+[2025-06-27 15:31:52,270] correct_pred_novel: 119, correct_pred_known: 15
+[2025-06-27 15:31:52,271] Known Class Discrepancy Energy: 1.0564091205596924
+[2025-06-27 15:31:52,271] Novel Class Discrepancy Energy: 0.5041366815567017
+[2025-06-27 15:31:52,271] Novel Detection ACC: 0.6979
+train epoch: 1/  50. itr:   96/ 195. btime: 0.560s. loss: 1.8607. lr: 0.002475
+[2025-06-27 15:31:54,763] correct_pred_novel: 116, correct_pred_known: 18
+[2025-06-27 15:31:54,765] Known Class Discrepancy Energy: 1.3052647113800049
+[2025-06-27 15:31:54,766] Novel Class Discrepancy Energy: 0.5057392120361328
+[2025-06-27 15:31:54,766] Novel Detection ACC: 0.6979
+train epoch: 1/  50. itr:  101/ 195. btime: 0.557s. loss: 1.8474. lr: 0.002474
+[2025-06-27 15:31:56,984] correct_pred_novel: 113, correct_pred_known: 21
+[2025-06-27 15:31:56,985] Known Class Discrepancy Energy: 1.239564061164856
+[2025-06-27 15:31:56,985] Novel Class Discrepancy Energy: 0.5630197525024414
+[2025-06-27 15:31:56,986] Novel Detection ACC: 0.6979
+train epoch: 1/  50. itr:  106/ 195. btime: 0.552s. loss: 1.8380. lr: 0.002473
+[2025-06-27 15:31:59,925] correct_pred_novel: 113, correct_pred_known: 23
+[2025-06-27 15:31:59,929] Known Class Discrepancy Energy: 1.2267584800720215
+[2025-06-27 15:31:59,934] Novel Class Discrepancy Energy: 0.5022317171096802
+[2025-06-27 15:31:59,936] Novel Detection ACC: 0.7083
+train epoch: 1/  50. itr:  111/ 195. btime: 0.553s. loss: 1.8206. lr: 0.002472
+[2025-06-27 15:32:02,334] correct_pred_novel: 106, correct_pred_known: 23
+[2025-06-27 15:32:02,335] Known Class Discrepancy Energy: 1.0624158382415771
+[2025-06-27 15:32:02,335] Novel Class Discrepancy Energy: 0.4773333668708801
+[2025-06-27 15:32:02,335] Novel Detection ACC: 0.6719
+train epoch: 1/  50. itr:  116/ 195. btime: 0.550s. loss: 1.8155. lr: 0.002470
+[2025-06-27 15:32:04,671] correct_pred_novel: 116, correct_pred_known: 16
+[2025-06-27 15:32:04,672] Known Class Discrepancy Energy: 1.16663658618927
+[2025-06-27 15:32:04,672] Novel Class Discrepancy Energy: 0.5307121276855469
+[2025-06-27 15:32:04,672] Novel Detection ACC: 0.6875
+train epoch: 1/  50. itr:  121/ 195. btime: 0.547s. loss: 1.8049. lr: 0.002469
+[2025-06-27 15:32:06,869] correct_pred_novel: 104, correct_pred_known: 25
+[2025-06-27 15:32:06,870] Known Class Discrepancy Energy: 1.3129632472991943
+[2025-06-27 15:32:06,871] Novel Class Discrepancy Energy: 0.447105348110199
+[2025-06-27 15:32:06,871] Novel Detection ACC: 0.6719
+train epoch: 1/  50. itr:  126/ 195. btime: 0.542s. loss: 1.7930. lr: 0.002468
+[2025-06-27 15:32:09,274] correct_pred_novel: 118, correct_pred_known: 18
+[2025-06-27 15:32:09,275] Known Class Discrepancy Energy: 1.1389751434326172
+[2025-06-27 15:32:09,275] Novel Class Discrepancy Energy: 0.647813081741333
+[2025-06-27 15:32:09,275] Novel Detection ACC: 0.7083
+train epoch: 1/  50. itr:  131/ 195. btime: 0.540s. loss: 1.7903. lr: 0.002466
+[2025-06-27 15:32:12,646] correct_pred_novel: 113, correct_pred_known: 25
+[2025-06-27 15:32:12,647] Known Class Discrepancy Energy: 1.3379123210906982
+[2025-06-27 15:32:12,648] Novel Class Discrepancy Energy: 0.42765477299690247
+[2025-06-27 15:32:12,648] Novel Detection ACC: 0.7188
+train epoch: 1/  50. itr:  136/ 195. btime: 0.545s. loss: 1.7810. lr: 0.002465
+[2025-06-27 15:32:14,975] correct_pred_novel: 103, correct_pred_known: 24
+[2025-06-27 15:32:14,976] Known Class Discrepancy Energy: 1.1261879205703735
+[2025-06-27 15:32:14,977] Novel Class Discrepancy Energy: 0.5160884857177734
+[2025-06-27 15:32:14,977] Novel Detection ACC: 0.6615
+train epoch: 1/  50. itr:  141/ 195. btime: 0.542s. loss: 1.7738. lr: 0.002464
+[2025-06-27 15:32:17,197] correct_pred_novel: 112, correct_pred_known: 17
+[2025-06-27 15:32:17,198] Known Class Discrepancy Energy: 1.1329967975616455
+[2025-06-27 15:32:17,198] Novel Class Discrepancy Energy: 0.5432255864143372
+[2025-06-27 15:32:17,198] Novel Detection ACC: 0.6719
+train epoch: 1/  50. itr:  146/ 195. btime: 0.539s. loss: 1.7695. lr: 0.002463
+[2025-06-27 15:32:20,116] correct_pred_novel: 115, correct_pred_known: 19
+[2025-06-27 15:32:20,121] Known Class Discrepancy Energy: 1.1616014242172241
+[2025-06-27 15:32:20,125] Novel Class Discrepancy Energy: 0.44407665729522705
+[2025-06-27 15:32:20,127] Novel Detection ACC: 0.6979
+train epoch: 1/  50. itr:  151/ 195. btime: 0.540s. loss: 1.7636. lr: 0.002461
+[2025-06-27 15:32:22,371] correct_pred_novel: 120, correct_pred_known: 16
+[2025-06-27 15:32:22,372] Known Class Discrepancy Energy: 1.0552157163619995
+[2025-06-27 15:32:22,373] Novel Class Discrepancy Energy: 0.5319926142692566
+[2025-06-27 15:32:22,373] Novel Detection ACC: 0.7083
+train epoch: 1/  50. itr:  156/ 195. btime: 0.538s. loss: 1.7548. lr: 0.002460
+[2025-06-27 15:32:24,684] correct_pred_novel: 123, correct_pred_known: 16
+[2025-06-27 15:32:24,685] Known Class Discrepancy Energy: 0.909451961517334
+[2025-06-27 15:32:24,685] Novel Class Discrepancy Energy: 0.5276116728782654
+[2025-06-27 15:32:24,685] Novel Detection ACC: 0.7240
+train epoch: 1/  50. itr:  161/ 195. btime: 0.535s. loss: 1.7525. lr: 0.002459
+[2025-06-27 15:32:27,029] correct_pred_novel: 120, correct_pred_known: 15
+[2025-06-27 15:32:27,030] Known Class Discrepancy Energy: 1.2020230293273926
+[2025-06-27 15:32:27,030] Novel Class Discrepancy Energy: 0.5249034762382507
+[2025-06-27 15:32:27,030] Novel Detection ACC: 0.7031
+train epoch: 1/  50. itr:  166/ 195. btime: 0.533s. loss: 1.7416. lr: 0.002457
+[2025-06-27 15:32:29,329] correct_pred_novel: 113, correct_pred_known: 10
+[2025-06-27 15:32:29,330] Known Class Discrepancy Energy: 0.7200851440429688
+[2025-06-27 15:32:29,330] Novel Class Discrepancy Energy: 0.47943922877311707
+[2025-06-27 15:32:29,331] Novel Detection ACC: 0.6406
+train epoch: 1/  50. itr:  171/ 195. btime: 0.531s. loss: 1.7377. lr: 0.002456
+[2025-06-27 15:32:31,571] correct_pred_novel: 114, correct_pred_known: 21
+[2025-06-27 15:32:31,573] Known Class Discrepancy Energy: 1.0925071239471436
+[2025-06-27 15:32:31,573] Novel Class Discrepancy Energy: 0.44019368290901184
+[2025-06-27 15:32:31,573] Novel Detection ACC: 0.7031
+train epoch: 1/  50. itr:  176/ 195. btime: 0.529s. loss: 1.7269. lr: 0.002455
+[2025-06-27 15:32:34,994] correct_pred_novel: 120, correct_pred_known: 17
+[2025-06-27 15:32:34,996] Known Class Discrepancy Energy: 1.384980320930481
+[2025-06-27 15:32:34,996] Novel Class Discrepancy Energy: 0.5407065749168396
+[2025-06-27 15:32:34,996] Novel Detection ACC: 0.7135
+train epoch: 1/  50. itr:  181/ 195. btime: 0.533s. loss: 1.7220. lr: 0.002454
+[2025-06-27 15:32:37,249] correct_pred_novel: 125, correct_pred_known: 16
+[2025-06-27 15:32:37,250] Known Class Discrepancy Energy: 1.099611520767212
+[2025-06-27 15:32:37,250] Novel Class Discrepancy Energy: 0.4121033847332001
+[2025-06-27 15:32:37,250] Novel Detection ACC: 0.7344
+train epoch: 1/  50. itr:  186/ 195. btime: 0.531s. loss: 1.7174. lr: 0.002452
+[2025-06-27 15:32:40,063] correct_pred_novel: 124, correct_pred_known: 20
+[2025-06-27 15:32:40,064] Known Class Discrepancy Energy: 1.3817570209503174
+[2025-06-27 15:32:40,065] Novel Class Discrepancy Energy: 0.43593403697013855
+[2025-06-27 15:32:40,065] Novel Detection ACC: 0.7500
+train epoch: 1/  50. itr:  191/ 195. btime: 0.532s. loss: 1.7080. lr: 0.002451
+Total train time: 101.513s
+Total test time: 20.339s
+Total test time: 19.621s
+Total test time: 37.702s
+[2025-06-27 15:33:59,895] epoch: 1, acc-known-trans: 79.96
+[2025-06-27 15:33:59,895] epoch: 1, acc-novel-trans: 4.5, nmi-novel: 0.5694862520431647
+[2025-06-27 15:33:59,895] epoch: 1, acc-all-trans: 42.24, nmi-all: 0.6479507734858827, best-acc: 42.24, best-acc-novel: 4.5
+[2025-06-27 15:34:07,287] correct_pred_novel: 112, correct_pred_known: 19
+[2025-06-27 15:34:07,289] Known Class Discrepancy Energy: 1.1935685873031616
+[2025-06-27 15:34:07,289] Novel Class Discrepancy Energy: 0.5698505640029907
+[2025-06-27 15:34:07,289] Novel Detection ACC: 0.6823
+train epoch: 2/  50. itr:    1/ 195. btime: 5.847s. loss: 1.3503. lr: 0.002450
+[2025-06-27 15:34:09,534] correct_pred_novel: 127, correct_pred_known: 16
+[2025-06-27 15:34:09,534] Known Class Discrepancy Energy: 1.142943263053894
+[2025-06-27 15:34:09,535] Novel Class Discrepancy Energy: 0.41053473949432373
+[2025-06-27 15:34:09,535] Novel Detection ACC: 0.7448
+train epoch: 2/  50. itr:    6/ 195. btime: 1.349s. loss: 1.4777. lr: 0.002448
+[2025-06-27 15:34:11,940] correct_pred_novel: 108, correct_pred_known: 27
+[2025-06-27 15:34:11,945] Known Class Discrepancy Energy: 1.4823750257492065
+[2025-06-27 15:34:11,949] Novel Class Discrepancy Energy: 0.6899052858352661
+[2025-06-27 15:34:11,952] Novel Detection ACC: 0.7031
+train epoch: 2/  50. itr:   11/ 195. btime: 0.955s. loss: 1.4638. lr: 0.002447
+[2025-06-27 15:34:14,533] correct_pred_novel: 109, correct_pred_known: 21
+[2025-06-27 15:34:14,533] Known Class Discrepancy Energy: 1.098805546760559
+[2025-06-27 15:34:14,534] Novel Class Discrepancy Energy: 0.5214622020721436
+[2025-06-27 15:34:14,534] Novel Detection ACC: 0.6771
+train epoch: 2/  50. itr:   16/ 195. btime: 0.818s. loss: 1.4738. lr: 0.002446
+[2025-06-27 15:34:16,950] correct_pred_novel: 109, correct_pred_known: 32
+[2025-06-27 15:34:16,952] Known Class Discrepancy Energy: 1.650583267211914
+[2025-06-27 15:34:16,952] Novel Class Discrepancy Energy: 0.4530511498451233
+[2025-06-27 15:34:16,952] Novel Detection ACC: 0.7344
+train epoch: 2/  50. itr:   21/ 195. btime: 0.739s. loss: 1.4525. lr: 0.002445
+[2025-06-27 15:34:19,388] correct_pred_novel: 107, correct_pred_known: 29
+[2025-06-27 15:34:19,389] Known Class Discrepancy Energy: 1.2781918048858643
+[2025-06-27 15:34:19,389] Novel Class Discrepancy Energy: 0.38498780131340027
+[2025-06-27 15:34:19,389] Novel Detection ACC: 0.7083
+train epoch: 2/  50. itr:   26/ 195. btime: 0.690s. loss: 1.4435. lr: 0.002443
+[2025-06-27 15:34:21,959] correct_pred_novel: 121, correct_pred_known: 21
+[2025-06-27 15:34:21,959] Known Class Discrepancy Energy: 1.450642704963684
+[2025-06-27 15:34:21,960] Novel Class Discrepancy Energy: 0.5124017596244812
+[2025-06-27 15:34:21,960] Novel Detection ACC: 0.7396
+train epoch: 2/  50. itr:   31/ 195. btime: 0.662s. loss: 1.4546. lr: 0.002442
+[2025-06-27 15:34:24,889] correct_pred_novel: 96, correct_pred_known: 21
+[2025-06-27 15:34:24,890] Known Class Discrepancy Energy: 1.180815577507019
+[2025-06-27 15:34:24,890] Novel Class Discrepancy Energy: 0.6327878832817078
+[2025-06-27 15:34:24,890] Novel Detection ACC: 0.6094
+train epoch: 2/  50. itr:   36/ 195. btime: 0.651s. loss: 1.4589. lr: 0.002441
+[2025-06-27 15:34:27,206] correct_pred_novel: 111, correct_pred_known: 19
+[2025-06-27 15:34:27,207] Known Class Discrepancy Energy: 1.1651723384857178
+[2025-06-27 15:34:27,207] Novel Class Discrepancy Energy: 0.5161899328231812
+[2025-06-27 15:34:27,208] Novel Detection ACC: 0.6771
+train epoch: 2/  50. itr:   41/ 195. btime: 0.628s. loss: 1.4697. lr: 0.002439
+[2025-06-27 15:34:29,405] correct_pred_novel: 110, correct_pred_known: 20
+[2025-06-27 15:34:29,407] Known Class Discrepancy Energy: 1.1499580144882202
+[2025-06-27 15:34:29,407] Novel Class Discrepancy Energy: 0.5632961988449097
+[2025-06-27 15:34:29,407] Novel Detection ACC: 0.6771
+train epoch: 2/  50. itr:   46/ 195. btime: 0.608s. loss: 1.4677. lr: 0.002438
+[2025-06-27 15:34:32,393] correct_pred_novel: 108, correct_pred_known: 24
+[2025-06-27 15:34:32,394] Known Class Discrepancy Energy: 1.2856471538543701
+[2025-06-27 15:34:32,394] Novel Class Discrepancy Energy: 0.49749019742012024
+[2025-06-27 15:34:32,394] Novel Detection ACC: 0.6875
+train epoch: 2/  50. itr:   51/ 195. btime: 0.607s. loss: 1.4726. lr: 0.002437
+[2025-06-27 15:34:34,636] correct_pred_novel: 110, correct_pred_known: 21
+[2025-06-27 15:34:34,637] Known Class Discrepancy Energy: 1.1300448179244995
+[2025-06-27 15:34:34,637] Novel Class Discrepancy Energy: 0.5489644408226013
+[2025-06-27 15:34:34,637] Novel Detection ACC: 0.6823
+train epoch: 2/  50. itr:   56/ 195. btime: 0.593s. loss: 1.4824. lr: 0.002436
+[2025-06-27 15:34:37,190] correct_pred_novel: 107, correct_pred_known: 29
+[2025-06-27 15:34:37,191] Known Class Discrepancy Energy: 1.3581269979476929
+[2025-06-27 15:34:37,191] Novel Class Discrepancy Energy: 0.6356431841850281
+[2025-06-27 15:34:37,191] Novel Detection ACC: 0.7083
+train epoch: 2/  50. itr:   61/ 195. btime: 0.586s. loss: 1.4908. lr: 0.002434
+[2025-06-27 15:34:40,083] correct_pred_novel: 121, correct_pred_known: 18
+[2025-06-27 15:34:40,084] Known Class Discrepancy Energy: 1.1554902791976929
+[2025-06-27 15:34:40,084] Novel Class Discrepancy Energy: 0.48740503191947937
+[2025-06-27 15:34:40,085] Novel Detection ACC: 0.7240
+train epoch: 2/  50. itr:   66/ 195. btime: 0.586s. loss: 1.4868. lr: 0.002433
+[2025-06-27 15:34:42,477] correct_pred_novel: 116, correct_pred_known: 19
+[2025-06-27 15:34:42,480] Known Class Discrepancy Energy: 1.2793314456939697
+[2025-06-27 15:34:42,480] Novel Class Discrepancy Energy: 0.5325828194618225
+[2025-06-27 15:34:42,480] Novel Detection ACC: 0.7031
+train epoch: 2/  50. itr:   71/ 195. btime: 0.578s. loss: 1.4913. lr: 0.002432
+[2025-06-27 15:34:44,743] correct_pred_novel: 117, correct_pred_known: 19
+[2025-06-27 15:34:44,744] Known Class Discrepancy Energy: 1.0417765378952026
+[2025-06-27 15:34:44,744] Novel Class Discrepancy Energy: 0.5390864610671997
+[2025-06-27 15:34:44,744] Novel Detection ACC: 0.7083
+train epoch: 2/  50. itr:   76/ 195. btime: 0.570s. loss: 1.5057. lr: 0.002431
+[2025-06-27 15:34:47,528] correct_pred_novel: 118, correct_pred_known: 17
+[2025-06-27 15:34:47,537] Known Class Discrepancy Energy: 0.9580759406089783
+[2025-06-27 15:34:47,546] Novel Class Discrepancy Energy: 0.4512281119823456
+[2025-06-27 15:34:47,551] Novel Detection ACC: 0.7031
+train epoch: 2/  50. itr:   81/ 195. btime: 0.569s. loss: 1.5006. lr: 0.002429
+[2025-06-27 15:34:50,615] correct_pred_novel: 115, correct_pred_known: 25
+[2025-06-27 15:34:50,616] Known Class Discrepancy Energy: 1.4946027994155884
+[2025-06-27 15:34:50,617] Novel Class Discrepancy Energy: 0.48157310485839844
+[2025-06-27 15:34:50,617] Novel Detection ACC: 0.7292
+train epoch: 2/  50. itr:   86/ 195. btime: 0.572s. loss: 1.4956. lr: 0.002428
+[2025-06-27 15:34:52,945] correct_pred_novel: 108, correct_pred_known: 23
+[2025-06-27 15:34:52,946] Known Class Discrepancy Energy: 1.1865363121032715
+[2025-06-27 15:34:52,947] Novel Class Discrepancy Energy: 0.5257970690727234
+[2025-06-27 15:34:52,947] Novel Detection ACC: 0.6823
+train epoch: 2/  50. itr:   91/ 195. btime: 0.566s. loss: 1.4934. lr: 0.002427
+[2025-06-27 15:34:55,361] correct_pred_novel: 123, correct_pred_known: 24
+[2025-06-27 15:34:55,366] Known Class Discrepancy Energy: 1.4817132949829102
+[2025-06-27 15:34:55,370] Novel Class Discrepancy Energy: 0.4401525855064392
+[2025-06-27 15:34:55,373] Novel Detection ACC: 0.7656
+train epoch: 2/  50. itr:   96/ 195. btime: 0.562s. loss: 1.4912. lr: 0.002425
+[2025-06-27 15:34:57,872] correct_pred_novel: 117, correct_pred_known: 28
+[2025-06-27 15:34:57,873] Known Class Discrepancy Energy: 1.5503402948379517
+[2025-06-27 15:34:57,873] Novel Class Discrepancy Energy: 0.4255119264125824
+[2025-06-27 15:34:57,873] Novel Detection ACC: 0.7552
+train epoch: 2/  50. itr:  101/ 195. btime: 0.559s. loss: 1.4809. lr: 0.002424
+[2025-06-27 15:35:00,108] correct_pred_novel: 109, correct_pred_known: 23
+[2025-06-27 15:35:00,109] Known Class Discrepancy Energy: 1.1235512495040894
+[2025-06-27 15:35:00,110] Novel Class Discrepancy Energy: 0.46567532420158386
+[2025-06-27 15:35:00,110] Novel Detection ACC: 0.6875
+train epoch: 2/  50. itr:  106/ 195. btime: 0.553s. loss: 1.4759. lr: 0.002423
+[2025-06-27 15:35:02,550] correct_pred_novel: 115, correct_pred_known: 23
+[2025-06-27 15:35:02,554] Known Class Discrepancy Energy: 1.3298786878585815
+[2025-06-27 15:35:02,558] Novel Class Discrepancy Energy: 0.5622323155403137
+[2025-06-27 15:35:02,561] Novel Detection ACC: 0.7188
+train epoch: 2/  50. itr:  111/ 195. btime: 0.551s. loss: 1.4840. lr: 0.002422
+[2025-06-27 15:35:04,936] correct_pred_novel: 125, correct_pred_known: 17
+[2025-06-27 15:35:04,937] Known Class Discrepancy Energy: 1.1927953958511353
+[2025-06-27 15:35:04,937] Novel Class Discrepancy Energy: 0.5128438472747803
+[2025-06-27 15:35:04,937] Novel Detection ACC: 0.7396
+train epoch: 2/  50. itr:  116/ 195. btime: 0.547s. loss: 1.4816. lr: 0.002420
+[2025-06-27 15:35:07,537] correct_pred_novel: 115, correct_pred_known: 20
+[2025-06-27 15:35:07,541] Known Class Discrepancy Energy: 0.8676838874816895
+[2025-06-27 15:35:07,545] Novel Class Discrepancy Energy: 0.47412699460983276
+[2025-06-27 15:35:07,545] Novel Detection ACC: 0.7031
+train epoch: 2/  50. itr:  121/ 195. btime: 0.546s. loss: 1.4848. lr: 0.002419
+[2025-06-27 15:35:09,806] correct_pred_novel: 119, correct_pred_known: 20
+[2025-06-27 15:35:09,807] Known Class Discrepancy Energy: 1.2324371337890625
+[2025-06-27 15:35:09,808] Novel Class Discrepancy Energy: 0.5078242421150208
+[2025-06-27 15:35:09,808] Novel Detection ACC: 0.7240
+train epoch: 2/  50. itr:  126/ 195. btime: 0.543s. loss: 1.4768. lr: 0.002418
+[2025-06-27 15:35:12,400] correct_pred_novel: 118, correct_pred_known: 20
+[2025-06-27 15:35:12,400] Known Class Discrepancy Energy: 1.196907639503479
+[2025-06-27 15:35:12,401] Novel Class Discrepancy Energy: 0.5412207841873169
+[2025-06-27 15:35:12,401] Novel Detection ACC: 0.7188
+train epoch: 2/  50. itr:  131/ 195. btime: 0.542s. loss: 1.4752. lr: 0.002416
+[2025-06-27 15:35:15,254] correct_pred_novel: 122, correct_pred_known: 15
+[2025-06-27 15:35:15,255] Known Class Discrepancy Energy: 0.9941390752792358
+[2025-06-27 15:35:15,255] Novel Class Discrepancy Energy: 0.5629098415374756
+[2025-06-27 15:35:15,256] Novel Detection ACC: 0.7135
+train epoch: 2/  50. itr:  136/ 195. btime: 0.543s. loss: 1.4710. lr: 0.002415
+[2025-06-27 15:35:17,699] correct_pred_novel: 125, correct_pred_known: 16
+[2025-06-27 15:35:17,700] Known Class Discrepancy Energy: 1.1857240200042725
+[2025-06-27 15:35:17,700] Novel Class Discrepancy Energy: 0.3895220160484314
+[2025-06-27 15:35:17,700] Novel Detection ACC: 0.7344
+train epoch: 2/  50. itr:  141/ 195. btime: 0.541s. loss: 1.4731. lr: 0.002414
+[2025-06-27 15:35:19,889] correct_pred_novel: 120, correct_pred_known: 17
+[2025-06-27 15:35:19,890] Known Class Discrepancy Energy: 1.0795608758926392
+[2025-06-27 15:35:19,891] Novel Class Discrepancy Energy: 0.45149120688438416
+[2025-06-27 15:35:19,891] Novel Detection ACC: 0.7135
+train epoch: 2/  50. itr:  146/ 195. btime: 0.537s. loss: 1.4738. lr: 0.002413
+[2025-06-27 15:35:22,217] correct_pred_novel: 122, correct_pred_known: 17
+[2025-06-27 15:35:22,218] Known Class Discrepancy Energy: 1.0601918697357178
+[2025-06-27 15:35:22,218] Novel Class Discrepancy Energy: 0.5038471817970276
+[2025-06-27 15:35:22,218] Novel Detection ACC: 0.7240
+train epoch: 2/  50. itr:  151/ 195. btime: 0.535s. loss: 1.4776. lr: 0.002411
+[2025-06-27 15:35:24,444] correct_pred_novel: 111, correct_pred_known: 21
+[2025-06-27 15:35:24,446] Known Class Discrepancy Energy: 1.1068415641784668
+[2025-06-27 15:35:24,446] Novel Class Discrepancy Energy: 0.5848941802978516
+[2025-06-27 15:35:24,446] Novel Detection ACC: 0.6875
+train epoch: 2/  50. itr:  156/ 195. btime: 0.532s. loss: 1.4785. lr: 0.002410
+[2025-06-27 15:35:26,742] correct_pred_novel: 123, correct_pred_known: 15
+[2025-06-27 15:35:26,743] Known Class Discrepancy Energy: 1.1024501323699951
+[2025-06-27 15:35:26,743] Novel Class Discrepancy Energy: 0.478996217250824
+[2025-06-27 15:35:26,743] Novel Detection ACC: 0.7188
+train epoch: 2/  50. itr:  161/ 195. btime: 0.530s. loss: 1.4759. lr: 0.002409
+[2025-06-27 15:35:28,950] correct_pred_novel: 132, correct_pred_known: 12
+[2025-06-27 15:35:28,951] Known Class Discrepancy Energy: 0.9348560571670532
+[2025-06-27 15:35:28,951] Novel Class Discrepancy Energy: 0.4576427638530731
+[2025-06-27 15:35:28,951] Novel Detection ACC: 0.7500
+train epoch: 2/  50. itr:  166/ 195. btime: 0.527s. loss: 1.4771. lr: 0.002407
+[2025-06-27 15:35:31,292] correct_pred_novel: 116, correct_pred_known: 19
+[2025-06-27 15:35:31,294] Known Class Discrepancy Energy: 1.27796471118927
+[2025-06-27 15:35:31,294] Novel Class Discrepancy Energy: 0.5146058201789856
+[2025-06-27 15:35:31,294] Novel Detection ACC: 0.7031
+train epoch: 2/  50. itr:  171/ 195. btime: 0.525s. loss: 1.4765. lr: 0.002406
+[2025-06-27 15:35:33,445] correct_pred_novel: 118, correct_pred_known: 18
+[2025-06-27 15:35:33,446] Known Class Discrepancy Energy: 1.0892339944839478
+[2025-06-27 15:35:33,446] Novel Class Discrepancy Energy: 0.5555872917175293
+[2025-06-27 15:35:33,447] Novel Detection ACC: 0.7083
+train epoch: 2/  50. itr:  176/ 195. btime: 0.523s. loss: 1.4782. lr: 0.002405
+[2025-06-27 15:35:36,074] correct_pred_novel: 113, correct_pred_known: 19
+[2025-06-27 15:35:36,075] Known Class Discrepancy Energy: 1.223407506942749
+[2025-06-27 15:35:36,075] Novel Class Discrepancy Energy: 0.5644769668579102
+[2025-06-27 15:35:36,076] Novel Detection ACC: 0.6875
+train epoch: 2/  50. itr:  181/ 195. btime: 0.523s. loss: 1.4777. lr: 0.002404
+[2025-06-27 15:35:38,560] correct_pred_novel: 103, correct_pred_known: 22
+[2025-06-27 15:35:38,561] Known Class Discrepancy Energy: 1.10975182056427
+[2025-06-27 15:35:38,561] Novel Class Discrepancy Energy: 0.579777717590332
+[2025-06-27 15:35:38,561] Novel Detection ACC: 0.6510
+train epoch: 2/  50. itr:  186/ 195. btime: 0.522s. loss: 1.4809. lr: 0.002402
+[2025-06-27 15:35:41,236] correct_pred_novel: 121, correct_pred_known: 17
+[2025-06-27 15:35:41,237] Known Class Discrepancy Energy: 1.2180051803588867
+[2025-06-27 15:35:41,237] Novel Class Discrepancy Energy: 0.4925784170627594
+[2025-06-27 15:35:41,238] Novel Detection ACC: 0.7188
+train epoch: 2/  50. itr:  191/ 195. btime: 0.522s. loss: 1.4801. lr: 0.002401
+Total train time: 99.091s
+Total test time: 18.046s
+Total test time: 17.829s
+Total test time: 35.750s
+[2025-06-27 15:36:55,174] epoch: 2, acc-known-trans: 81.3
+[2025-06-27 15:36:55,174] epoch: 2, acc-novel-trans: 3.7800000000000002, nmi-novel: 0.5552937099976794
+[2025-06-27 15:36:55,175] epoch: 2, acc-all-trans: 42.51, nmi-all: 0.6416120737109137, best-acc: 42.51, best-acc-novel: 4.5
+[2025-06-27 15:37:05,762] correct_pred_novel: 118, correct_pred_known: 21
+[2025-06-27 15:37:05,763] Known Class Discrepancy Energy: 1.1312493085861206
+[2025-06-27 15:37:05,763] Novel Class Discrepancy Energy: 0.4268741011619568
+[2025-06-27 15:37:05,763] Novel Detection ACC: 0.7240
+train epoch: 3/  50. itr:    1/ 195. btime: 5.835s. loss: 1.1812. lr: 0.002400
+[2025-06-27 15:37:08,016] correct_pred_novel: 108, correct_pred_known: 25
+[2025-06-27 15:37:08,017] Known Class Discrepancy Energy: 1.401241660118103
+[2025-06-27 15:37:08,017] Novel Class Discrepancy Energy: 0.4796108305454254
+[2025-06-27 15:37:08,018] Novel Detection ACC: 0.6927
+train epoch: 3/  50. itr:    6/ 195. btime: 1.348s. loss: 1.4334. lr: 0.002398
+[2025-06-27 15:37:10,542] correct_pred_novel: 124, correct_pred_known: 19
+[2025-06-27 15:37:10,543] Known Class Discrepancy Energy: 1.2917197942733765
+[2025-06-27 15:37:10,543] Novel Class Discrepancy Energy: 0.5182880759239197
+[2025-06-27 15:37:10,543] Novel Detection ACC: 0.7448
+train epoch: 3/  50. itr:   11/ 195. btime: 0.965s. loss: 1.4781. lr: 0.002397
+[2025-06-27 15:37:13,335] correct_pred_novel: 114, correct_pred_known: 15
+[2025-06-27 15:37:13,336] Known Class Discrepancy Energy: 0.9690632224082947
+[2025-06-27 15:37:13,336] Novel Class Discrepancy Energy: 0.4698319435119629
+[2025-06-27 15:37:13,336] Novel Detection ACC: 0.6719
+train epoch: 3/  50. itr:   16/ 195. btime: 0.838s. loss: 1.4550. lr: 0.002396
+[2025-06-27 15:37:15,978] correct_pred_novel: 123, correct_pred_known: 19
+[2025-06-27 15:37:15,978] Known Class Discrepancy Energy: 1.3662376403808594
+[2025-06-27 15:37:15,979] Novel Class Discrepancy Energy: 0.5026533007621765
+[2025-06-27 15:37:15,979] Novel Detection ACC: 0.7396
+train epoch: 3/  50. itr:   21/ 195. btime: 0.764s. loss: 1.4602. lr: 0.002395
+[2025-06-27 15:37:18,192] correct_pred_novel: 123, correct_pred_known: 19
+[2025-06-27 15:37:18,193] Known Class Discrepancy Energy: 1.1049867868423462
+[2025-06-27 15:37:18,193] Novel Class Discrepancy Energy: 0.34012818336486816
+[2025-06-27 15:37:18,193] Novel Detection ACC: 0.7396
+train epoch: 3/  50. itr:   26/ 195. btime: 0.703s. loss: 1.4288. lr: 0.002393
+[2025-06-27 15:37:20,501] correct_pred_novel: 118, correct_pred_known: 18
+[2025-06-27 15:37:20,502] Known Class Discrepancy Energy: 1.304425597190857
+[2025-06-27 15:37:20,502] Novel Class Discrepancy Energy: 0.545889675617218
+[2025-06-27 15:37:20,502] Novel Detection ACC: 0.7083
+train epoch: 3/  50. itr:   31/ 195. btime: 0.664s. loss: 1.4390. lr: 0.002392
+[2025-06-27 15:37:22,703] correct_pred_novel: 123, correct_pred_known: 20
+[2025-06-27 15:37:22,703] Known Class Discrepancy Energy: 1.1640353202819824
+[2025-06-27 15:37:22,704] Novel Class Discrepancy Energy: 0.49612146615982056
+[2025-06-27 15:37:22,704] Novel Detection ACC: 0.7448
+train epoch: 3/  50. itr:   36/ 195. btime: 0.633s. loss: 1.4439. lr: 0.002391
+[2025-06-27 15:37:25,057] correct_pred_novel: 126, correct_pred_known: 15
+[2025-06-27 15:37:25,058] Known Class Discrepancy Energy: 1.0223344564437866
+[2025-06-27 15:37:25,058] Novel Class Discrepancy Energy: 0.5277780294418335
+[2025-06-27 15:37:25,058] Novel Detection ACC: 0.7344
+train epoch: 3/  50. itr:   41/ 195. btime: 0.613s. loss: 1.4148. lr: 0.002389
+[2025-06-27 15:37:27,246] correct_pred_novel: 113, correct_pred_known: 26
+[2025-06-27 15:37:27,247] Known Class Discrepancy Energy: 1.402390956878662
+[2025-06-27 15:37:27,248] Novel Class Discrepancy Energy: 0.48149240016937256
+[2025-06-27 15:37:27,248] Novel Detection ACC: 0.7240
+train epoch: 3/  50. itr:   46/ 195. btime: 0.594s. loss: 1.4139. lr: 0.002388
+[2025-06-27 15:37:29,612] correct_pred_novel: 110, correct_pred_known: 18
+[2025-06-27 15:37:29,613] Known Class Discrepancy Energy: 1.0920575857162476
+[2025-06-27 15:37:29,613] Novel Class Discrepancy Energy: 0.48917683959007263
+[2025-06-27 15:37:29,613] Novel Detection ACC: 0.6667
+train epoch: 3/  50. itr:   51/ 195. btime: 0.582s. loss: 1.4015. lr: 0.002387
+[2025-06-27 15:37:31,825] correct_pred_novel: 109, correct_pred_known: 26
+[2025-06-27 15:37:31,826] Known Class Discrepancy Energy: 1.388874888420105
+[2025-06-27 15:37:31,826] Novel Class Discrepancy Energy: 0.4863419532775879
+[2025-06-27 15:37:31,826] Novel Detection ACC: 0.7031
+train epoch: 3/  50. itr:   56/ 195. btime: 0.570s. loss: 1.4044. lr: 0.002386
+[2025-06-27 15:37:34,725] correct_pred_novel: 115, correct_pred_known: 14
+[2025-06-27 15:37:34,729] Known Class Discrepancy Energy: 0.9508895874023438
+[2025-06-27 15:37:34,734] Novel Class Discrepancy Energy: 0.4665548503398895
+[2025-06-27 15:37:34,736] Novel Detection ACC: 0.6719
+train epoch: 3/  50. itr:   61/ 195. btime: 0.571s. loss: 1.4006. lr: 0.002384
+[2025-06-27 15:37:37,107] correct_pred_novel: 105, correct_pred_known: 25
+[2025-06-27 15:37:37,108] Known Class Discrepancy Energy: 1.1983966827392578
+[2025-06-27 15:37:37,108] Novel Class Discrepancy Energy: 0.5561521053314209
+[2025-06-27 15:37:37,108] Novel Detection ACC: 0.6771
+train epoch: 3/  50. itr:   66/ 195. btime: 0.563s. loss: 1.4026. lr: 0.002383
+[2025-06-27 15:37:39,795] correct_pred_novel: 120, correct_pred_known: 18
+[2025-06-27 15:37:39,796] Known Class Discrepancy Energy: 1.1654857397079468
+[2025-06-27 15:37:39,796] Novel Class Discrepancy Energy: 0.49920278787612915
+[2025-06-27 15:37:39,796] Novel Detection ACC: 0.7188
+train epoch: 3/  50. itr:   71/ 195. btime: 0.562s. loss: 1.3976. lr: 0.002382
+[2025-06-27 15:37:42,032] correct_pred_novel: 117, correct_pred_known: 16
+[2025-06-27 15:37:42,033] Known Class Discrepancy Energy: 1.1174746751785278
+[2025-06-27 15:37:42,033] Novel Class Discrepancy Energy: 0.5194481611251831
+[2025-06-27 15:37:42,033] Novel Detection ACC: 0.6927
+train epoch: 3/  50. itr:   76/ 195. btime: 0.554s. loss: 1.4057. lr: 0.002381
+[2025-06-27 15:37:44,436] correct_pred_novel: 123, correct_pred_known: 14
+[2025-06-27 15:37:44,437] Known Class Discrepancy Energy: 0.9016875624656677
+[2025-06-27 15:37:44,437] Novel Class Discrepancy Energy: 0.4078136682510376
+[2025-06-27 15:37:44,437] Novel Detection ACC: 0.7135
+train epoch: 3/  50. itr:   81/ 195. btime: 0.549s. loss: 1.4056. lr: 0.002379
+[2025-06-27 15:37:46,649] correct_pred_novel: 114, correct_pred_known: 13
+[2025-06-27 15:37:46,650] Known Class Discrepancy Energy: 0.9332903027534485
+[2025-06-27 15:37:46,650] Novel Class Discrepancy Energy: 0.4239270091056824
+[2025-06-27 15:37:46,650] Novel Detection ACC: 0.6615
+train epoch: 3/  50. itr:   86/ 195. btime: 0.543s. loss: 1.3996. lr: 0.002378
+[2025-06-27 15:37:49,006] correct_pred_novel: 104, correct_pred_known: 17
+[2025-06-27 15:37:49,007] Known Class Discrepancy Energy: 0.9653558731079102
+[2025-06-27 15:37:49,007] Novel Class Discrepancy Energy: 0.5938267111778259
+[2025-06-27 15:37:49,007] Novel Detection ACC: 0.6302
+train epoch: 3/  50. itr:   91/ 195. btime: 0.539s. loss: 1.4017. lr: 0.002377
+[2025-06-27 15:37:51,224] correct_pred_novel: 115, correct_pred_known: 19
+[2025-06-27 15:37:51,225] Known Class Discrepancy Energy: 1.162724256515503
+[2025-06-27 15:37:51,225] Novel Class Discrepancy Energy: 0.4553353488445282
+[2025-06-27 15:37:51,225] Novel Detection ACC: 0.6979
+train epoch: 3/  50. itr:   96/ 195. btime: 0.534s. loss: 1.3980. lr: 0.002375
+[2025-06-27 15:37:53,520] correct_pred_novel: 106, correct_pred_known: 24
+[2025-06-27 15:37:53,521] Known Class Discrepancy Energy: 1.2859549522399902
+[2025-06-27 15:37:53,521] Novel Class Discrepancy Energy: 0.4538050889968872
+[2025-06-27 15:37:53,521] Novel Detection ACC: 0.6771
+train epoch: 3/  50. itr:  101/ 195. btime: 0.531s. loss: 1.3957. lr: 0.002374
+[2025-06-27 15:37:55,680] correct_pred_novel: 116, correct_pred_known: 19
+[2025-06-27 15:37:55,681] Known Class Discrepancy Energy: 1.2557960748672485
+[2025-06-27 15:37:55,681] Novel Class Discrepancy Energy: 0.5786333084106445
+[2025-06-27 15:37:55,681] Novel Detection ACC: 0.7031
+train epoch: 3/  50. itr:  106/ 195. btime: 0.526s. loss: 1.3979. lr: 0.002373
+[2025-06-27 15:37:57,975] correct_pred_novel: 115, correct_pred_known: 18
+[2025-06-27 15:37:57,976] Known Class Discrepancy Energy: 1.2567150592803955
+[2025-06-27 15:37:57,976] Novel Class Discrepancy Energy: 0.49714395403862
+[2025-06-27 15:37:57,976] Novel Detection ACC: 0.6927
+train epoch: 3/  50. itr:  111/ 195. btime: 0.523s. loss: 1.4020. lr: 0.002372
+[2025-06-27 15:38:00,945] correct_pred_novel: 106, correct_pred_known: 26
+[2025-06-27 15:38:00,946] Known Class Discrepancy Energy: 1.2581652402877808
+[2025-06-27 15:38:00,946] Novel Class Discrepancy Energy: 0.5341538786888123
+[2025-06-27 15:38:00,947] Novel Detection ACC: 0.6875
+train epoch: 3/  50. itr:  116/ 195. btime: 0.526s. loss: 1.4043. lr: 0.002370
+[2025-06-27 15:38:03,406] correct_pred_novel: 121, correct_pred_known: 19
+[2025-06-27 15:38:03,410] Known Class Discrepancy Energy: 1.1353110074996948
+[2025-06-27 15:38:03,415] Novel Class Discrepancy Energy: 0.4917936623096466
+[2025-06-27 15:38:03,417] Novel Detection ACC: 0.7292
+train epoch: 3/  50. itr:  121/ 195. btime: 0.525s. loss: 1.4074. lr: 0.002369
+[2025-06-27 15:38:05,855] correct_pred_novel: 119, correct_pred_known: 17
+[2025-06-27 15:38:05,856] Known Class Discrepancy Energy: 0.8290444612503052
+[2025-06-27 15:38:05,857] Novel Class Discrepancy Energy: 0.4500058591365814
+[2025-06-27 15:38:05,857] Novel Detection ACC: 0.7083
+train epoch: 3/  50. itr:  126/ 195. btime: 0.523s. loss: 1.4067. lr: 0.002368
+[2025-06-27 15:38:08,161] correct_pred_novel: 116, correct_pred_known: 26
+[2025-06-27 15:38:08,161] Known Class Discrepancy Energy: 1.575439214706421
+[2025-06-27 15:38:08,162] Novel Class Discrepancy Energy: 0.5017512440681458
+[2025-06-27 15:38:08,162] Novel Detection ACC: 0.7396
+train epoch: 3/  50. itr:  131/ 195. btime: 0.521s. loss: 1.4088. lr: 0.002366
+[2025-06-27 15:38:10,395] correct_pred_novel: 103, correct_pred_known: 27
+[2025-06-27 15:38:10,395] Known Class Discrepancy Energy: 1.2111032009124756
+[2025-06-27 15:38:10,396] Novel Class Discrepancy Energy: 0.5134723782539368
+[2025-06-27 15:38:10,396] Novel Detection ACC: 0.6771
+train epoch: 3/  50. itr:  136/ 195. btime: 0.518s. loss: 1.4100. lr: 0.002365
+[2025-06-27 15:38:12,721] correct_pred_novel: 109, correct_pred_known: 17
+[2025-06-27 15:38:12,721] Known Class Discrepancy Energy: 0.997029721736908
+[2025-06-27 15:38:12,722] Novel Class Discrepancy Energy: 0.5668724179267883
+[2025-06-27 15:38:12,722] Novel Detection ACC: 0.6562
+train epoch: 3/  50. itr:  141/ 195. btime: 0.516s. loss: 1.4089. lr: 0.002364
+[2025-06-27 15:38:14,936] correct_pred_novel: 112, correct_pred_known: 28
+[2025-06-27 15:38:14,937] Known Class Discrepancy Energy: 1.500816822052002
+[2025-06-27 15:38:14,938] Novel Class Discrepancy Energy: 0.590343177318573
+[2025-06-27 15:38:14,938] Novel Detection ACC: 0.7292
+train epoch: 3/  50. itr:  146/ 195. btime: 0.514s. loss: 1.4060. lr: 0.002363
+[2025-06-27 15:38:17,261] correct_pred_novel: 126, correct_pred_known: 15
+[2025-06-27 15:38:17,261] Known Class Discrepancy Energy: 1.1573660373687744
+[2025-06-27 15:38:17,262] Novel Class Discrepancy Energy: 0.5161799788475037
+[2025-06-27 15:38:17,262] Novel Detection ACC: 0.7344
+train epoch: 3/  50. itr:  151/ 195. btime: 0.512s. loss: 1.4059. lr: 0.002361
+[2025-06-27 15:38:19,481] correct_pred_novel: 109, correct_pred_known: 21
+[2025-06-27 15:38:19,482] Known Class Discrepancy Energy: 1.2165852785110474
+[2025-06-27 15:38:19,482] Novel Class Discrepancy Energy: 0.5245215892791748
+[2025-06-27 15:38:19,482] Novel Detection ACC: 0.6771
+train epoch: 3/  50. itr:  156/ 195. btime: 0.510s. loss: 1.4047. lr: 0.002360
+[2025-06-27 15:38:22,021] correct_pred_novel: 113, correct_pred_known: 19
+[2025-06-27 15:38:22,021] Known Class Discrepancy Energy: 1.1019796133041382
+[2025-06-27 15:38:22,022] Novel Class Discrepancy Energy: 0.4740034341812134
+[2025-06-27 15:38:22,022] Novel Detection ACC: 0.6875
+train epoch: 3/  50. itr:  161/ 195. btime: 0.510s. loss: 1.4107. lr: 0.002359
+[2025-06-27 15:38:24,748] correct_pred_novel: 129, correct_pred_known: 13
+[2025-06-27 15:38:24,749] Known Class Discrepancy Energy: 1.0434385538101196
+[2025-06-27 15:38:24,749] Novel Class Discrepancy Energy: 0.3958074748516083
+[2025-06-27 15:38:24,749] Novel Detection ACC: 0.7396
+train epoch: 3/  50. itr:  166/ 195. btime: 0.511s. loss: 1.4121. lr: 0.002357
+[2025-06-27 15:38:27,390] correct_pred_novel: 114, correct_pred_known: 19
+[2025-06-27 15:38:27,391] Known Class Discrepancy Energy: 1.1269025802612305
+[2025-06-27 15:38:27,391] Novel Class Discrepancy Energy: 0.5911434888839722
+[2025-06-27 15:38:27,391] Novel Detection ACC: 0.6927
+train epoch: 3/  50. itr:  171/ 195. btime: 0.511s. loss: 1.4120. lr: 0.002356
+[2025-06-27 15:38:29,614] correct_pred_novel: 121, correct_pred_known: 14
+[2025-06-27 15:38:29,615] Known Class Discrepancy Energy: 1.0317840576171875
+[2025-06-27 15:38:29,615] Novel Class Discrepancy Energy: 0.5287424921989441
+[2025-06-27 15:38:29,615] Novel Detection ACC: 0.7031
+train epoch: 3/  50. itr:  176/ 195. btime: 0.510s. loss: 1.4130. lr: 0.002355
+[2025-06-27 15:38:31,917] correct_pred_novel: 109, correct_pred_known: 24
+[2025-06-27 15:38:31,918] Known Class Discrepancy Energy: 1.2261155843734741
+[2025-06-27 15:38:31,918] Novel Class Discrepancy Energy: 0.6151761412620544
+[2025-06-27 15:38:31,918] Novel Detection ACC: 0.6927
+train epoch: 3/  50. itr:  181/ 195. btime: 0.508s. loss: 1.4163. lr: 0.002354
+[2025-06-27 15:38:34,084] correct_pred_novel: 117, correct_pred_known: 15
+[2025-06-27 15:38:34,085] Known Class Discrepancy Energy: 0.9018335342407227
+[2025-06-27 15:38:34,085] Novel Class Discrepancy Energy: 0.5396047830581665
+[2025-06-27 15:38:34,085] Novel Detection ACC: 0.6875
+train epoch: 3/  50. itr:  186/ 195. btime: 0.506s. loss: 1.4158. lr: 0.002352
+[2025-06-27 15:38:36,394] correct_pred_novel: 109, correct_pred_known: 21
+[2025-06-27 15:38:36,395] Known Class Discrepancy Energy: 1.0195237398147583
+[2025-06-27 15:38:36,395] Novel Class Discrepancy Energy: 0.4204763174057007
+[2025-06-27 15:38:36,395] Novel Detection ACC: 0.6771
+train epoch: 3/  50. itr:  191/ 195. btime: 0.505s. loss: 1.4145. lr: 0.002351
+Total train time: 95.373s
+Total test time: 19.190s
+Total test time: 18.513s
+Total test time: 34.771s
+[2025-06-27 15:39:50,882] epoch: 3, acc-known-trans: 81.94
+[2025-06-27 15:39:50,882] epoch: 3, acc-novel-trans: 0.0, nmi-novel: 0.5345965331918705
+[2025-06-27 15:39:50,882] epoch: 3, acc-all-trans: 40.98, nmi-all: 0.6317753103393227, best-acc: 42.51, best-acc-novel: 4.5
+[2025-06-27 15:40:00,976] correct_pred_novel: 119, correct_pred_known: 21
+[2025-06-27 15:40:00,977] Known Class Discrepancy Energy: 1.3283311128616333
+[2025-06-27 15:40:00,977] Novel Class Discrepancy Energy: 0.4724341928958893
+[2025-06-27 15:40:00,977] Novel Detection ACC: 0.7292
+train epoch: 4/  50. itr:    1/ 195. btime: 5.417s. loss: 1.2385. lr: 0.002350
+[2025-06-27 15:40:03,197] correct_pred_novel: 115, correct_pred_known: 17
+[2025-06-27 15:40:03,198] Known Class Discrepancy Energy: 1.1173131465911865
+[2025-06-27 15:40:03,198] Novel Class Discrepancy Energy: 0.4808456301689148
+[2025-06-27 15:40:03,199] Novel Detection ACC: 0.6875
+train epoch: 4/  50. itr:    6/ 195. btime: 1.273s. loss: 1.3769. lr: 0.002348
+[2025-06-27 15:40:05,471] correct_pred_novel: 111, correct_pred_known: 19
+[2025-06-27 15:40:05,472] Known Class Discrepancy Energy: 1.1775801181793213
+[2025-06-27 15:40:05,473] Novel Class Discrepancy Energy: 0.46241533756256104
+[2025-06-27 15:40:05,473] Novel Detection ACC: 0.6771
+train epoch: 4/  50. itr:   11/ 195. btime: 0.901s. loss: 1.4293. lr: 0.002347
+[2025-06-27 15:40:07,797] correct_pred_novel: 107, correct_pred_known: 27
+[2025-06-27 15:40:07,798] Known Class Discrepancy Energy: 1.3703924417495728
+[2025-06-27 15:40:07,798] Novel Class Discrepancy Energy: 0.4386858642101288
+[2025-06-27 15:40:07,798] Novel Detection ACC: 0.6979
+train epoch: 4/  50. itr:   16/ 195. btime: 0.765s. loss: 1.4169. lr: 0.002346
+[2025-06-27 15:40:10,296] correct_pred_novel: 107, correct_pred_known: 32
+[2025-06-27 15:40:10,297] Known Class Discrepancy Energy: 1.338153600692749
+[2025-06-27 15:40:10,298] Novel Class Discrepancy Energy: 0.5186133980751038
+[2025-06-27 15:40:10,298] Novel Detection ACC: 0.7240
+train epoch: 4/  50. itr:   21/ 195. btime: 0.702s. loss: 1.4139. lr: 0.002345
+[2025-06-27 15:40:12,741] correct_pred_novel: 122, correct_pred_known: 14
+[2025-06-27 15:40:12,743] Known Class Discrepancy Energy: 0.8995338082313538
+[2025-06-27 15:40:12,743] Novel Class Discrepancy Energy: 0.5354288816452026
+[2025-06-27 15:40:12,743] Novel Detection ACC: 0.7083
+train epoch: 4/  50. itr:   26/ 195. btime: 0.661s. loss: 1.4027. lr: 0.002343
+[2025-06-27 15:40:15,018] correct_pred_novel: 118, correct_pred_known: 18
+[2025-06-27 15:40:15,019] Known Class Discrepancy Energy: 1.258937954902649
+[2025-06-27 15:40:15,019] Novel Class Discrepancy Energy: 0.4789215326309204
+[2025-06-27 15:40:15,019] Novel Detection ACC: 0.7083
+train epoch: 4/  50. itr:   31/ 195. btime: 0.628s. loss: 1.4142. lr: 0.002342
+[2025-06-27 15:40:17,172] correct_pred_novel: 113, correct_pred_known: 15
+[2025-06-27 15:40:17,173] Known Class Discrepancy Energy: 0.9799403548240662
+[2025-06-27 15:40:17,173] Novel Class Discrepancy Energy: 0.48580366373062134
+[2025-06-27 15:40:17,174] Novel Detection ACC: 0.6667
+train epoch: 4/  50. itr:   36/ 195. btime: 0.600s. loss: 1.4146. lr: 0.002341
+[2025-06-27 15:40:19,451] correct_pred_novel: 132, correct_pred_known: 18
+[2025-06-27 15:40:19,452] Known Class Discrepancy Energy: 1.1424179077148438
+[2025-06-27 15:40:19,453] Novel Class Discrepancy Energy: 0.3911689817905426
+[2025-06-27 15:40:19,453] Novel Detection ACC: 0.7812
+train epoch: 4/  50. itr:   41/ 195. btime: 0.583s. loss: 1.4089. lr: 0.002339
+[2025-06-27 15:40:21,664] correct_pred_novel: 117, correct_pred_known: 23
+[2025-06-27 15:40:21,665] Known Class Discrepancy Energy: 1.3793190717697144
+[2025-06-27 15:40:21,665] Novel Class Discrepancy Energy: 0.3761269450187683
+[2025-06-27 15:40:21,665] Novel Detection ACC: 0.7292
+train epoch: 4/  50. itr:   46/ 195. btime: 0.567s. loss: 1.4225. lr: 0.002338
+[2025-06-27 15:40:24,341] correct_pred_novel: 127, correct_pred_known: 19
+[2025-06-27 15:40:24,341] Known Class Discrepancy Energy: 1.4262933731079102
+[2025-06-27 15:40:24,342] Novel Class Discrepancy Energy: 0.47554710507392883
+[2025-06-27 15:40:24,342] Novel Detection ACC: 0.7604
+train epoch: 4/  50. itr:   51/ 195. btime: 0.564s. loss: 1.4155. lr: 0.002337
+[2025-06-27 15:40:26,558] correct_pred_novel: 113, correct_pred_known: 15
+[2025-06-27 15:40:26,559] Known Class Discrepancy Energy: 1.1219133138656616
+[2025-06-27 15:40:26,559] Novel Class Discrepancy Energy: 0.4766255021095276
+[2025-06-27 15:40:26,559] Novel Detection ACC: 0.6667
+train epoch: 4/  50. itr:   56/ 195. btime: 0.554s. loss: 1.4051. lr: 0.002336
+[2025-06-27 15:40:28,868] correct_pred_novel: 123, correct_pred_known: 16
+[2025-06-27 15:40:28,869] Known Class Discrepancy Energy: 1.1967823505401611
+[2025-06-27 15:40:28,869] Novel Class Discrepancy Energy: 0.507749080657959
+[2025-06-27 15:40:28,869] Novel Detection ACC: 0.7240
+train epoch: 4/  50. itr:   61/ 195. btime: 0.546s. loss: 1.3974. lr: 0.002334
+[2025-06-27 15:40:31,141] correct_pred_novel: 121, correct_pred_known: 19
+[2025-06-27 15:40:31,142] Known Class Discrepancy Energy: 1.0294779539108276
+[2025-06-27 15:40:31,142] Novel Class Discrepancy Energy: 0.39478105306625366
+[2025-06-27 15:40:31,142] Novel Detection ACC: 0.7292
+train epoch: 4/  50. itr:   66/ 195. btime: 0.539s. loss: 1.3815. lr: 0.002333
+[2025-06-27 15:40:33,676] correct_pred_novel: 120, correct_pred_known: 19
+[2025-06-27 15:40:33,677] Known Class Discrepancy Energy: 1.1744606494903564
+[2025-06-27 15:40:33,677] Novel Class Discrepancy Energy: 0.5019132494926453
+[2025-06-27 15:40:33,678] Novel Detection ACC: 0.7240
+train epoch: 4/  50. itr:   71/ 195. btime: 0.537s. loss: 1.3794. lr: 0.002332
+[2025-06-27 15:40:36,041] correct_pred_novel: 117, correct_pred_known: 17
+[2025-06-27 15:40:36,042] Known Class Discrepancy Energy: 1.1504340171813965
+[2025-06-27 15:40:36,042] Novel Class Discrepancy Energy: 0.5960285067558289
+[2025-06-27 15:40:36,043] Novel Detection ACC: 0.6979
+train epoch: 4/  50. itr:   76/ 195. btime: 0.533s. loss: 1.3837. lr: 0.002331
+[2025-06-27 15:40:38,351] correct_pred_novel: 116, correct_pred_known: 12
+[2025-06-27 15:40:38,352] Known Class Discrepancy Energy: 0.9735376834869385
+[2025-06-27 15:40:38,352] Novel Class Discrepancy Energy: 0.5557221174240112
+[2025-06-27 15:40:38,353] Novel Detection ACC: 0.6667
+train epoch: 4/  50. itr:   81/ 195. btime: 0.528s. loss: 1.3783. lr: 0.002329
+[2025-06-27 15:40:40,537] correct_pred_novel: 118, correct_pred_known: 16
+[2025-06-27 15:40:40,538] Known Class Discrepancy Energy: 1.1711214780807495
+[2025-06-27 15:40:40,538] Novel Class Discrepancy Energy: 0.5790720582008362
+[2025-06-27 15:40:40,538] Novel Detection ACC: 0.6979
+train epoch: 4/  50. itr:   86/ 195. btime: 0.523s. loss: 1.3792. lr: 0.002328
+[2025-06-27 15:40:42,824] correct_pred_novel: 122, correct_pred_known: 21
+[2025-06-27 15:40:42,825] Known Class Discrepancy Energy: 1.2724345922470093
+[2025-06-27 15:40:42,825] Novel Class Discrepancy Energy: 0.5174349546432495
+[2025-06-27 15:40:42,825] Novel Detection ACC: 0.7448
+train epoch: 4/  50. itr:   91/ 195. btime: 0.519s. loss: 1.3784. lr: 0.002327
+[2025-06-27 15:40:44,992] correct_pred_novel: 113, correct_pred_known: 20
+[2025-06-27 15:40:44,993] Known Class Discrepancy Energy: 0.9880506992340088
+[2025-06-27 15:40:44,993] Novel Class Discrepancy Energy: 0.5119253993034363
+[2025-06-27 15:40:44,994] Novel Detection ACC: 0.6927
+train epoch: 4/  50. itr:   96/ 195. btime: 0.515s. loss: 1.3746. lr: 0.002325
+[2025-06-27 15:40:47,439] correct_pred_novel: 108, correct_pred_known: 24
+[2025-06-27 15:40:47,440] Known Class Discrepancy Energy: 1.1751137971878052
+[2025-06-27 15:40:47,440] Novel Class Discrepancy Energy: 0.4157007038593292
+[2025-06-27 15:40:47,440] Novel Detection ACC: 0.6875
+train epoch: 4/  50. itr:  101/ 195. btime: 0.514s. loss: 1.3772. lr: 0.002324
+[2025-06-27 15:40:50,068] correct_pred_novel: 109, correct_pred_known: 17
+[2025-06-27 15:40:50,069] Known Class Discrepancy Energy: 0.9345338940620422
+[2025-06-27 15:40:50,070] Novel Class Discrepancy Energy: 0.5030902624130249
+[2025-06-27 15:40:50,070] Novel Detection ACC: 0.6562
+train epoch: 4/  50. itr:  106/ 195. btime: 0.514s. loss: 1.3807. lr: 0.002323
+[2025-06-27 15:40:52,482] correct_pred_novel: 104, correct_pred_known: 25
+[2025-06-27 15:40:52,483] Known Class Discrepancy Energy: 1.3241095542907715
+[2025-06-27 15:40:52,483] Novel Class Discrepancy Energy: 0.4770946204662323
+[2025-06-27 15:40:52,484] Novel Detection ACC: 0.6719
+train epoch: 4/  50. itr:  111/ 195. btime: 0.513s. loss: 1.3891. lr: 0.002322
+[2025-06-27 15:40:54,926] correct_pred_novel: 111, correct_pred_known: 20
+[2025-06-27 15:40:54,927] Known Class Discrepancy Energy: 0.9526730179786682
+[2025-06-27 15:40:54,927] Novel Class Discrepancy Energy: 0.5557524561882019
+[2025-06-27 15:40:54,927] Novel Detection ACC: 0.6823
+train epoch: 4/  50. itr:  116/ 195. btime: 0.512s. loss: 1.3912. lr: 0.002320
+[2025-06-27 15:40:57,550] correct_pred_novel: 134, correct_pred_known: 11
+[2025-06-27 15:40:57,551] Known Class Discrepancy Energy: 1.1293554306030273
+[2025-06-27 15:40:57,551] Novel Class Discrepancy Energy: 0.4940962493419647
+[2025-06-27 15:40:57,551] Novel Detection ACC: 0.7552
+train epoch: 4/  50. itr:  121/ 195. btime: 0.512s. loss: 1.3862. lr: 0.002319
+[2025-06-27 15:40:59,725] correct_pred_novel: 112, correct_pred_known: 20
+[2025-06-27 15:40:59,725] Known Class Discrepancy Energy: 1.1328765153884888
+[2025-06-27 15:40:59,725] Novel Class Discrepancy Energy: 0.4922928810119629
+[2025-06-27 15:40:59,726] Novel Detection ACC: 0.6875
+train epoch: 4/  50. itr:  126/ 195. btime: 0.509s. loss: 1.3794. lr: 0.002318
+[2025-06-27 15:41:02,070] correct_pred_novel: 117, correct_pred_known: 17
+[2025-06-27 15:41:02,071] Known Class Discrepancy Energy: 0.9728361964225769
+[2025-06-27 15:41:02,071] Novel Class Discrepancy Energy: 0.6402896046638489
+[2025-06-27 15:41:02,071] Novel Detection ACC: 0.6979
+train epoch: 4/  50. itr:  131/ 195. btime: 0.508s. loss: 1.3812. lr: 0.002316
+[2025-06-27 15:41:04,275] correct_pred_novel: 106, correct_pred_known: 17
+[2025-06-27 15:41:04,276] Known Class Discrepancy Energy: 0.9650284051895142
+[2025-06-27 15:41:04,276] Novel Class Discrepancy Energy: 0.5894944071769714
+[2025-06-27 15:41:04,277] Novel Detection ACC: 0.6406
+train epoch: 4/  50. itr:  136/ 195. btime: 0.505s. loss: 1.3777. lr: 0.002315
+[2025-06-27 15:41:06,662] correct_pred_novel: 109, correct_pred_known: 23
+[2025-06-27 15:41:06,663] Known Class Discrepancy Energy: 1.2513468265533447
+[2025-06-27 15:41:06,663] Novel Class Discrepancy Energy: 0.5453921556472778
+[2025-06-27 15:41:06,664] Novel Detection ACC: 0.6875
+train epoch: 4/  50. itr:  141/ 195. btime: 0.504s. loss: 1.3875. lr: 0.002314
+[2025-06-27 15:41:08,837] correct_pred_novel: 118, correct_pred_known: 17
+[2025-06-27 15:41:08,838] Known Class Discrepancy Energy: 1.1197600364685059
+[2025-06-27 15:41:08,838] Novel Class Discrepancy Energy: 0.4711027443408966
+[2025-06-27 15:41:08,838] Novel Detection ACC: 0.7031
+train epoch: 4/  50. itr:  146/ 195. btime: 0.502s. loss: 1.3886. lr: 0.002313
+[2025-06-27 15:41:11,276] correct_pred_novel: 117, correct_pred_known: 11
+[2025-06-27 15:41:11,277] Known Class Discrepancy Energy: 1.0993144512176514
+[2025-06-27 15:41:11,277] Novel Class Discrepancy Energy: 0.6729279160499573
+[2025-06-27 15:41:11,277] Novel Detection ACC: 0.6667
+train epoch: 4/  50. itr:  151/ 195. btime: 0.501s. loss: 1.3885. lr: 0.002311
+[2025-06-27 15:41:13,615] correct_pred_novel: 118, correct_pred_known: 15
+[2025-06-27 15:41:13,616] Known Class Discrepancy Energy: 1.1032516956329346
+[2025-06-27 15:41:13,616] Novel Class Discrepancy Energy: 0.5836194753646851
+[2025-06-27 15:41:13,616] Novel Detection ACC: 0.6927
+train epoch: 4/  50. itr:  156/ 195. btime: 0.500s. loss: 1.3918. lr: 0.002310
+[2025-06-27 15:41:16,215] correct_pred_novel: 114, correct_pred_known: 21
+[2025-06-27 15:41:16,216] Known Class Discrepancy Energy: 1.3716943264007568
+[2025-06-27 15:41:16,216] Novel Class Discrepancy Energy: 0.6132465600967407
+[2025-06-27 15:41:16,217] Novel Detection ACC: 0.7031
+train epoch: 4/  50. itr:  161/ 195. btime: 0.501s. loss: 1.3899. lr: 0.002309
+[2025-06-27 15:41:18,727] correct_pred_novel: 118, correct_pred_known: 20
+[2025-06-27 15:41:18,728] Known Class Discrepancy Energy: 1.165096640586853
+[2025-06-27 15:41:18,728] Novel Class Discrepancy Energy: 0.4593992233276367
+[2025-06-27 15:41:18,729] Novel Detection ACC: 0.7188
+train epoch: 4/  50. itr:  166/ 195. btime: 0.501s. loss: 1.3872. lr: 0.002307
+[2025-06-27 15:41:21,057] correct_pred_novel: 125, correct_pred_known: 21
+[2025-06-27 15:41:21,058] Known Class Discrepancy Energy: 1.1468424797058105
+[2025-06-27 15:41:21,058] Novel Class Discrepancy Energy: 0.46076253056526184
+[2025-06-27 15:41:21,058] Novel Detection ACC: 0.7604
+train epoch: 4/  50. itr:  171/ 195. btime: 0.500s. loss: 1.3924. lr: 0.002306
+[2025-06-27 15:41:23,251] correct_pred_novel: 103, correct_pred_known: 26
+[2025-06-27 15:41:23,252] Known Class Discrepancy Energy: 1.1792994737625122
+[2025-06-27 15:41:23,252] Novel Class Discrepancy Energy: 0.5202988982200623
+[2025-06-27 15:41:23,252] Novel Detection ACC: 0.6719
+train epoch: 4/  50. itr:  176/ 195. btime: 0.498s. loss: 1.3901. lr: 0.002305
+[2025-06-27 15:41:25,577] correct_pred_novel: 114, correct_pred_known: 18
+[2025-06-27 15:41:25,578] Known Class Discrepancy Energy: 1.124617338180542
+[2025-06-27 15:41:25,578] Novel Class Discrepancy Energy: 0.5510472655296326
+[2025-06-27 15:41:25,578] Novel Detection ACC: 0.6875
+train epoch: 4/  50. itr:  181/ 195. btime: 0.497s. loss: 1.3895. lr: 0.002304
+[2025-06-27 15:41:27,793] correct_pred_novel: 124, correct_pred_known: 20
+[2025-06-27 15:41:27,794] Known Class Discrepancy Energy: 1.19703209400177
+[2025-06-27 15:41:27,794] Novel Class Discrepancy Energy: 0.565355122089386
+[2025-06-27 15:41:27,794] Novel Detection ACC: 0.7500
+train epoch: 4/  50. itr:  186/ 195. btime: 0.496s. loss: 1.3833. lr: 0.002302
+[2025-06-27 15:41:30,062] correct_pred_novel: 117, correct_pred_known: 27
+[2025-06-27 15:41:30,063] Known Class Discrepancy Energy: 1.4790003299713135
+[2025-06-27 15:41:30,063] Novel Class Discrepancy Energy: 0.4320463538169861
+[2025-06-27 15:41:30,064] Novel Detection ACC: 0.7500
+train epoch: 4/  50. itr:  191/ 195. btime: 0.495s. loss: 1.3806. lr: 0.002301
+Total train time: 93.529s
+Total test time: 18.765s
+Total test time: 18.636s
+Total test time: 34.727s
+[2025-06-27 15:42:44,239] epoch: 4, acc-known-trans: 82.06
+[2025-06-27 15:42:44,239] epoch: 4, acc-novel-trans: 2.3, nmi-novel: 0.5444328524222903
+[2025-06-27 15:42:44,239] epoch: 4, acc-all-trans: 42.230000000000004, nmi-all: 0.6393264258814292, best-acc: 42.51, best-acc-novel: 4.5
+[2025-06-27 15:42:54,162] correct_pred_novel: 114, correct_pred_known: 23
+[2025-06-27 15:42:54,164] Known Class Discrepancy Energy: 1.1664522886276245
+[2025-06-27 15:42:54,164] Novel Class Discrepancy Energy: 0.525770902633667
+[2025-06-27 15:42:54,164] Novel Detection ACC: 0.7135
+train epoch: 5/  50. itr:    1/ 195. btime: 5.223s. loss: 1.4214. lr: 0.002300
+[2025-06-27 15:42:56,463] correct_pred_novel: 117, correct_pred_known: 14
+[2025-06-27 15:42:56,464] Known Class Discrepancy Energy: 0.9709057211875916
+[2025-06-27 15:42:56,465] Novel Class Discrepancy Energy: 0.5314134359359741
+[2025-06-27 15:42:56,465] Novel Detection ACC: 0.6823
+train epoch: 5/  50. itr:    6/ 195. btime: 1.254s. loss: 1.3108. lr: 0.002298
+[2025-06-27 15:42:58,752] correct_pred_novel: 106, correct_pred_known: 22
+[2025-06-27 15:42:58,752] Known Class Discrepancy Energy: 0.9574873447418213
+[2025-06-27 15:42:58,753] Novel Class Discrepancy Energy: 0.6412410736083984
+[2025-06-27 15:42:58,753] Novel Detection ACC: 0.6667
+train epoch: 5/  50. itr:   11/ 195. btime: 0.892s. loss: 1.2337. lr: 0.002297
+[2025-06-27 15:43:00,910] correct_pred_novel: 113, correct_pred_known: 20
+[2025-06-27 15:43:00,911] Known Class Discrepancy Energy: 0.9808990359306335
+[2025-06-27 15:43:00,911] Novel Class Discrepancy Energy: 0.40704411268234253
+[2025-06-27 15:43:00,911] Novel Detection ACC: 0.6927
+train epoch: 5/  50. itr:   16/ 195. btime: 0.748s. loss: 1.2837. lr: 0.002296
+[2025-06-27 15:43:03,327] correct_pred_novel: 115, correct_pred_known: 28
+[2025-06-27 15:43:03,328] Known Class Discrepancy Energy: 1.346659541130066
+[2025-06-27 15:43:03,328] Novel Class Discrepancy Energy: 0.5047411918640137
+[2025-06-27 15:43:03,328] Novel Detection ACC: 0.7448
+train epoch: 5/  50. itr:   21/ 195. btime: 0.685s. loss: 1.2742. lr: 0.002295
+[2025-06-27 15:43:05,812] correct_pred_novel: 124, correct_pred_known: 15
+[2025-06-27 15:43:05,813] Known Class Discrepancy Energy: 1.1041314601898193
+[2025-06-27 15:43:05,814] Novel Class Discrepancy Energy: 0.48197901248931885
+[2025-06-27 15:43:05,814] Novel Detection ACC: 0.7240
+train epoch: 5/  50. itr:   26/ 195. btime: 0.649s. loss: 1.2933. lr: 0.002293
+[2025-06-27 15:43:08,084] correct_pred_novel: 111, correct_pred_known: 21
+[2025-06-27 15:43:08,086] Known Class Discrepancy Energy: 1.1625394821166992
+[2025-06-27 15:43:08,086] Novel Class Discrepancy Energy: 0.5220861434936523
+[2025-06-27 15:43:08,087] Novel Detection ACC: 0.6875
+train epoch: 5/  50. itr:   31/ 195. btime: 0.618s. loss: 1.3251. lr: 0.002292
+[2025-06-27 15:43:10,856] correct_pred_novel: 121, correct_pred_known: 16
+[2025-06-27 15:43:10,856] Known Class Discrepancy Energy: 1.0649487972259521
+[2025-06-27 15:43:10,857] Novel Class Discrepancy Energy: 0.45159050822257996
+[2025-06-27 15:43:10,857] Novel Detection ACC: 0.7135
+train epoch: 5/  50. itr:   36/ 195. btime: 0.609s. loss: 1.3250. lr: 0.002291
+[2025-06-27 15:43:13,463] correct_pred_novel: 124, correct_pred_known: 21
+[2025-06-27 15:43:13,464] Known Class Discrepancy Energy: 1.2452582120895386
+[2025-06-27 15:43:13,465] Novel Class Discrepancy Energy: 0.46802976727485657
+[2025-06-27 15:43:13,465] Novel Detection ACC: 0.7552
+train epoch: 5/  50. itr:   41/ 195. btime: 0.598s. loss: 1.3202. lr: 0.002289
+[2025-06-27 15:43:15,646] correct_pred_novel: 109, correct_pred_known: 17
+[2025-06-27 15:43:15,647] Known Class Discrepancy Energy: 0.8708083629608154
+[2025-06-27 15:43:15,647] Novel Class Discrepancy Energy: 0.45005181431770325
+[2025-06-27 15:43:15,647] Novel Detection ACC: 0.6562
+train epoch: 5/  50. itr:   46/ 195. btime: 0.581s. loss: 1.3356. lr: 0.002288
+[2025-06-27 15:43:17,941] correct_pred_novel: 114, correct_pred_known: 23
+[2025-06-27 15:43:17,941] Known Class Discrepancy Energy: 1.2521662712097168
+[2025-06-27 15:43:17,942] Novel Class Discrepancy Energy: 0.49098867177963257
+[2025-06-27 15:43:17,942] Novel Detection ACC: 0.7135
+train epoch: 5/  50. itr:   51/ 195. btime: 0.569s. loss: 1.3392. lr: 0.002287
+[2025-06-27 15:43:20,112] correct_pred_novel: 113, correct_pred_known: 17
+[2025-06-27 15:43:20,113] Known Class Discrepancy Energy: 0.9609740972518921
+[2025-06-27 15:43:20,114] Novel Class Discrepancy Energy: 0.5365755558013916
+[2025-06-27 15:43:20,114] Novel Detection ACC: 0.6771
+train epoch: 5/  50. itr:   56/ 195. btime: 0.557s. loss: 1.3456. lr: 0.002286
+[2025-06-27 15:43:22,421] correct_pred_novel: 116, correct_pred_known: 18
+[2025-06-27 15:43:22,422] Known Class Discrepancy Energy: 1.024195909500122
+[2025-06-27 15:43:22,423] Novel Class Discrepancy Energy: 0.43152087926864624
+[2025-06-27 15:43:22,423] Novel Detection ACC: 0.6979
+train epoch: 5/  50. itr:   61/ 195. btime: 0.549s. loss: 1.3393. lr: 0.002284
+[2025-06-27 15:43:24,643] correct_pred_novel: 123, correct_pred_known: 17
+[2025-06-27 15:43:24,643] Known Class Discrepancy Energy: 1.338179111480713
+[2025-06-27 15:43:24,644] Novel Class Discrepancy Energy: 0.5843713283538818
+[2025-06-27 15:43:24,644] Novel Detection ACC: 0.7292
+train epoch: 5/  50. itr:   66/ 195. btime: 0.541s. loss: 1.3471. lr: 0.002283
+[2025-06-27 15:43:27,175] correct_pred_novel: 113, correct_pred_known: 16
+[2025-06-27 15:43:27,176] Known Class Discrepancy Energy: 0.9614524245262146
+[2025-06-27 15:43:27,177] Novel Class Discrepancy Energy: 0.5777521133422852
+[2025-06-27 15:43:27,177] Novel Detection ACC: 0.6719
+train epoch: 5/  50. itr:   71/ 195. btime: 0.539s. loss: 1.3387. lr: 0.002282
+[2025-06-27 15:43:29,566] correct_pred_novel: 121, correct_pred_known: 18
+[2025-06-27 15:43:29,567] Known Class Discrepancy Energy: 1.129386067390442
+[2025-06-27 15:43:29,567] Novel Class Discrepancy Energy: 0.4602522552013397
+[2025-06-27 15:43:29,567] Novel Detection ACC: 0.7240
+train epoch: 5/  50. itr:   76/ 195. btime: 0.535s. loss: 1.3387. lr: 0.002281
+[2025-06-27 15:43:32,269] correct_pred_novel: 122, correct_pred_known: 16
+[2025-06-27 15:43:32,270] Known Class Discrepancy Energy: 1.0069934129714966
+[2025-06-27 15:43:32,270] Novel Class Discrepancy Energy: 0.5167379975318909
+[2025-06-27 15:43:32,271] Novel Detection ACC: 0.7188
+train epoch: 5/  50. itr:   81/ 195. btime: 0.535s. loss: 1.3384. lr: 0.002279
+[2025-06-27 15:43:34,614] correct_pred_novel: 130, correct_pred_known: 11
+[2025-06-27 15:43:34,615] Known Class Discrepancy Energy: 1.2266802787780762
+[2025-06-27 15:43:34,615] Novel Class Discrepancy Energy: 0.4599163830280304
+[2025-06-27 15:43:34,616] Novel Detection ACC: 0.7344
+train epoch: 5/  50. itr:   86/ 195. btime: 0.531s. loss: 1.3385. lr: 0.002278
+[2025-06-27 15:43:37,205] correct_pred_novel: 114, correct_pred_known: 18
+[2025-06-27 15:43:37,206] Known Class Discrepancy Energy: 1.1643767356872559
+[2025-06-27 15:43:37,206] Novel Class Discrepancy Energy: 0.5759779810905457
+[2025-06-27 15:43:37,207] Novel Detection ACC: 0.6875
+train epoch: 5/  50. itr:   91/ 195. btime: 0.530s. loss: 1.3469. lr: 0.002277
+[2025-06-27 15:43:39,379] correct_pred_novel: 121, correct_pred_known: 16
+[2025-06-27 15:43:39,380] Known Class Discrepancy Energy: 1.0734386444091797
+[2025-06-27 15:43:39,380] Novel Class Discrepancy Energy: 0.6090303063392639
+[2025-06-27 15:43:39,381] Novel Detection ACC: 0.7135
+train epoch: 5/  50. itr:   96/ 195. btime: 0.525s. loss: 1.3500. lr: 0.002275
+[2025-06-27 15:43:41,812] correct_pred_novel: 122, correct_pred_known: 19
+[2025-06-27 15:43:41,812] Known Class Discrepancy Energy: 1.0786798000335693
+[2025-06-27 15:43:41,813] Novel Class Discrepancy Energy: 0.45054540038108826
+[2025-06-27 15:43:41,813] Novel Detection ACC: 0.7344
+train epoch: 5/  50. itr:  101/ 195. btime: 0.523s. loss: 1.3508. lr: 0.002274
+[2025-06-27 15:43:44,094] correct_pred_novel: 115, correct_pred_known: 23
+[2025-06-27 15:43:44,095] Known Class Discrepancy Energy: 1.0097346305847168
+[2025-06-27 15:43:44,095] Novel Class Discrepancy Energy: 0.4141720235347748
+[2025-06-27 15:43:44,095] Novel Detection ACC: 0.7188
+train epoch: 5/  50. itr:  106/ 195. btime: 0.520s. loss: 1.3503. lr: 0.002273
+[2025-06-27 15:43:46,432] correct_pred_novel: 109, correct_pred_known: 21
+[2025-06-27 15:43:46,432] Known Class Discrepancy Energy: 1.1335550546646118
+[2025-06-27 15:43:46,433] Novel Class Discrepancy Energy: 0.5611909031867981
+[2025-06-27 15:43:46,433] Novel Detection ACC: 0.6771
+train epoch: 5/  50. itr:  111/ 195. btime: 0.518s. loss: 1.3462. lr: 0.002272
+[2025-06-27 15:43:48,632] correct_pred_novel: 112, correct_pred_known: 16
+[2025-06-27 15:43:48,633] Known Class Discrepancy Energy: 1.063606858253479
+[2025-06-27 15:43:48,633] Novel Class Discrepancy Energy: 0.5875928997993469
+[2025-06-27 15:43:48,634] Novel Detection ACC: 0.6667
+train epoch: 5/  50. itr:  116/ 195. btime: 0.515s. loss: 1.3445. lr: 0.002270
+[2025-06-27 15:43:50,994] correct_pred_novel: 103, correct_pred_known: 19
+[2025-06-27 15:43:50,995] Known Class Discrepancy Energy: 0.9763706922531128
+[2025-06-27 15:43:50,995] Novel Class Discrepancy Energy: 0.49558377265930176
+[2025-06-27 15:43:50,995] Novel Detection ACC: 0.6354
+train epoch: 5/  50. itr:  121/ 195. btime: 0.513s. loss: 1.3436. lr: 0.002269
+[2025-06-27 15:43:53,417] correct_pred_novel: 114, correct_pred_known: 18
+[2025-06-27 15:43:53,418] Known Class Discrepancy Energy: 1.1749176979064941
+[2025-06-27 15:43:53,418] Novel Class Discrepancy Energy: 0.47162818908691406
+[2025-06-27 15:43:53,418] Novel Detection ACC: 0.6875
+train epoch: 5/  50. itr:  126/ 195. btime: 0.512s. loss: 1.3445. lr: 0.002268
+[2025-06-27 15:43:55,773] correct_pred_novel: 126, correct_pred_known: 18
+[2025-06-27 15:43:55,774] Known Class Discrepancy Energy: 1.2622431516647339
+[2025-06-27 15:43:55,774] Novel Class Discrepancy Energy: 0.4855894148349762
+[2025-06-27 15:43:55,774] Novel Detection ACC: 0.7500
+train epoch: 5/  50. itr:  131/ 195. btime: 0.510s. loss: 1.3406. lr: 0.002266
+[2025-06-27 15:43:58,474] correct_pred_novel: 112, correct_pred_known: 25
+[2025-06-27 15:43:58,475] Known Class Discrepancy Energy: 1.2215240001678467
+[2025-06-27 15:43:58,475] Novel Class Discrepancy Energy: 0.2840783894062042
+[2025-06-27 15:43:58,475] Novel Detection ACC: 0.7135
+train epoch: 5/  50. itr:  136/ 195. btime: 0.511s. loss: 1.3394. lr: 0.002265
+[2025-06-27 15:44:01,007] correct_pred_novel: 116, correct_pred_known: 28
+[2025-06-27 15:44:01,008] Known Class Discrepancy Energy: 1.62223219871521
+[2025-06-27 15:44:01,008] Novel Class Discrepancy Energy: 0.5195745825767517
+[2025-06-27 15:44:01,009] Novel Detection ACC: 0.7500
+train epoch: 5/  50. itr:  141/ 195. btime: 0.511s. loss: 1.3442. lr: 0.002264
+[2025-06-27 15:44:03,216] correct_pred_novel: 118, correct_pred_known: 20
+[2025-06-27 15:44:03,217] Known Class Discrepancy Energy: 1.107283592224121
+[2025-06-27 15:44:03,217] Novel Class Discrepancy Energy: 0.38562995195388794
+[2025-06-27 15:44:03,217] Novel Detection ACC: 0.7188
+train epoch: 5/  50. itr:  146/ 195. btime: 0.509s. loss: 1.3341. lr: 0.002263
+[2025-06-27 15:44:05,559] correct_pred_novel: 115, correct_pred_known: 20
+[2025-06-27 15:44:05,559] Known Class Discrepancy Energy: 1.008564829826355
+[2025-06-27 15:44:05,560] Novel Class Discrepancy Energy: 0.530300498008728
+[2025-06-27 15:44:05,560] Novel Detection ACC: 0.7031
+train epoch: 5/  50. itr:  151/ 195. btime: 0.507s. loss: 1.3376. lr: 0.002261
+[2025-06-27 15:44:07,813] correct_pred_novel: 116, correct_pred_known: 23
+[2025-06-27 15:44:07,814] Known Class Discrepancy Energy: 1.269303560256958
+[2025-06-27 15:44:07,815] Novel Class Discrepancy Energy: 0.5043271780014038
+[2025-06-27 15:44:07,815] Novel Detection ACC: 0.7240
+train epoch: 5/  50. itr:  156/ 195. btime: 0.506s. loss: 1.3373. lr: 0.002260
+[2025-06-27 15:44:10,122] correct_pred_novel: 120, correct_pred_known: 16
+[2025-06-27 15:44:10,123] Known Class Discrepancy Energy: 1.0665676593780518
+[2025-06-27 15:44:10,123] Novel Class Discrepancy Energy: 0.5316872000694275
+[2025-06-27 15:44:10,123] Novel Detection ACC: 0.7083
+train epoch: 5/  50. itr:  161/ 195. btime: 0.504s. loss: 1.3371. lr: 0.002259
+[2025-06-27 15:44:12,311] correct_pred_novel: 114, correct_pred_known: 13
+[2025-06-27 15:44:12,312] Known Class Discrepancy Energy: 1.0139622688293457
+[2025-06-27 15:44:12,312] Novel Class Discrepancy Energy: 0.6362691521644592
+[2025-06-27 15:44:12,313] Novel Detection ACC: 0.6615
+train epoch: 5/  50. itr:  166/ 195. btime: 0.502s. loss: 1.3384. lr: 0.002257
+[2025-06-27 15:44:14,773] correct_pred_novel: 112, correct_pred_known: 31
+[2025-06-27 15:44:14,774] Known Class Discrepancy Energy: 1.591923713684082
+[2025-06-27 15:44:14,774] Novel Class Discrepancy Energy: 0.4913891553878784
+[2025-06-27 15:44:14,774] Novel Detection ACC: 0.7448
+train epoch: 5/  50. itr:  171/ 195. btime: 0.502s. loss: 1.3408. lr: 0.002256
+[2025-06-27 15:44:16,933] correct_pred_novel: 102, correct_pred_known: 26
+[2025-06-27 15:44:16,933] Known Class Discrepancy Energy: 1.288468837738037
+[2025-06-27 15:44:16,934] Novel Class Discrepancy Energy: 0.5894762873649597
+[2025-06-27 15:44:16,934] Novel Detection ACC: 0.6667
+train epoch: 5/  50. itr:  176/ 195. btime: 0.500s. loss: 1.3438. lr: 0.002255
+[2025-06-27 15:44:19,589] correct_pred_novel: 131, correct_pred_known: 18
+[2025-06-27 15:44:19,589] Known Class Discrepancy Energy: 1.1653605699539185
+[2025-06-27 15:44:19,590] Novel Class Discrepancy Energy: 0.4530515968799591
+[2025-06-27 15:44:19,590] Novel Detection ACC: 0.7760
+train epoch: 5/  50. itr:  181/ 195. btime: 0.501s. loss: 1.3421. lr: 0.002254
+[2025-06-27 15:44:21,930] correct_pred_novel: 111, correct_pred_known: 23
+[2025-06-27 15:44:21,930] Known Class Discrepancy Energy: 1.2289831638336182
+[2025-06-27 15:44:21,931] Novel Class Discrepancy Energy: 0.5260454416275024
+[2025-06-27 15:44:21,931] Novel Detection ACC: 0.6979
+train epoch: 5/  50. itr:  186/ 195. btime: 0.500s. loss: 1.3413. lr: 0.002252
+[2025-06-27 15:44:24,560] correct_pred_novel: 116, correct_pred_known: 14
+[2025-06-27 15:44:24,561] Known Class Discrepancy Energy: 1.0938926935195923
+[2025-06-27 15:44:24,561] Novel Class Discrepancy Energy: 0.513420581817627
+[2025-06-27 15:44:24,561] Novel Detection ACC: 0.6771
+train epoch: 5/  50. itr:  191/ 195. btime: 0.501s. loss: 1.3417. lr: 0.002251
+Total train time: 94.812s

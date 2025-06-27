@@ -1,0 +1,132 @@
+import numpy as np
+from torchvision import datasets, transforms
+import pickle
+from PIL import Image
+import os
+from .utils import x_u_split_known_novel, TransformWS224, TransformWS32, TransformWS64
+
+tinyimagenet_mean, tinyimagenet_std = (0.4802, 0.4481, 0.3975), (0.2302, 0.2265, 0.2262)
+
+def get_tinyimagenet(args):
+    # augmentations
+    transform_labeled = transforms.Compose([
+        transforms.RandomHorizontalFlip(),
+        transforms.RandomCrop(size=64,
+                                  padding=int(64*0.125),
+                                  padding_mode='reflect'),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=tinyimagenet_mean, std=tinyimagenet_std)])
+
+    transform_val = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize(mean=tinyimagenet_mean, std=tinyimagenet_std)])
+
+    # generate random labeled/unlabeled split or use a saved labeled/unlabeled split
+    if not os.path.exists(args.ssl_indexes):
+        base_dataset = datasets.ImageFolder(os.path.join(args.data_root, 'train'))
+        base_dataset_targets = np.array(base_dataset.imgs)
+        base_dataset_targets = base_dataset_targets[:,1]
+        base_dataset_targets= list(map(int, base_dataset_targets.tolist()))
+        train_labeled_idxs, train_unlabeled_idxs, train_val_idxs = x_u_split_known_novel(base_dataset_targets, args.lbl_percent, args.no_class, list(range(0,args.no_known)), list(range(args.no_known, args.no_class)))
+
+        f = open(os.path.join(args.split_root, f'tinyimagenet_{args.lbl_percent}_{args.novel_percent}_{args.split_id}.pkl'),"wb")
+        label_unlabel_dict = {'labeled_idx': train_labeled_idxs, 'unlabeled_idx': train_unlabeled_idxs, 'val_idx': train_val_idxs}
+        pickle.dump(label_unlabel_dict,f)
+        f.close()
+
+    else:
+        label_unlabel_dict = pickle.load(open(args.ssl_indexes, 'rb'))
+        train_labeled_idxs = label_unlabel_dict['labeled_idx']
+        train_unlabeled_idxs = label_unlabel_dict['unlabeled_idx']
+
+    # balance the labeled and unlabeled data
+    if len(train_unlabeled_idxs) > len(train_labeled_idxs):
+        exapand_labeled = len(train_unlabeled_idxs) // len(train_labeled_idxs)
+        train_labeled_idxs = np.hstack([train_labeled_idxs for _ in range(exapand_labeled)])
+
+        if len(train_labeled_idxs) < len(train_unlabeled_idxs):
+            diff = len(train_unlabeled_idxs) - len(train_labeled_idxs)
+            train_labeled_idxs = np.hstack((train_labeled_idxs, np.random.choice(train_labeled_idxs, diff)))
+        else:
+            assert len(train_labeled_idxs) == len(train_unlabeled_idxs)
+
+    # generate datasets
+    train_labeled_dataset = GenericSSL(os.path.join(args.data_root, 'train'), train_labeled_idxs, transform=TransformWS64(mean=tinyimagenet_mean, std=tinyimagenet_std))
+    train_unlabeled_dataset = GenericSSL(os.path.join(args.data_root, 'train'), train_unlabeled_idxs, transform=TransformWS64(mean=tinyimagenet_mean, std=tinyimagenet_std))
+    # train_pl_dataset = GenericSSL(os.path.join(args.data_root, 'train'), train_unlabeled_idxs, transform=transform_val)
+    test_dataset_known = GenericTEST(os.path.join(args.data_root, 'test'), no_class=args.no_class, transform=transform_val, labeled_set=list(range(0,args.no_known)))
+    test_dataset_novel = GenericTEST(os.path.join(args.data_root, 'test'), no_class=args.no_class, transform=transform_val, labeled_set=list(range(args.no_known, args.no_class)))
+    test_dataset_all = GenericTEST(os.path.join(args.data_root, 'test'), no_class=args.no_class, transform=transform_val)
+
+    return train_labeled_dataset, train_unlabeled_dataset, test_dataset_known, test_dataset_novel, test_dataset_all
+
+
+class GenericSSL(datasets.ImageFolder):
+    def __init__(self, root, indexs,
+                 transform=None, target_transform=None):
+        super().__init__(root, transform=transform, target_transform=target_transform)
+
+        self.imgs = np.array(self.imgs)
+        self.targets = self.imgs[:, 1]
+        self.targets= list(map(int, self.targets.tolist()))
+        self.data = np.array(self.imgs[:, 0])
+
+        self.targets = np.array(self.targets)
+        if indexs is not None:
+            indexs = np.array(indexs)
+            self.data = self.data[indexs]
+            self.targets = np.array(self.targets)[indexs]
+            self.indexs = indexs
+        else:
+            self.indexs = np.arange(len(self.targets))
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, index):
+        img, target = self.data[index], self.targets[index]
+        img = self.loader(img)
+
+        if self.transform is not None:
+            img = self.transform(img)
+
+        if self.target_transform is not None:
+            target = self.target_transform(target)
+
+        return img, target, index
+
+
+class GenericTEST(datasets.ImageFolder):
+    def __init__(self, root, transform=None, target_transform=None, labeled_set=None, no_class=200):
+        super().__init__(root, transform=transform, target_transform=target_transform)
+
+        self.imgs = np.array(self.imgs)
+        self.targets = self.imgs[:, 1]
+        self.targets= list(map(int, self.targets.tolist()))
+        self.data = np.array(self.imgs[:, 0])
+
+        self.targets = np.array(self.targets)
+        indexs = []
+        if labeled_set is not None:
+            for i in range(no_class):
+                idx = np.where(self.targets == i)[0]
+                if i in labeled_set:
+                    indexs.extend(idx)
+            indexs = np.array(indexs)
+            self.data = self.data[indexs]
+            self.targets = np.array(self.targets)[indexs]
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, index):
+        img, target = self.data[index], self.targets[index]
+        img = self.loader(img)
+
+        if self.transform is not None:
+            img = self.transform(img)
+
+        if self.target_transform is not None:
+            target = self.target_transform(target)
+
+        return img, target

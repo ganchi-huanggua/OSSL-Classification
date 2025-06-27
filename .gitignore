@@ -1,0 +1,8 @@
+.vscode/
+**/__pycache__/
+pretrained/
+random_splits/
+*.tar
+events.out*
+*.txt.gz
+.DS_Store
