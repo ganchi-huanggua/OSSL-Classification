@@ -135,3 +135,131 @@ def interleave_ssl(xy, batch):
     for i in range(1, nu + 1):
         xy[0][i], xy[i][i] = xy[i][i], xy[0][i]
     return [torch.cat(v, dim=0) for v in xy]
+
+def compute_tau(conf: torch.Tensor, alpha: float=0.9) -> float:
+    """
+    根据 alpha 分位数计算阈值 τ
+
+    Args:
+        conf (torch.Tensor): 形状为 [B, C] 的 softmax 置信度
+        alpha (float): 分位数阈值，取值范围 [0, 1]，如 0.9 表示取前 90% 的最小值
+
+    Returns:
+        float: τ，softmax 最大值的 alpha 分位数
+    """
+    # 1. 每个样本的最大置信度
+    max_conf = torch.max(conf, dim=1).values  # [B]
+
+    # 2. 排序（升序）
+    sorted_conf, _ = torch.sort(max_conf)
+
+    # 3. 计算第 alpha 分位上的值
+    idx = int(alpha * (len(sorted_conf) - 1))
+    tau = sorted_conf[idx].item()
+
+    return tau
+
+def select_intra_candidate_labels(sorted_conf: torch.Tensor, sorted_indices: torch.Tensor, tau: float) -> list[list[int]]:
+    """
+    根据置信度和 τ，选出每个样本的候选伪标签集合。
+
+    Args:
+        conf (torch.Tensor): [B, C] 的 softmax 概率
+        tau (float): 全局置信度累计阈值 ∈ [0, 1]
+
+    Returns:
+        List[List[int]]: 每个样本对应的候选标签索引列表
+    """
+
+    batch_size, num_classes = sorted_conf.shape
+    candidate_labels = []
+
+    for i in range(batch_size):
+        cumsum = 0.0
+        selected = []
+
+        for j in range(num_classes):
+            cumsum += sorted_conf[i, j].item()
+            selected.append(sorted_indices[i, j].item())
+            if cumsum >= tau:
+                break
+
+        candidate_labels.append(selected)
+
+    return candidate_labels
+
+def select_inter_candidate_labels(conf: torch.Tensor, beta: float) -> list[list[int]]:
+    """
+    对每一类设置置信度阈值，并筛选每个样本的候选伪标签集合
+
+    Args:
+        conf (torch.Tensor): [B, C] 的 softmax 概率
+        beta (float): 类别级别的分位数阈值 ∈ [0, 1]
+
+    Returns:
+        List[List[int]]: 每个样本的候选类别列表
+    """
+    batch_size, num_classes = conf.shape
+    conf_thresholds = []
+
+    # 1~3. 为每一个类计算 β 分位置信度阈值 τ_c
+    for c in range(num_classes):
+        conf_c = conf[:, c]
+        sorted_conf_c, _ = torch.sort(conf_c)
+        idx = int(beta * (batch_size - 1))
+        tau_c = sorted_conf_c[idx].item()
+        conf_thresholds.append(tau_c)
+
+    # 4~5. 为每一个样本选出所有满足条件的类别
+    candidate_labels = []
+
+    for i in range(batch_size):
+        sample_labels = []
+        for c in range(num_classes):
+            if conf[i, c].item() >= conf_thresholds[c]:
+                sample_labels.append(c)
+        candidate_labels.append(sample_labels)
+
+    return candidate_labels
+
+def merge_candidate_labels(
+    intra_candidates: list[list[int]],
+    inter_candidates: list[list[int]]
+) -> list[list[int]]:
+    """
+    合并两个候选伪标签集合，按样本逐一求并集
+
+    Args:
+        intra_candidates (List[List[int]]): 每个样本的 intra 伪标签集合
+        inter_candidates (List[List[int]]): 每个样本的 inter 伪标签集合
+
+    Returns:
+        List[List[int]]: 每个样本最终伪标签集合（intra ∪ inter）
+    """
+    merged = []
+    for intra, inter in zip(intra_candidates, inter_candidates):
+        union = list(set(intra) & set(inter))
+        # union.sort()  # 可选：排序方便可视化或一致性
+        merged.append(union)
+    return merged
+
+
+def convert_to_one_hot(candidate_labels: list[list[int]], num_classes: int) -> torch.Tensor:
+    """
+    将候选伪标签集合转换为 one-hot 多标签张量。
+
+    Args:
+        candidate_labels (List[List[int]]): 每个样本的候选类别索引列表
+        num_classes (int): 总类别数
+
+    Returns:
+        torch.Tensor: [B, C] 的 multi-hot 向量，1 表示该类是伪标签
+    """
+    batch_size = len(candidate_labels)
+    one_hot = torch.zeros(batch_size, num_classes)
+
+    for i, labels in enumerate(candidate_labels):
+        if labels:  # 有伪标签
+            one_hot[i, labels] = 1.0
+
+    return one_hot

@@ -2,13 +2,16 @@ import torch.nn as nn
 import torch
 from models.clip import clip
 from models.clip.simple_tokenizer import SimpleTokenizer as _Tokenizer
+from torchvision.datasets import CIFAR100
+from torch.utils.data import DataLoader
+from torchvision import transforms
 import logging
 # source /etc/profile.d/clash.sh
 # proxy_on
 
 CUSTOM_TEMPLATES = {
     "OxfordPets": "a photo of a {}, a type of pet.",
-    "OxfordFlowers": "a photo of a {}, a type of flower.",
+    "oxfordflowers": "a photo of a {}, a type of flower.",
     "FGVCAircraft": "a photo of a {}, a type of aircraft.",
     "DescribableTextures": "{} texture.",
     "EuroSAT": "a centered satellite photo of {}.",
@@ -23,7 +26,8 @@ CUSTOM_TEMPLATES = {
     "ImageNetA": "a photo of a {}.",
     "ImageNetR": "a photo of a {}.",
     "cifar100": "a photo of a {}.",
-    "cifar10": "a photo of a {}."
+    "cifar10": "a photo of a {}.",
+    "imagenet100": "a photo of a {}."
 }
 
 _tokenizer = _Tokenizer()
@@ -48,13 +52,23 @@ def coop(args):
     n_ctx = 16
     ctp = "end"
     clip_model = load_clip_to_cpu(backbone_name)
+    # clip_model, _ = clip.load("ViT-B/16", device="cuda:5")
     clip_model.float()
     model = CoOp(classnames, clip_model, n_ctx, ctx_init, ctp)
     for name, param in model.named_parameters():
         if "prompt_learner" not in name:
             param.requires_grad_(False)
+    # for name, param in model.named_parameters():
+    #     # 判断参数名是否不在需要训练的参数列表中
+    #     if not any(name.startswith(x) for x in ['prototypes', 'concept_prototypes', "proj", "proj2", "prompt_learner"]):
+    #         param.requires_grad_(False)
+    # print("learnable parameters:")
+    # for name, param in model.named_parameters():
+    #     if param.requires_grad:
+    #         print(name)
     model.cuda()
-    model.get_text_feature("cifar100", classnames)
+    model.get_text_feature(args.dataset, classnames)
+    # print(model.original_text_features)
     return model
 
 class TextEncoder(nn.Module):
@@ -253,8 +267,9 @@ class CoOp(nn.Module):
             image_features = image_features / image_features.norm(dim=-1, keepdim=True)
             text_features = text_features / text_features.norm(dim=-1, keepdim=True)
 
-            logit_scale = self.logit_scale.exp()
-            logits = logit_scale * image_features @ text_features.t()
+            # logit_scale = self.logit_scale.exp()
+            # logits = logit_scale * image_features @ text_features.t()
+            logits = image_features @ text_features.t()
 
             return logits
         else:
@@ -262,11 +277,13 @@ class CoOp(nn.Module):
             image_features = image_features / image_features.norm(dim=-1, keepdim=True)
             logit_scale = self.clip_model.logit_scale.exp()
             logits = logit_scale * image_features @ self.original_text_features.t()
+            logits = image_features @ self.original_text_features.T
             return logits
     
     def get_text_feature(self, dataset_name, classnames):
         temp = CUSTOM_TEMPLATES[dataset_name]
         prompts = [temp.format(c.replace("_", " ")) for c in classnames]
+        # prompts = [temp.format(c) for c in classnames]
         print(f"Prompts: {prompts}")
         prompts = torch.cat([clip.tokenize(p) for p in prompts])
         prompts = prompts.cuda()
@@ -277,13 +294,47 @@ class CoOp(nn.Module):
 
         self.original_text_features = original_text_features
         
-    
-if __name__ == "__main__":
-    model = coop()
-    # 设置默认设备为cuda:0
-    device = torch.device("cuda:0")
-    model.to(device)
-    dummy_image = torch.randn(1, 3, 224, 224).to(device)  # Simulate a batch of 1 image
-    logits = model(dummy_image)
-    logging.info("Logits:", logits)
+cifar100_mean, cifar100_std = (0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761)  
 
+if __name__ == "__main__":
+    test_dataset = CIFAR100(root='/home/lhz/data', train=False, download=True, transform=transforms.Compose([
+            transforms.Resize(224, interpolation=transforms.InterpolationMode.BICUBIC),  # 保持结构更好
+            # transforms.Resize(224),
+            transforms.CenterCrop(224),  # 实际没必要crop，但写上更标准
+            transforms.ToTensor(),
+            transforms.Normalize(mean=cifar100_mean, std=cifar100_std)
+        ]))
+    test_loader = DataLoader(test_dataset, batch_size=128, shuffle=False)
+    class args:
+        dataset = "cifar100"
+        classname = test_dataset.classes
+    model = coop(args())
+    # model, ppp = clip.load("ViT-B/16", device="cuda:5")
+    # 设置默认设备为cuda:0
+    model.cuda()
+    model.eval()
+    ground_truth = []
+    pred_label = []
+    tokenizer = clip.tokenize
+    with torch.no_grad():
+        # all_text = [f"a photo of a {c}." for c in test_dataset.classes]
+        # text = tokenizer(all_text).to(device)
+        # text_features = model.encode_text(text)
+        # print(text_features)
+        for image, label in test_loader:
+            image = image.to(device)
+            # image_embeds = model.encode_image(image)
+            # image_embeds /= image_embeds.norm(dim=-1, keepdim=True)
+            # text_features /= text_features.norm(dim=-1, keepdim=True)
+            # logits = image_embeds @ text_features.T
+            # preds = logits.argmax(dim=-1)
+            # logits = model(image, text)[0]
+            logits = model(image, True)
+            preds = logits.argmax(dim=1)
+            pred_label.append(preds)
+            ground_truth.append(label)
+    
+    ground_truth = torch.cat(ground_truth, dim=0).cpu()
+    pred_label = torch.cat(pred_label, dim=0).cpu()
+    acc = (pred_label == ground_truth).float().mean()
+    print(f"Accuracy: {acc}")

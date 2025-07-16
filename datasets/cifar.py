@@ -108,7 +108,8 @@ def get_cifar100(args):
     # 从CIFAR100数据集中获取类别名称
     classes = base_dataset.classes
     if not os.path.exists(args.ssl_indexes):
-        train_labeled_idxs, train_unlabeled_idxs, train_val_idxs = x_u_split_known_novel(base_dataset.targets, args.lbl_percent, args.no_class, list(range(0,args.no_known)), list(range(args.no_known, args.no_class)))
+        train_labeled_idxs, train_unlabeled_idxs, train_val_idxs = x_u_split_known_novel
+        (base_dataset.targets, args.lbl_percent, args.no_class, list(range(0,args.no_known)), list(range(args.no_known, args.no_class)))
 
         f = open(os.path.join(args.split_root, f'cifar100_{args.lbl_percent}_{args.novel_percent}_{args.split_id}.pkl'),"wb")
         label_unlabel_dict = {'labeled_idx': train_labeled_idxs, 'unlabeled_idx': train_unlabeled_idxs, 'val_idx': train_val_idxs}

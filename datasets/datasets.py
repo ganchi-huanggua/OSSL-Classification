@@ -2,6 +2,7 @@ from .cifar import get_cifar10, get_cifar100
 from .svhn import get_svhn
 from .tinyimagenet import get_tinyimagenet
 from .imagenet100 import get_dataset224
+from .oxfordflowers import get_flowers
 
 def get_dataset(args):
     if args.dataset == 'cifar10':
@@ -12,6 +13,8 @@ def get_dataset(args):
         return get_svhn(args)
     elif args.dataset == 'tinyimagenet':
         return get_tinyimagenet(args)
+    elif args.dataset == 'oxfordflowers':
+        return get_flowers(args)
     elif args.dataset in ['aircraft', 'stanfordcars', 'oxfordpets', 'imagenet100', 'herbarium']:
         return get_dataset224(args)
 

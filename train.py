@@ -26,23 +26,23 @@ from utils.energy import energy_discrepancy, energy
 
 def main():
     parser = argparse.ArgumentParser(description='Base Training')
-    parser.add_argument('--data-root', default=f'data', help='directory to store data')
+    parser.add_argument('--data-root', default=f'/home/lhz/data', help='directory to store data')
     parser.add_argument('--split-root', default=f'random_splits', help='directory to store datasets')
     parser.add_argument('--out', default=f'outputs', help='directory to output the result')
     parser.add_argument('--num-workers', type=int, default=16, help='number of workers')
     parser.add_argument('--dataset', default='cifar10', type=str,
-                        choices=['cifar10', 'cifar100', 'svhn', 'tinyimagenet', 'oxfordpets', 'aircraft', 'stanfordcars', 'imagenet100', 'herbarium'], help='dataset name')
+                        choices=['cifar10', 'cifar100', 'svhn', 'tinyimagenet', 'oxfordpets', 'oxfordflowers', 
+                                 'aircraft', 'stanfordcars', 'imagenet100', 'herbarium'], help='dataset name')
     parser.add_argument('--lbl-percent', type=int, default=50, help='percent of labeled data')
     parser.add_argument('--novel-percent', default=50, type=int, help='percentage of novel classes, default 50')
-    parser.add_argument('--epochs', default=50, type=int, help='number of total epochs to run, deafult 50')
+    parser.add_argument('--epochs', default=15, type=int, help='number of total epochs to run, deafult 50')
     parser.add_argument('--batch-size', default=256, type=int, help='train batchsize, batch_x + batch_u')
     parser.add_argument('--test-batch-size', default=128, type=int, help='test batchsize')
     parser.add_argument('--lr', default=0.0025, type=float, help='learning rate, default 1e-3')
     parser.add_argument('--resume', default='', type=str, help='path to latest checkpoint (default: none)')
     parser.add_argument('--seed', type=int, default=-1, help="random seed (-1: don't use random seed)")
-    parser.add_argument('--no-class', default=10, type=int, help='total classes')
-    parser.add_argument('--split-id', default='split_0', type=str, help='random data split number')
-    parser.add_argument('--ssl-indexes', default='random_splits/cifar100_50_50_split_70058.pkl', type=str, help='path to random data split')
+    parser.add_argument('--split-id', default='', type=str, help='random data split number')
+    # parser.add_argument('--ssl-indexes', default='random_splits/cifar100_50_50_split_70058.pkl', type=str, help='path to random data split')
     parser.add_argument('--rho', default='0.3,0.9', type=str, help='pseudo-label filtering ratio')
     parser.add_argument('--warmup', default=0, type=int, help='warmup epoch')
     parser.add_argument('--no-progress', action='store_true', help="don't use progress bar")
@@ -52,10 +52,11 @@ def main():
     parser.add_argument('--knn_weight', default=0.2, type=float, help='weight of KNN contrastive loss')
     args = parser.parse_args()
     run_started = datetime.today().strftime('%d-%m-%y_%H%M')
-    split_id = f'split_{random.randint(1, 100000)}'
-    args.split_id = split_id
-    if args.ssl_indexes == "":
-        args.ssl_indexes = f'{args.split_root}/{args.dataset}_{args.lbl_percent}_{args.novel_percent}_{args.split_id}.pkl'
+    if args.split_id == "":
+        split_id = f'split_{random.randint(1, 100000)}'
+        args.split_id = split_id
+        
+    args.ssl_indexes = f'{args.split_root}/{args.dataset}_{args.lbl_percent}_{args.novel_percent}_{args.split_id}.pkl'
     args.exp_name = f'dataset_{args.dataset}_lbl_percent_{args.lbl_percent}_novel_percent_{args.novel_percent}_{run_started}_split_id_{args.split_id}'
     args.img_size = 224
     args.out = os.path.join(args.out, args.exp_name)
@@ -92,6 +93,10 @@ def main():
         args.no_class = 100
     elif args.dataset == 'imagenet100':
         args.no_class = 100
+    elif args.dataset == 'oxfordflowers':
+        args.no_class = 102
+    elif args.dataset == 'oxfordpets':
+        args.no_class = 37
 
     args.data_root = os.path.join(args.data_root, args.dataset)
     # os.makedirs(args.data_root, exist_ok=True)
@@ -163,21 +168,25 @@ def main():
     # }
     for epoch in range(start_epoch, args.epochs):
         #training
-        train(args, lbl_loader, unlbl_loader, model, optimizer, scheduler, epoch)
+        # train(args, lbl_loader, unlbl_loader, model, optimizer, scheduler, epoch)
         #test
         test_acc_known_trans = test_known(args, test_loader_known_trans, model, epoch)
-        novel_cluster_results_trans = test_cluster(args, test_loader_novel_trans, model, epoch, offset=args.no_known)
-        all_cluster_results_trans = test_cluster(args, test_loader_all_trans, model, epoch)
-        test_acc_trans = all_cluster_results_trans["acc"]
-        test_acc_novel_trans = novel_cluster_results_trans["acc"]
+        # novel_cluster_results_trans = test_cluster(args, test_loader_novel_trans, model, epoch, offset=args.no_known)
+        # all_cluster_results_trans = test_cluster(args, test_loader_all_trans, model, epoch)
+        # test_acc_trans = all_cluster_results_trans["acc"]
+        # test_acc_novel_trans = novel_cluster_results_trans["acc"]
+        novel_cluster_results_trans = test_known(args, test_loader_novel_trans, model, epoch)
+        all_cluster_results_trans = test_known(args, test_loader_all_trans, model, epoch)
+        test_acc_trans = all_cluster_results_trans
+        test_acc_novel_trans = novel_cluster_results_trans
 
         is_best_trans = test_acc_novel_trans > best_acc_novel_trans
         best_acc_trans = max(test_acc_trans, best_acc_trans)
         best_acc_novel_trans = max(test_acc_novel_trans,best_acc_novel_trans)
 
         logging.info(f'epoch: {epoch + 1}, acc-known-trans: {test_acc_known_trans}')
-        logging.info(f'epoch: {epoch + 1}, acc-novel-trans: {novel_cluster_results_trans["acc"]}, nmi-novel: {novel_cluster_results_trans["nmi"]}')
-        logging.info(f'epoch: {epoch + 1}, acc-all-trans: {all_cluster_results_trans["acc"]}, nmi-all: {all_cluster_results_trans["nmi"]}, best-acc: {best_acc_trans}, best-acc-novel: {best_acc_novel_trans}')
+        logging.info(f'epoch: {epoch + 1}, acc-novel-trans: {test_acc_novel_trans}')
+        logging.info(f'epoch: {epoch + 1}, acc-all-trans: {test_acc_trans}, best-acc: {best_acc_trans}, best-acc-novel: {best_acc_novel_trans}')
 
         model_to_save = model.module if hasattr(model, "module") else model    
         save_checkpoint({
@@ -190,7 +199,8 @@ def main():
 
     writer.close()
 
-
+# export http_proxy=http://10.26.66.12:7897
+# export https_proxy=http://10.26.66.12:7897
 def train(args, lbl_loader, unlbl_loader, model, optimizer, scheduler, epoch):
     batch_time = AverageMeter()
     losses = AverageMeter()
@@ -215,78 +225,43 @@ def train(args, lbl_loader, unlbl_loader, model, optimizer, scheduler, epoch):
         batch_l = inputs_l_w.shape[0]
         batch_u = inputs_u_w.shape[0]
         model.train()
+        with torch.no_grad():
+            zs_logits = model(inputs_u_w, True)
+            conf = F.softmax(zs_logits, dim=1)
+            sorted_conf, sorted_indices = torch.sort(conf, dim=1, descending=True)
+            tau = compute_tau(sorted_conf, alpha=0.5)
+            intra_candidate_labels = select_intra_candidate_labels(sorted_conf, sorted_indices, tau)
+            inter_candidate_labels = select_inter_candidate_labels(conf, beta=0.5)
+            candidate_labels = merge_candidate_labels(intra_candidate_labels, inter_candidate_labels)
+            pseudo_one_hot = convert_to_one_hot(candidate_labels, num_classes=args.no_class).cuda()
+            selected_mask = pseudo_one_hot.sum(dim=1) > 0
 
-        logits = model(inputs_l_w)
+            pseudo_label_indices = [set(cls_idxs) for cls_idxs in candidate_labels]  # List[Set[int]]
+            
+            correct = 0
+            total = 0
+            for i in range(len(targets_u)):
+                if len(pseudo_label_indices[i]) == 0:
+                    continue  # 无伪标签，不参与统计
+                total += 1
+                if targets_u[i].item() in pseudo_label_indices[i]:
+                    correct += 1
+
+            pseudo_accuracy = correct / total if total > 0 else 0.0
+            print(f"[Batch {batch_idx}] Pseudo-label Accuracy: {pseudo_accuracy:.4f} ({correct}/{total})")
         
-        # outputs = torch.nn.Softmax(dim=1)(logits)
-        # weight = (targets_l < args.no_known).type(target_maxpro.dtype) + 1e-3
-        # mean_outputs = torch.mm(torch.diag(1 / weight), outputs).sum(dim=0) / torch.sum(1 / weight)
-        # loss = loss_entropy_w(outputs, weight) - 1 * loss_entropy(mean_outputs)
-        ce_loss = F.cross_entropy(logits, targets_l)
+        logits = model(inputs_u_w)
+        # bce_loss = F.binary_cross_entropy_with_logits(logits, pseudo_one_hot)
+        ce_loss = F.cross_entropy(logits[selected_mask], pseudo_one_hot[selected_mask])
+
         loss = ce_loss
         
-        losses.update(loss.item(), batch_l)
+        losses.update(loss.item(), batch_u)
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
         # ema_optimizer.step()
         scheduler.step()
-        
-        if batch_idx % 5 == 0:
-            with torch.no_grad():
-                model.eval()
-                logits = model(inputs_u_w, True)
-                # logits = F.softmax(logits, dim=1)
-                ed = energy_discrepancy(logits, T=1.0, top_k=args.no_known)
-                
-                # conf, pseudo_labels = torch.max(logits, dim=1)
-                known_novel_thre = 1.25
-                ground_truth = targets_u
-                truth_known_mask = ground_truth < args.no_known
-                # pred_known_mask = pseudo_labels < args.no_known
-                # known_correct = (pseudo_labels[truth_known_mask] == ground_truth[truth_known_mask]).sum()
-                # known_total = truth_known_mask.sum()
-
-                # mask2: novel 类别样本（ground_truth >= args.no_known）
-                truth_novel_mask = ground_truth >= args.no_known
-                # pred_novel_mask = pseudo_labels >= args.no_known
-                
-                pred_novel_mask = ed < known_novel_thre
-                correct_pred_novel = ((truth_novel_mask == 1) & (pred_novel_mask == 1)).sum()
-                correct_pred_known = ((truth_novel_mask == 0) & (pred_novel_mask == 0)).sum()
-                correct_pred_total = correct_pred_novel + correct_pred_known
-                logging.info(f"correct_pred_novel: {correct_pred_novel.item()}, correct_pred_known: {correct_pred_known.item()}")
-                # logits_dist_known = logits[truth_known_mask].mean(dim=0)
-                # logits_dist_novel = logits[truth_novel_mask].mean(dim=0)
-                # logging.info(f"logits_dist_known_0-50: {logits_dist_known[:50].sum()}")
-                # logging.info(f"logits_dist_known_50-100: {logits_dist_known[50:].sum()}")
-                # logging.info(f"logits_dist_novel_0-50: {logits_dist_novel[:50].sum()}")
-                # logging.info(f"logits_dist_novel_50-100: {logits_dist_novel[50:].sum()}")
-                
-                # pred_as_novel = (pseudo_labels[truth_novel_mask] >= args.no_known).sum()
-                novel_total = truth_novel_mask.sum()
-
-                # accuracy统计
-                # if known_total > 0:
-                #     known_acc = known_correct.float() / known_total
-                # else:
-                #     known_acc = torch.tensor(0.0, device=logits.device)
-
-                # if novel_total > 0:
-                #     novel_detect_acc = pred_as_novel.float() / novel_total
-                # else:
-                #     novel_detect_acc = torch.tensor(0.0, device=logits.device)
-                    
-                # logging.info(f"Known Class Conf: {conf[truth_known_mask].mean()}")
-                # logging.info(f"Novel Class Conf: {conf[truth_novel_mask].mean()}")
-                logging.info(f"Known Class Discrepancy Energy: {ed[truth_known_mask].mean()}")
-                logging.info(f"Novel Class Discrepancy Energy: {ed[truth_novel_mask].mean()}")
-                
-                logging.info(f"Novel Detection ACC: {(correct_pred_total / batch_u):.4f}")
-                
-                # logging.info(f"Known ACC: {known_acc:.4f}, Novel Detection ACC: {novel_detect_acc:.4f}")
-                # logging.info(f"Novel Total: {novel_total}, Pred as Novel: {(pseudo_labels >= args.no_known).sum()}")
-                model.train()
             
         if batch_idx == 0 and epoch == 0:
             updated_param = []
@@ -339,7 +314,7 @@ def test_known(args, test_loader, model, epoch):
         for batch_idx, (inputs, targets) in enumerate(test_loader):
             inputs = inputs.cuda()
             targets = targets.cuda()
-            outputs = model(inputs)
+            outputs = model(inputs, True)
             loss = F.cross_entropy(outputs, targets)
             prec1, prec5 = accuracy(outputs, targets, topk=(1, 5))
             losses.update(loss.item(), inputs.shape[0])
@@ -348,7 +323,7 @@ def test_known(args, test_loader, model, epoch):
             batch_time.update(time.time() - end)
             end = time.time()
             if not args.no_progress:
-                msg = "test cluster epoch: {epoch}/{epochs:4}. itr: {batch:4}/{iter:4}. btime: {bt:.3f}s.".format(
+                msg = "test known epoch: {epoch}/{epochs:4}. itr: {batch:4}/{iter:4}. btime: {bt:.3f}s.".format(
                     epoch=epoch + 1,
                     epochs=args.epochs,
                     batch=batch_idx + 1,

@@ -3,8 +3,10 @@ from torchvision import transforms
 from .randaugment import RandAugmentMC
 import math
 from PIL import Image
+import os.path as osp
+import json
 
-def x_u_split_known_novel(labels, lbl_percent, no_classes, lbl_set, unlbl_set, val_percent=1):
+def x_u_split_known_novel(labels, lbl_percent, no_classes, lbl_set, unlbl_set, val_percent=False):
     labels = np.array(labels)
     labeled_idx = []
     unlabeled_idx = []
@@ -12,18 +14,31 @@ def x_u_split_known_novel(labels, lbl_percent, no_classes, lbl_set, unlbl_set, v
     for i in range(no_classes):
         idx = np.where(labels == i)[0]
         n_lbl_sample = math.ceil(len(idx)*(lbl_percent/100))
-        # n_val_sample = max(int(len(idx)*(val_percent/100)), 1)
+        if val_percent:
+            n_val_sample = max(int(len(idx)*(20/100)), 1)
         np.random.shuffle(idx)
         if i in lbl_set:
-            labeled_idx.extend(idx[:n_lbl_sample])
-            # unlabeled_idx.extend(idx[n_lbl_sample:-n_val_sample])
-            unlabeled_idx.extend(idx[n_lbl_sample:])
-            # val_idx.extend(idx[-n_val_sample:])
+            if val_percent:
+                labeled_idx.extend(idx[:n_lbl_sample])
+                unlabeled_idx.extend(idx[n_lbl_sample:-n_val_sample])
+                val_idx.extend(idx[-n_val_sample:])
+            else:
+                labeled_idx.extend(idx[:n_lbl_sample])
+                unlabeled_idx.extend(idx[n_lbl_sample:])
         elif i in unlbl_set:
-            # unlabeled_idx.extend(idx[:-n_val_sample])
-            unlabeled_idx.extend(idx)
-            # val_idx.extend(idx[-n_val_sample:])
+            if val_percent:
+                unlabeled_idx.extend(idx[:-n_val_sample])
+                val_idx.extend(idx[-n_val_sample:])
+            else:
+                unlabeled_idx.extend(idx)
     return labeled_idx, unlabeled_idx, val_idx
+
+
+def read_json(fpath):
+    """Read json file from a path."""
+    with open(fpath, "r") as f:
+        obj = json.load(f)
+    return obj
 
 
 class TransformWS32(object):
@@ -96,3 +111,4 @@ class TransformWS224(object):
         weak = self.weak(x)
         strong = self.strong(x)
         return self.normalize(weak), self.normalize(strong)
+    

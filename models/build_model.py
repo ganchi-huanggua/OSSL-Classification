@@ -1,7 +1,7 @@
 import torch
 from .CoOp import coop
 import logging
-def build_model(args, ema=False, try_assert=True):
+def build_model(args, ema=False):
 
     model = coop(args)
 

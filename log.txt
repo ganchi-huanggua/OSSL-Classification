@@ -1,0 +1,72 @@
+====================================================================
+# outputs = torch.nn.Softmax(dim=1)(logits)
+# weight = (targets_l < args.no_known).type(target_maxpro.dtype) + 1e-3
+# mean_outputs = torch.mm(torch.diag(1 / weight), outputs).sum(dim=0) / torch.sum(1 / weight)
+# loss = loss_entropy_w(outputs, weight) - 1 * loss_entropy(mean_outputs)
+# ce_loss = F.cross_entropy(logits, targets_l)
+=====================================================================
+if batch_idx % 5 == 0:
+    with torch.no_grad():
+        model.eval()
+        unlabeled_logits = model(inputs_u_w)
+        labeled_logits = model(inputs_l_w)
+        # logits = F.softmax(logits, dim=1)
+        unlabeled_ed = energy_discrepancy(unlabeled_logits, T=0.5, top_k=args.no_known)
+        labeled_ed = energy_discrepancy(labeled_logits, T=0.5, top_k=args.no_known)
+        # conf, pseudo_labels = torch.max(logits, dim=1)
+        known_novel_thre = 3.0
+        ground_truth = targets_u
+        truth_known_mask = ground_truth < args.no_known
+        # pred_known_mask = pseudo_labels < args.no_known
+        # known_correct = (pseudo_labels[truth_known_mask] == ground_truth[truth_known_mask]).sum()
+        # known_total = truth_known_mask.sum()
+
+        # mask2: novel 类别样本（ground_truth >= args.no_known）
+        truth_novel_mask = ground_truth >= args.no_known
+        # pred_novel_mask = pseudo_labels >= args.no_known
+        logging.info(f"max_novel_ed: {unlabeled_ed[truth_novel_mask].max()}, min_known_ed: {unlabeled_ed[truth_known_mask].min()}")
+        if epoch == 4 and batch_idx == 5:
+            logging.info(f"novel_ed: {unlabeled_ed[truth_novel_mask]}, known_ed: {unlabeled_ed[truth_known_mask]}")
+        if epoch == 4 and batch_idx == 10:
+            logging.info(f"novel_ed: {unlabeled_ed[truth_novel_mask]}, known_ed: {unlabeled_ed[truth_known_mask]}")
+        if epoch == 4 and batch_idx == 15:
+            logging.info(f"novel_ed: {unlabeled_ed[truth_novel_mask]}, known_ed: {unlabeled_ed[truth_known_mask]}")
+        if epoch == 4 and batch_idx == 20:
+            logging.info(f"novel_ed: {unlabeled_ed[truth_novel_mask]}, known_ed: {unlabeled_ed[truth_known_mask]}")
+        pred_novel_mask = unlabeled_ed < known_novel_thre
+        correct_pred_novel = ((truth_novel_mask == 1) & (pred_novel_mask == 1)).sum()
+        correct_pred_known = ((truth_novel_mask == 0) & (pred_novel_mask == 0)).sum()
+        correct_pred_total = correct_pred_novel + correct_pred_known
+        logging.info(f"correct_pred_novel: {correct_pred_novel.item()}, correct_pred_known: {correct_pred_known.item()}")
+        logging.info(f"pred_novel_mask: {pred_novel_mask.sum()}")
+        # logits_dist_known = logits[truth_known_mask].mean(dim=0)
+        # logits_dist_novel = logits[truth_novel_mask].mean(dim=0)
+        # logging.info(f"logits_dist_known_0-50: {logits_dist_known[:50].sum()}")
+        # logging.info(f"logits_dist_known_50-100: {logits_dist_known[50:].sum()}")
+        # logging.info(f"logits_dist_novel_0-50: {logits_dist_novel[:50].sum()}")
+        # logging.info(f"logits_dist_novel_50-100: {logits_dist_novel[50:].sum()}")
+        
+        # pred_as_novel = (pseudo_labels[truth_novel_mask] >= args.no_known).sum()
+        novel_total = truth_novel_mask.sum()
+
+        # accuracy统计
+        # if known_total > 0:
+        #     known_acc = known_correct.float() / known_total
+        # else:
+        #     known_acc = torch.tensor(0.0, device=logits.device)
+
+        # if novel_total > 0:
+        #     novel_detect_acc = pred_as_novel.float() / novel_total
+        # else:
+        #     novel_detect_acc = torch.tensor(0.0, device=logits.device)
+            
+        # logging.info(f"Known Class Conf: {conf[truth_known_mask].mean()}")
+        # logging.info(f"Novel Class Conf: {conf[truth_novel_mask].mean()}")
+        logging.info(f"Known Class Discrepancy Energy: {unlabeled_ed[truth_known_mask].mean()}")
+        logging.info(f"Novel Class Discrepancy Energy: {unlabeled_ed[truth_novel_mask].mean()}")
+        
+        logging.info(f"Novel Detection ACC: {(correct_pred_total / batch_u):.4f}")
+        
+        # logging.info(f"Known ACC: {known_acc:.4f}, Novel Detection ACC: {novel_detect_acc:.4f}")
+        # logging.info(f"Novel Total: {novel_total}, Pred as Novel: {(pseudo_labels >= args.no_known).sum()}")
+        model.train()
