@@ -109,7 +109,7 @@ class GenericSSL(datasets.ImageFolder):
 
 
 class GenericTEST(datasets.ImageFolder):
-    def __init__(self, root, transform=None, target_transform=None, labeled_set=None, no_class=200):
+    def __init__(self, root, transform=None, target_transform=None, labeled_set=None, no_class=100):
         super().__init__(root, transform=transform, target_transform=target_transform)
 
         self.imgs = np.array(self.imgs)

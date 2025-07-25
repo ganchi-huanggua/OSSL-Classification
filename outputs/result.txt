@@ -513,7 +513,7 @@ Test overall acc 0.8435, seen acc 0.9168, unseen acc 0.8069
 Test overall acc 0.8406, seen acc 0.9150, unseen acc 0.8034
 
 
-CoOp + orca:
+CoOp + TIDA:
 cifar10:
 Test overall acc 10.48, seen acc 20.34, unseen acc 2.39
 cifar100:
