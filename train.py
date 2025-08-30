@@ -11,7 +11,7 @@ import torch
 import torch.backends.cudnn as cudnn
 import torch.nn.functional as F
 import torch.optim as optim
-from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
+from torch.utils.data import DataLoader, RandomSampler, SequentialSampler, Subset
 from torch.optim.lr_scheduler import LambdaLR
 from tensorboardX import SummaryWriter
 from tqdm import tqdm
@@ -29,19 +29,19 @@ def main():
     parser.add_argument('--data-root', default=f'/home/lhz/data', help='directory to store data')
     parser.add_argument('--split-root', default=f'random_splits', help='directory to store datasets')
     parser.add_argument('--out', default=f'outputs', help='directory to output the result')
-    parser.add_argument('--num-workers', type=int, default=16, help='number of workers')
+    parser.add_argument('--num-workers', type=int, default=4, help='number of workers')
     parser.add_argument('--dataset', default='cifar10', type=str,
                         choices=['cifar10', 'cifar100', 'svhn', 'tinyimagenet', 'oxfordpets', 'oxfordflowers', 
                                  'aircraft', 'stanfordcars', 'imagenet100', 'herbarium'], help='dataset name')
     parser.add_argument('--lbl-percent', type=int, default=50, help='percent of labeled data')
     parser.add_argument('--novel-percent', default=50, type=int, help='percentage of novel classes, default 50')
-    parser.add_argument('--epochs', default=15, type=int, help='number of total epochs to run, deafult 50')
-    parser.add_argument('--batch-size', default=256, type=int, help='train batchsize, batch_x + batch_u')
-    parser.add_argument('--test-batch-size', default=128, type=int, help='test batchsize')
+    parser.add_argument('--epochs', default=30, type=int, help='number of total epochs to run, deafult 50')
+    parser.add_argument('--batch-size', default=512, type=int, help='train batchsize, batch_x + batch_u')
+    parser.add_argument('--test-batch-size', default=512, type=int, help='test batchsize')
     parser.add_argument('--lr', default=0.0025, type=float, help='learning rate, default 1e-3')
     parser.add_argument('--resume', default='', type=str, help='path to latest checkpoint (default: none)')
     parser.add_argument('--seed', type=int, default=-1, help="random seed (-1: don't use random seed)")
-    parser.add_argument('--split-id', default='', type=str, help='random data split number')
+    parser.add_argument('--split-id', default='44007', type=str, help='random data split number')
     # parser.add_argument('--ssl-indexes', default='random_splits/cifar100_50_50_split_70058.pkl', type=str, help='path to random data split')
     parser.add_argument('--rho', default='0.3,0.9', type=str, help='pseudo-label filtering ratio')
     parser.add_argument('--warmup', default=0, type=int, help='warmup epoch')
@@ -51,13 +51,13 @@ def main():
     parser.add_argument('--temparature', default=0.3, type=float, help='temperature for classification loss')
     parser.add_argument('--knn_weight', default=0.2, type=float, help='weight of KNN contrastive loss')
     args = parser.parse_args()
-    run_started = datetime.today().strftime('%d-%m-%y_%H%M')
+    run_started = datetime.today().strftime('%y-%m-%d_%H%M')
     if args.split_id == "":
-        split_id = f'split_{random.randint(1, 100000)}'
+        split_id = f'{random.randint(1, 100000)}'
         args.split_id = split_id
         
     args.ssl_indexes = f'{args.split_root}/{args.dataset}_{args.lbl_percent}_{args.novel_percent}_{args.split_id}.pkl'
-    args.exp_name = f'dataset_{args.dataset}_lbl_percent_{args.lbl_percent}_novel_percent_{args.novel_percent}_{run_started}_split_id_{args.split_id}'
+    args.exp_name = f'dataset_{args.dataset}_lbl_{args.lbl_percent}_novel_{args.novel_percent}_{run_started}_split_id_{args.split_id}'
     args.img_size = 224
     args.out = os.path.join(args.out, args.exp_name)
     os.makedirs(args.out, exist_ok=True)
@@ -110,11 +110,11 @@ def main():
     # Create dataloaders
     unlbl_batchsize = int((float(args.batch_size) * len(unlbl_dataset)) / (len(lbl_dataset) + len(unlbl_dataset)))
     lbl_batchsize = args.batch_size - unlbl_batchsize
-    args.iteration = (len(lbl_dataset) + len(unlbl_dataset)) // args.batch_size
+    args.iteration = math.ceil((len(lbl_dataset) + len(unlbl_dataset)) / args.batch_size)
 
     train_sampler = RandomSampler
-    lbl_loader = DataLoader(lbl_dataset, sampler=train_sampler(lbl_dataset), batch_size=lbl_batchsize, num_workers=args.num_workers, drop_last=True)
-    unlbl_loader = DataLoader(unlbl_dataset, sampler=train_sampler(unlbl_dataset), batch_size=unlbl_batchsize, num_workers=args.num_workers, drop_last=True)
+    lbl_loader = DataLoader(lbl_dataset, sampler=train_sampler(lbl_dataset), batch_size=lbl_batchsize, num_workers=args.num_workers, drop_last=False)
+    unlbl_loader = DataLoader(unlbl_dataset, sampler=train_sampler(unlbl_dataset), batch_size=unlbl_batchsize, num_workers=args.num_workers, drop_last=False)
     # Transductive setting
     test_loader_known_trans = DataLoader(test_dataset_known, sampler=SequentialSampler(test_dataset_known), batch_size=args.test_batch_size, num_workers=args.num_workers, drop_last=False)
     test_loader_novel_trans = DataLoader(test_dataset_novel, sampler=SequentialSampler(test_dataset_novel), batch_size=args.test_batch_size, num_workers=args.num_workers, drop_last=False)
@@ -166,9 +166,89 @@ def main():
     #     'pseudo_list_all': torch.zeros((len(unlbl_loader.dataset),args.no_class)),
     #     'prob': np.zeros(len(unlbl_loader.dataset)),
     # }
+
+
+    # training
+    selected_samples = dict()
+    # 新增：存储每个样本的真实标签（用于后续计算精度）
+    sample_true_labels = dict()
+    for cls in range(args.no_class):
+        selected_samples[cls] = []
+        sample_true_labels[cls] = []  # 存储对应样本的真实标签
+
+    # 存储每个类别的所有预测结果 (置信度, 样本索引, 真实标签)
+    all_predictions = {cls: [] for cls in range(args.no_class)}
+
+    for batch_idx, data_unlbl in enumerate(unlbl_loader):
+        (inputs_u, inputs_u_w, inputs_u_s), targets_u, index_u = data_unlbl 
+        inputs_u = inputs_u.cuda()
+        inputs_u_w = inputs_u_w.cuda()
+        inputs_u_s = inputs_u_s.cuda()
+
+        # 提取真实标签（转为numpy便于存储）
+        true_labels = targets_u.numpy()
+
+        model.train()
+        with torch.no_grad():
+            zs_logits = model(inputs_u, True)
+            conf = F.softmax(zs_logits, dim=1)
+            max_conf, pseudo_label = torch.max(conf, dim=1)
+            max_conf = max_conf.cpu().numpy()
+            pseudo_label = pseudo_label.cpu().numpy()
+            index_u = index_u.numpy()
+
+            # 按伪标签分类存储（同时记录真实标签）
+            for idx, pl, cf, tl in zip(index_u, pseudo_label, max_conf, true_labels):
+                all_predictions[pl].append((-cf, idx, tl))  # 增加真实标签tl
+
+    # 筛选topk并计算精度
+    correct = 0
+    total = 0
+    topk_conf = 16
+    for cls in range(args.no_class):
+        # 按置信度降序排序
+        all_predictions[cls].sort()
+        # 取前16个样本
+        topk_samples = all_predictions[cls][:topk_conf]
+
+        # 提取样本索引和对应的真实标签
+        selected_samples[cls] = [item[1] for item in topk_samples]
+        sample_true_labels[cls] = [item[2] for item in topk_samples]
+        
+        # 计算伪标签精度：伪标签（cls）与真实标签匹配的比例
+        if len(topk_samples) != 0:
+            # 统计真实标签等于当前伪标签类别的数量
+            correct += sum(1 for tl in sample_true_labels[cls] if tl == cls)
+            total += len(topk_samples)
+        
+    print(f"伪标签精度: {correct / total:.4f} ({correct}/{total})")
+
+    all_selected_indices = []
+    for cls in selected_samples:
+        all_selected_indices.extend(selected_samples[cls])
+    # 去重（避免同一样本被多次选中）
+    all_selected_indices = list(set(all_selected_indices))
+    # 排序（可选，使索引顺序一致）
+    all_selected_indices.sort()
+
+    # 2. 获取原始数据集（从unlbl_loader中提取）
+    # 注意：unlbl_loader.dataset 是原始数据集对象
+    original_dataset = unlbl_loader.dataset
+
+    # 3. 创建筛选后的子集数据集
+    # Subset会根据索引从原始数据集中提取对应样本
+    subset_dataset = Subset(original_dataset, all_selected_indices)
+    selected_dataloader = DataLoader(
+        subset_dataset,
+        batch_size=int(len(subset_dataset) / args.iteration),
+        sampler=train_sampler(subset_dataset),
+        num_workers=args.num_workers,
+        drop_last=False
+    )
+
     for epoch in range(start_epoch, args.epochs):
         #training
-        # train(args, lbl_loader, unlbl_loader, model, optimizer, scheduler, epoch)
+        train(args, lbl_loader, unlbl_loader, selected_dataloader, model, optimizer, scheduler, epoch)
         #test
         test_acc_known_trans = test_known(args, test_loader_known_trans, model, epoch)
         # novel_cluster_results_trans = test_cluster(args, test_loader_novel_trans, model, epoch, offset=args.no_known)
@@ -199,9 +279,7 @@ def main():
 
     writer.close()
 
-# export http_proxy=http://10.26.66.12:7897
-# export https_proxy=http://10.26.66.12:7897
-def train(args, lbl_loader, unlbl_loader, model, optimizer, scheduler, epoch):
+def train(args, lbl_loader, unlbl_loader, selected_dataloader, model, optimizer, scheduler, epoch):
     batch_time = AverageMeter()
     losses = AverageMeter()
     end = time.time()
@@ -213,50 +291,68 @@ def train(args, lbl_loader, unlbl_loader, model, optimizer, scheduler, epoch):
     #For normalization of PU classifier 
     msg = ""
     train_start_time = time.time()
+
+    # 初始化存储结构
     for batch_idx, (data_lbl, data_unlbl) in enumerate(train_loader):
-        (inputs_l_w, inputs_l_s), targets_l, index_l = data_lbl 
-        (inputs_u_w, inputs_u_s), targets_u, index_u = data_unlbl 
-        
+        (inputs_l, inputs_l_w, inputs_l_s), targets_l, index_l = data_lbl 
+        (inputs_u, inputs_u_w, inputs_u_s), targets_u, index_u = data_unlbl 
+        inputs_l = inputs_l.cuda()
         inputs_l_w = inputs_l_w.cuda()
-        targets_l = targets_l.cuda()
+        inputs_l_s = inputs_l_s.cuda()
+        inputs_u = inputs_u.cuda()
+
         inputs_u_w = inputs_u_w.cuda()
+        inputs_u_s = inputs_u_s.cuda()
+        targets_l = targets_l.cuda()
         targets_u = targets_u.cuda()
         
         batch_l = inputs_l_w.shape[0]
         batch_u = inputs_u_w.shape[0]
         model.train()
         with torch.no_grad():
-            zs_logits = model(inputs_u_w, True)
+            zs_logits = model(inputs_u, True)
             conf = F.softmax(zs_logits, dim=1)
             sorted_conf, sorted_indices = torch.sort(conf, dim=1, descending=True)
-            tau = compute_tau(sorted_conf, alpha=0.5)
+            tau = compute_tau(sorted_conf, alpha=0.6)
             intra_candidate_labels = select_intra_candidate_labels(sorted_conf, sorted_indices, tau)
-            inter_candidate_labels = select_inter_candidate_labels(conf, beta=0.5)
+            inter_candidate_labels = select_inter_candidate_labels(conf, beta=0.95)
             candidate_labels = merge_candidate_labels(intra_candidate_labels, inter_candidate_labels)
             pseudo_one_hot = convert_to_one_hot(candidate_labels, num_classes=args.no_class).cuda()
-            selected_mask = pseudo_one_hot.sum(dim=1) > 0
+            selected_mask = (pseudo_one_hot.sum(dim=1) > 0) & (pseudo_one_hot.sum(dim=1) < 2)  # choosed 159 pseudo-labeled samples
 
-            pseudo_label_indices = [set(cls_idxs) for cls_idxs in candidate_labels]  # List[Set[int]]
-            
-            correct = 0
-            total = 0
-            for i in range(len(targets_u)):
-                if len(pseudo_label_indices[i]) == 0:
-                    continue  # 无伪标签，不参与统计
-                total += 1
-                if targets_u[i].item() in pseudo_label_indices[i]:
-                    correct += 1
+            # correct = 0
+            # correct_intra = 0
+            # correct_inter = 0
+            # correct_filter = 0
+            # total = 0
+            # total_filter = 0
+            # for i in range(len(targets_u)):
+            #     if len(candidate_labels[i]) == 0:
+            #         continue  # 无伪标签，不参与统计
+            #     total += 1
+            #     if 0 < len(candidate_labels[i]) < 2:
+            #         total_filter += 1
+            #         if targets_u[i].item() in candidate_labels[i]:
+            #             correct_filter += 1
+            #     if targets_u[i].item() in candidate_labels[i]:
+            #         correct += 1
+                # if targets_u[i].item() in intra_candidate_labels[i]:
+                #     correct_intra += 1
+                # if targets_u[i].item() in inter_candidate_labels[i]:
+                #     correct_inter += 1
 
-            pseudo_accuracy = correct / total if total > 0 else 0.0
-            print(f"[Batch {batch_idx}] Pseudo-label Accuracy: {pseudo_accuracy:.4f} ({correct}/{total})")
+            # pseudo_accuracy = correct / total if total > 0 else 0.0
+            # print(f"[Batch {batch_idx}] Pseudo-label Accuracy: {pseudo_accuracy:.4f} ({correct}/{total})")
+            # pseudo_accuracy = correct_filter / total_filter if total_filter > 0 else 0.0
+            # print(f"[Batch {batch_idx}] Pseudo-label Accuracy Filter: {pseudo_accuracy:.4f} ({correct_filter}/{total_filter})")
         
         logits = model(inputs_u_w)
-        # bce_loss = F.binary_cross_entropy_with_logits(logits, pseudo_one_hot)
         ce_loss = F.cross_entropy(logits[selected_mask], pseudo_one_hot[selected_mask])
+        # ce_loss = F.cross_entropy(logits, targets_l)
 
         loss = ce_loss
         
-        losses.update(loss.item(), batch_u)
+        losses.update(loss.item(), batch_l)
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
@@ -314,7 +410,7 @@ def test_known(args, test_loader, model, epoch):
         for batch_idx, (inputs, targets) in enumerate(test_loader):
             inputs = inputs.cuda()
             targets = targets.cuda()
-            outputs = model(inputs, True)
+            outputs = model(inputs)
             loss = F.cross_entropy(outputs, targets)
             prec1, prec5 = accuracy(outputs, targets, topk=(1, 5))
             losses.update(loss.item(), inputs.shape[0])

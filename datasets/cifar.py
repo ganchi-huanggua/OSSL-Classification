@@ -10,14 +10,14 @@ cifar100_mean, cifar100_std = (0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761)
 
 def get_cifar10(args):
     # augmentations
-    transform_labeled = transforms.Compose([
-        transforms.RandomHorizontalFlip(),
-        transforms.RandomCrop(size=32,
-                              padding=int(32*0.125),
-                              padding_mode='reflect'),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=cifar10_mean, std=cifar10_std)
-    ])
+    # transform_labeled = transforms.Compose([
+    #     transforms.RandomHorizontalFlip(),
+    #     transforms.RandomCrop(size=32,
+    #                           padding=int(32*0.125),
+    #                           padding_mode='reflect'),
+    #     transforms.ToTensor(),
+    #     transforms.Normalize(mean=cifar10_mean, std=cifar10_std)
+    # ])
     if args.img_size == 224:
         transform_val = transforms.Compose([
             transforms.Resize(224, interpolation=transforms.InterpolationMode.BICUBIC),  # 保持结构更好
@@ -81,13 +81,13 @@ def get_cifar10(args):
 
 def get_cifar100(args):
     # augmentations
-    transform_labeled = transforms.Compose([
-        transforms.RandomHorizontalFlip(),
-        transforms.RandomCrop(size=32,
-                              padding=int(32*0.125),
-                              padding_mode='reflect'),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=cifar100_mean, std=cifar100_std)])
+    # transform_labeled = transforms.Compose([
+    #     transforms.RandomHorizontalFlip(),
+    #     transforms.RandomCrop(size=32,
+    #                           padding=int(32*0.125),
+    #                           padding_mode='reflect'),
+    #     transforms.ToTensor(),
+    #     transforms.Normalize(mean=cifar100_mean, std=cifar100_std)])
 
     if args.img_size == 224:
         transform_val = transforms.Compose([
@@ -108,8 +108,7 @@ def get_cifar100(args):
     # 从CIFAR100数据集中获取类别名称
     classes = base_dataset.classes
     if not os.path.exists(args.ssl_indexes):
-        train_labeled_idxs, train_unlabeled_idxs, train_val_idxs = x_u_split_known_novel
-        (base_dataset.targets, args.lbl_percent, args.no_class, list(range(0,args.no_known)), list(range(args.no_known, args.no_class)))
+        train_labeled_idxs, train_unlabeled_idxs, train_val_idxs = x_u_split_known_novel(base_dataset.targets, args.lbl_percent, args.no_class, list(range(0,args.no_known)), list(range(args.no_known, args.no_class)))
 
         f = open(os.path.join(args.split_root, f'cifar100_{args.lbl_percent}_{args.novel_percent}_{args.split_id}.pkl'),"wb")
         label_unlabel_dict = {'labeled_idx': train_labeled_idxs, 'unlabeled_idx': train_unlabeled_idxs, 'val_idx': train_val_idxs}

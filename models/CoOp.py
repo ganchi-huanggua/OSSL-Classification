@@ -51,7 +51,7 @@ def coop(args):
     backbone_name = "ViT-B/16"
     classnames = args.classname
     ctx_init = ""
-    n_ctx = 16
+    n_ctx = 32
     ctp = "end"
     clip_model = load_clip_to_cpu(backbone_name)
     # clip_model, _ = clip.load("ViT-B/16", device="cuda:5")
@@ -269,9 +269,9 @@ class CoOp(nn.Module):
             image_features = image_features / image_features.norm(dim=-1, keepdim=True)
             text_features = text_features / text_features.norm(dim=-1, keepdim=True)
 
-            # logit_scale = self.logit_scale.exp()
-            # logits = logit_scale * image_features @ text_features.t()
-            logits = image_features @ text_features.t()
+            logit_scale = self.logit_scale.exp()
+            logits = logit_scale * image_features @ text_features.t()
+            # logits = image_features @ text_features.t()
 
             return logits
         else:
@@ -279,7 +279,7 @@ class CoOp(nn.Module):
             image_features = image_features / image_features.norm(dim=-1, keepdim=True)
             logit_scale = self.clip_model.logit_scale.exp()
             logits = logit_scale * image_features @ self.original_text_features.t()
-            logits = image_features @ self.original_text_features.T
+            # logits = image_features @ self.original_text_features.T
             return logits
     
     def get_text_feature(self, dataset_name, classnames):
