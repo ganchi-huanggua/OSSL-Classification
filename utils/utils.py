@@ -5,26 +5,86 @@ import random
 import shutil
 import torch.nn.functional as F
 import torch.nn as nn
+from copy import deepcopy
 
+class EMA:
+    def __init__(self, model, decay=0.999, device=None):
+        """
+        初始化EMA对象（支持CUDA）
+        Args:
+            model: 待更新的模型（已移至GPU）
+            decay: 衰减系数（0.999/0.9999常用）
+            device: 设备（如torch.device('cuda:0')，默认与model相同）
+        """
+        # 确定设备（默认与原始模型一致）
+        self.device = device if device is not None else next(model.parameters()).device
+        
+        # 复制模型参数作为EMA初始参数，并移至目标设备
+        self.ema_model = deepcopy(model).to(self.device)
+        
+        # 冻结EMA模型参数（不参与梯度更新）
+        for param in self.ema_model.parameters():
+            param.requires_grad_(False)
+        
+        self.decay = decay
+        self.epoch = 0
 
-class WeightEMA(object):
-    def __init__(self, alpha, model, ema_model):
-        self.model = model
-        self.ema_model = ema_model
-        self.alpha = alpha
-        self.params = list(model.state_dict().values())
-        self.ema_params = list(ema_model.state_dict().values())
-        # self.wd = 0.02 * args.lr
+    def update(self, model, step=None):
+        """
+        更新EMA模型参数（确保在CUDA上操作）
+        Args:
+            model: 最新的模型（需在同一GPU上）
+            step: 当前训练步数（用于预热）
+        """
+        # 检查设备是否匹配（避免CPU/GPU混合使用）
+        if next(model.parameters()).device != self.device:
+            raise RuntimeError(f"EMA设备({self.device})与模型设备({next(model.parameters()).device})不匹配")
 
-        for param, ema_param in zip(self.params, self.ema_params):
-            ema_param.data.copy_(param.data)
+        # 预热策略（可选）
+        if step is not None and step < 2000:
+            current_decay = min(self.decay, (1 + step) / (10 + step))
+        else:
+            current_decay = self.decay
 
-    def step(self):
-        one_minus_alpha = 1.0 - self.alpha
-        for param, ema_param in zip(self.params, self.ema_params):
-            if ema_param.dtype==torch.float32:
-                ema_param.mul_(self.alpha)
-                ema_param.add_(param * one_minus_alpha)
+        # 遍历参数，在CUDA上更新EMA（使用in-place操作提升效率）
+        for ema_param, model_param in zip(self.ema_model.parameters(), model.parameters()):
+            # 公式：ema_param = decay * ema_param + (1 - decay) * model_param
+            ema_param.data.mul_(current_decay).add_(model_param.data, alpha=1 - current_decay)
+
+        # 同步缓冲区（如BN层的running_mean/running_var）
+        for ema_buf, model_buf in zip(self.ema_model.buffers(), model.buffers()):
+            ema_buf.data.copy_(model_buf.data.to(self.device))  # 确保缓冲区在同一设备
+
+    def apply(self):
+        """返回EMA模型（已在CUDA上）"""
+        return self.ema_model
+
+    def state_dict(self):
+        """保存EMA模型的状态字典（包含CUDA参数）"""
+        return self.ema_model.state_dict()
+
+    def load_state_dict(self, state_dict):
+        """加载EMA模型的状态字典（自动匹配设备）"""
+        self.ema_model.load_state_dict(state_dict)
+
+# class WeightEMA(object):
+#     def __init__(self, alpha, model, ema_model):
+#         self.model = model
+#         self.ema_model = ema_model
+#         self.alpha = alpha
+#         self.params = list(model.state_dict().values())
+#         self.ema_params = list(ema_model.state_dict().values())
+#         # self.wd = 0.02 * args.lr
+
+#         for param, ema_param in zip(self.params, self.ema_params):
+#             ema_param.data.copy_(param.data)
+
+#     def step(self):
+#         one_minus_alpha = 1.0 - self.alpha
+#         for param, ema_param in zip(self.params, self.ema_params):
+#             if ema_param.dtype==torch.float32:
+#                 ema_param.mul_(self.alpha)
+#                 ema_param.add_(param * one_minus_alpha)
 
 def linear_rampup(current, start ,end):
     """Linear rampup"""

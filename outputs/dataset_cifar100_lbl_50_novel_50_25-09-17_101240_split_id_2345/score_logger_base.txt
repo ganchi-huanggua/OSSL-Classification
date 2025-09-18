@@ -1,0 +1,10 @@
+[2025-09-17 10:12:40,231] ************************************************************************
+
+
+[2025-09-17 10:12:40,232] data_root=/home/lhz/data | split_root=random_splits | out=outputs/dataset_cifar100_lbl_50_novel_50_25-09-17_101240_split_id_2345 | num_workers=4 | dataset=cifar100 | lbl_percent=50 | novel_percent=50 | epochs=30 | batch_size=128 | test_batch_size=512 | lr=0.0025 | resume= | seed=-1 | split_id=2345 | rho=0.3,0.9 | warmup=0 | no_progress=False | chosen_neighbors=100 | entropy_q=0.3 | temparature=0.3 | knn_weight=0.2 | ssl_indexes=random_splits/cifar100_50_50_2345.pkl | exp_name=dataset_cifar100_lbl_50_novel_50_25-09-17_101240_split_id_2345 | img_size=224
+[2025-09-17 10:12:40,233] 
+
+************************************************************************
+
+[2025-09-17 10:12:44,410] using device: 0
+[2025-09-17 10:12:45,623] Pretrained clip model parameters will be saved in ../pretrained/ViT-B-16.pt

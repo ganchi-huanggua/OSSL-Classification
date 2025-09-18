@@ -18,9 +18,11 @@ from tqdm import tqdm
 from datetime import datetime
 from models.build_model import build_model
 from datasets.datasets import get_dataset
+from datasets.utils import PseudoLabelDataset
 from utils.evaluate_utils import hungarian_evaluate
 from utils.losses import *
 from utils.utils import *
+from utils.sinkhorn_knopp import SinkhornKnopp
 from utils.energy import energy_discrepancy, energy
 
 
@@ -36,7 +38,7 @@ def main():
     parser.add_argument('--lbl-percent', type=int, default=50, help='percent of labeled data')
     parser.add_argument('--novel-percent', default=50, type=int, help='percentage of novel classes, default 50')
     parser.add_argument('--epochs', default=30, type=int, help='number of total epochs to run, deafult 50')
-    parser.add_argument('--batch-size', default=512, type=int, help='train batchsize, batch_x + batch_u')
+    parser.add_argument('--batch-size', default=128, type=int, help='train batchsize, batch_x + batch_u')
     parser.add_argument('--test-batch-size', default=512, type=int, help='test batchsize')
     parser.add_argument('--lr', default=0.0025, type=float, help='learning rate, default 1e-3')
     parser.add_argument('--resume', default='', type=str, help='path to latest checkpoint (default: none)')
@@ -51,7 +53,7 @@ def main():
     parser.add_argument('--temparature', default=0.3, type=float, help='temperature for classification loss')
     parser.add_argument('--knn_weight', default=0.2, type=float, help='weight of KNN contrastive loss')
     args = parser.parse_args()
-    run_started = datetime.today().strftime('%y-%m-%d_%H%M')
+    run_started = datetime.today().strftime('%y-%m-%d_%H%M%S')
     if args.split_id == "":
         split_id = f'{random.randint(1, 100000)}'
         args.split_id = split_id
@@ -123,13 +125,14 @@ def main():
     logging.info(f"using device: {torch.cuda.current_device()}")
     [args.rho_start, args.rho_end] = [float(item) for item in args.rho.split(',')]
     model = build_model(args)
+    ema = EMA(model, decay=0.9999)
     # ema_model = build_model(args,ema=True)
 
     logging.info(' | '.join(f'{k}={v}' for k, v in vars(args).items()))
     
     # ema_model = ema_model.cuda()
     # ema_optimizer= WeightEMA(0.95, model, ema_model)
-    # sinkhorn = SinkhornKnopp(num_iters_sk=3,epsilon_sk=0.05,imb_factor=1)
+    # sinkhorn = SinkhornKnopp(num_iters_sk=3, epsilon_sk=0.05, imb_factor=1)
 
     # optimizer
     # if torch.cuda.device_count() > 1:
@@ -172,7 +175,7 @@ def main():
     selected_samples = dict()
     # 新增：存储每个样本的真实标签（用于后续计算精度）
     sample_true_labels = dict()
-    for cls in range(args.no_class):
+    for cls in range(args.no_known, args.no_class):
         selected_samples[cls] = []
         sample_true_labels[cls] = []  # 存储对应样本的真实标签
 
@@ -204,8 +207,9 @@ def main():
     # 筛选topk并计算精度
     correct = 0
     total = 0
-    topk_conf = 16
-    for cls in range(args.no_class):
+    topk_conf = int(len(lbl_dataset) / args.no_known)
+    
+    for cls in range(args.no_known, args.no_class):
         # 按置信度降序排序
         all_predictions[cls].sort()
         # 取前16个样本
@@ -220,43 +224,42 @@ def main():
             # 统计真实标签等于当前伪标签类别的数量
             correct += sum(1 for tl in sample_true_labels[cls] if tl == cls)
             total += len(topk_samples)
-        
+    
     print(f"伪标签精度: {correct / total:.4f} ({correct}/{total})")
 
-    all_selected_indices = []
-    for cls in selected_samples:
-        all_selected_indices.extend(selected_samples[cls])
-    # 去重（避免同一样本被多次选中）
-    all_selected_indices = list(set(all_selected_indices))
-    # 排序（可选，使索引顺序一致）
-    all_selected_indices.sort()
+    index_to_pseudo_label = {}
+    for pseudo_cls, sample_indices in selected_samples.items():
+        # 遍历当前伪类下的所有样本索引，记录其对应的伪标签
+        for idx in sample_indices:
+            index_to_pseudo_label[idx] = pseudo_cls
 
-    # 2. 获取原始数据集（从unlbl_loader中提取）
-    # 注意：unlbl_loader.dataset 是原始数据集对象
     original_dataset = unlbl_loader.dataset
 
-    # 3. 创建筛选后的子集数据集
-    # Subset会根据索引从原始数据集中提取对应样本
-    subset_dataset = Subset(original_dataset, all_selected_indices)
-    selected_dataloader = DataLoader(
-        subset_dataset,
-        batch_size=int(len(subset_dataset) / args.iteration),
-        sampler=train_sampler(subset_dataset),
+    pseudo_label_dataset = PseudoLabelDataset(
+        original_dataset=original_dataset,
+        index_to_pseudo_label=index_to_pseudo_label
+    )
+    
+    pseudo_label_dataloader = DataLoader(
+        pseudo_label_dataset,
+        batch_size=int(len(pseudo_label_dataset) / args.iteration),
+        sampler=train_sampler(pseudo_label_dataset),
         num_workers=args.num_workers,
         drop_last=False
     )
 
     for epoch in range(start_epoch, args.epochs):
         #training
-        train(args, lbl_loader, unlbl_loader, selected_dataloader, model, optimizer, scheduler, epoch)
+        train(args, lbl_loader, unlbl_loader, pseudo_label_dataloader, model, optimizer, scheduler, epoch, args.epochs, ema)
+        # train(args, lbl_loader, unlbl_loader, model, optimizer, scheduler, epoch)
         #test
-        test_acc_known_trans = test_known(args, test_loader_known_trans, model, epoch)
+        test_acc_known_trans = test_known(args, test_loader_known_trans, model, ema, epoch)
         # novel_cluster_results_trans = test_cluster(args, test_loader_novel_trans, model, epoch, offset=args.no_known)
         # all_cluster_results_trans = test_cluster(args, test_loader_all_trans, model, epoch)
         # test_acc_trans = all_cluster_results_trans["acc"]
         # test_acc_novel_trans = novel_cluster_results_trans["acc"]
-        novel_cluster_results_trans = test_known(args, test_loader_novel_trans, model, epoch)
-        all_cluster_results_trans = test_known(args, test_loader_all_trans, model, epoch)
+        novel_cluster_results_trans = test_known(args, test_loader_novel_trans, model, ema, epoch)
+        all_cluster_results_trans = test_known(args, test_loader_all_trans, model, ema, epoch)
         test_acc_trans = all_cluster_results_trans
         test_acc_novel_trans = novel_cluster_results_trans
 
@@ -279,7 +282,21 @@ def main():
 
     writer.close()
 
-def train(args, lbl_loader, unlbl_loader, selected_dataloader, model, optimizer, scheduler, epoch):
+def get_la_loss(tau=1.0):
+    cls_num_list = [314]*50
+    cls_num_list.extend([64]*50)
+    cls_num_list = torch.tensor(cls_num_list)
+    cls_num_ratio = cls_num_list/torch.sum(cls_num_list)
+    log_cls_num = torch.log(cls_num_ratio)
+    tau = torch.tensor(tau)
+
+    def loss_fn(logits,target):
+        logit_adjusted = logits + tau*log_cls_num.unsqueeze(0).to(logits.device)
+        return F.cross_entropy(logit_adjusted, target)
+    return loss_fn
+        
+    
+def train(args, lbl_loader, unlbl_loader, pseudo_label_dataloader, model, optimizer, scheduler, epoch, total_epochs, ema):
     batch_time = AverageMeter()
     losses = AverageMeter()
     end = time.time()
@@ -287,42 +304,94 @@ def train(args, lbl_loader, unlbl_loader, selected_dataloader, model, optimizer,
     if not args.no_progress:
         p_bar = tqdm(range(args.iteration))
 
-    train_loader = zip(lbl_loader, unlbl_loader)
+    # train_loader = zip(lbl_loader, unlbl_loader)
+    train_loader = zip(lbl_loader, unlbl_loader, pseudo_label_dataloader)
     #For normalization of PU classifier 
     msg = ""
     train_start_time = time.time()
-
+    model.train()
     # 初始化存储结构
-    for batch_idx, (data_lbl, data_unlbl) in enumerate(train_loader):
+    LA_loss = get_la_loss()
+    for batch_idx, (data_lbl, data_unlbl, data_pseudo) in enumerate(train_loader):
         (inputs_l, inputs_l_w, inputs_l_s), targets_l, index_l = data_lbl 
         (inputs_u, inputs_u_w, inputs_u_s), targets_u, index_u = data_unlbl 
+        (inputs_p, inputs_p_w, inputs_p_s), targets_p, index_p = data_pseudo
+        
         inputs_l = inputs_l.cuda()
         inputs_l_w = inputs_l_w.cuda()
-        inputs_l_s = inputs_l_s.cuda()
-        inputs_u = inputs_u.cuda()
-
-        inputs_u_w = inputs_u_w.cuda()
-        inputs_u_s = inputs_u_s.cuda()
+        # inputs_l_s = inputs_l_s.cuda()
         targets_l = targets_l.cuda()
+        
+        inputs_u = inputs_u.cuda()
+        # inputs_u_w = inputs_u_w.cuda()
+        inputs_u_s = inputs_u_s.cuda()
         targets_u = targets_u.cuda()
         
-        batch_l = inputs_l_w.shape[0]
-        batch_u = inputs_u_w.shape[0]
-        model.train()
-        with torch.no_grad():
-            zs_logits = model(inputs_u, True)
-            conf = F.softmax(zs_logits, dim=1)
-            sorted_conf, sorted_indices = torch.sort(conf, dim=1, descending=True)
-            tau = compute_tau(sorted_conf, alpha=0.6)
-            intra_candidate_labels = select_intra_candidate_labels(sorted_conf, sorted_indices, tau)
-            inter_candidate_labels = select_inter_candidate_labels(conf, beta=0.95)
-            candidate_labels = merge_candidate_labels(intra_candidate_labels, inter_candidate_labels)
-            pseudo_one_hot = convert_to_one_hot(candidate_labels, num_classes=args.no_class).cuda()
-            selected_mask = (pseudo_one_hot.sum(dim=1) > 0) & (pseudo_one_hot.sum(dim=1) < 2)  # choosed 159 pseudo-labeled samples
+        # inputs_p = inputs_p.cuda()
+        inputs_p_w = inputs_p_w.cuda()
+        # inputs_p_s = inputs_p_s.cuda()
+        targets_p = targets_p.cuda()
 
+        batch_l = index_l.shape[0]
+        batch_u = index_u.shape[0]
+        batch_p = index_p.shape[0]
+
+        with torch.no_grad():
+            ema_model = ema.apply()
+            inputs = torch.cat([inputs_l, inputs_u], dim=0)
+            outputs = ema_model(inputs)
+            outputs = F.softmax(outputs, dim=1)
+            output_l, output_u = torch.split(outputs, [batch_l, batch_u], dim=0)
+            # output_l = sinkhorn(output_l)
+            # output_u = sinkhorn(output_u)
+            max_conf, pseudo_label = torch.max(output_l, dim=1)
+            
+            class_thre = [1.0] * args.no_known
+            for i in range(batch_l):
+                if pseudo_label[i] == targets_l[i]:
+                    class_thre[targets_l[i]] = min(class_thre[pseudo_label[i]], max_conf[i])
+            # 统计class_thre中不为1的值的平均值作为阈值
+            non_one_values = [v for v in class_thre if v != 1.0]
+            thre = sum(non_one_values) / len(non_one_values)
+
+            # conf = F.softmax(output_u, dim=1)
+            max_conf, pseudo_label = torch.max(output_u, dim=1)
+            conf_mask = (max_conf >= thre)
+            novel_mask = (pseudo_label >= args.no_known)
+            mask = conf_mask & novel_mask
+            
+            # total_samples = len(pseudo_label)
+            # correct_all = (pseudo_label == targets_u).sum().item()
+            # acc_all = correct_all / total_samples if total_samples > 0 else 0.0
+
+            # # 2. 高置信度样本的伪标签精度
+            # high_conf_samples = mask.sum().item()
+            # correct_high = 0
+            # if high_conf_samples > 0:
+            #     # 仅统计高置信度样本中伪标签正确的数量
+            #     correct_high = (pseudo_label[mask] == targets_u[mask]).sum().item()
+            #     acc_high = correct_high / high_conf_samples
+            # else:
+            #     acc_high = 0.0  # 无高置信度样本时精度为0
+            # print(f"高置信度精度: {acc_high:.4f} ({correct_high}/{high_conf_samples})")
+            # sorted_conf, sorted_indices = torch.sort(conf, dim=1, descending=True)
+            # tau = compute_tau(sorted_conf, alpha=0.6)
+            # intra_candidate_labels = select_intra_candidate_labels(sorted_conf, sorted_indices, tau)
+            # inter_candidate_labels = select_inter_candidate_labels(conf, beta=0.95)
+            # candidate_labels = merge_candidate_labels(intra_candidate_labels, inter_candidate_labels)
+            # selected_labels = []
+            # for candidate_label in candidate_labels:
+            #     if 0 < len(candidate_label) < 2 and candidate_label[0] in list(range(args.no_known, args.no_class)):
+            #         selected_labels.append(candidate_label)
+            # pseudo_label = convert_to_one_hot(candidate_labels, num_classes=args.no_class).cuda()
+            # count_mask = (pseudo_label.sum(dim=1) > 0) & (pseudo_label.sum(dim=1) < 2)  # choosed 159 pseudo-labeled samples
+            # novel_classes = list(range(args.no_known, args.no_class))
+            # novel_mask = pseudo_label[:, novel_classes].sum(dim=1) > 0
+            # mask = count_mask & novel_mask
+            
             # correct = 0
-            # correct_intra = 0
-            # correct_inter = 0
+            # # correct_intra = 0
+            # # correct_inter = 0
             # correct_filter = 0
             # total = 0
             # total_filter = 0
@@ -330,35 +399,45 @@ def train(args, lbl_loader, unlbl_loader, selected_dataloader, model, optimizer,
             #     if len(candidate_labels[i]) == 0:
             #         continue  # 无伪标签，不参与统计
             #     total += 1
-            #     if 0 < len(candidate_labels[i]) < 2:
+            #     if 0 < len(candidate_labels[i]) < 2 and candidate_labels[i][0] in novel_classes:
             #         total_filter += 1
             #         if targets_u[i].item() in candidate_labels[i]:
             #             correct_filter += 1
-            #     if targets_u[i].item() in candidate_labels[i]:
-            #         correct += 1
-                # if targets_u[i].item() in intra_candidate_labels[i]:
-                #     correct_intra += 1
-                # if targets_u[i].item() in inter_candidate_labels[i]:
-                #     correct_inter += 1
+            #     # if targets_u[i].item() in candidate_labels[i]:
+            #     #     correct += 1
+            #     # if targets_u[i].item() in intra_candidate_labels[i]:
+            #     #     correct_intra += 1
+            #     # if targets_u[i].item() in inter_candidate_labels[i]:
+            #     #     correct_inter += 1
 
             # pseudo_accuracy = correct / total if total > 0 else 0.0
             # print(f"[Batch {batch_idx}] Pseudo-label Accuracy: {pseudo_accuracy:.4f} ({correct}/{total})")
             # pseudo_accuracy = correct_filter / total_filter if total_filter > 0 else 0.0
             # print(f"[Batch {batch_idx}] Pseudo-label Accuracy Filter: {pseudo_accuracy:.4f} ({correct_filter}/{total_filter})")
-        
-        logits = model(inputs_u_w)
-        ce_loss = F.cross_entropy(logits[selected_mask], pseudo_one_hot[selected_mask])
-        # ce_loss = F.cross_entropy(logits, targets_l)
 
-        loss = ce_loss
+        inputs_concat = torch.cat([inputs_l_w, inputs_u_s, inputs_p_w], dim=0)
+        logits_concat = model(inputs_concat)
         
-        losses.update(loss.item(), batch_l)
+        logits_l, logits_u, logits_p = torch.split(logits_concat, [batch_l, batch_u, batch_p], dim=0)
+        ce_loss_l = F.cross_entropy(logits_l, targets_l)
+        # la_loss_l = LA_loss(logits_l, targets_l)
+        ce_loss_u = F.cross_entropy(logits_u[mask], pseudo_label[mask])
+        ce_loss_p = F.cross_entropy(logits_p, targets_p)
+        # la_loss_p = LA_loss(logits_p, targets_p)
+        
+
+        loss = ce_loss_l + ce_loss_u + ce_loss_p
+        # loss = ce_loss_l + 2 * epoch / total_epochs * ce_loss_u + ce_loss_p
+        # loss = la_loss_l + la_loss_p
+        
+        losses.update(loss.item(), batch_u + batch_l + batch_p)
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
         # ema_optimizer.step()
         scheduler.step()
-            
+        ema.update(model)
+        
         if batch_idx == 0 and epoch == 0:
             updated_param = []
             for name, param in model.named_parameters():
@@ -394,12 +473,13 @@ def train(args, lbl_loader, unlbl_loader, selected_dataloader, model, optimizer,
     # return train_stat
 
 
-def test_known(args, test_loader, model, epoch):
+def test_known(args, test_loader, model, ema, epoch):
     batch_time = AverageMeter()
     losses = AverageMeter()
     top1 = AverageMeter()
     top5 = AverageMeter()
     end = time.time()
+    # ema_model = ema.apply()
     model.eval()
 
     if not args.no_progress:
@@ -411,6 +491,7 @@ def test_known(args, test_loader, model, epoch):
             inputs = inputs.cuda()
             targets = targets.cuda()
             outputs = model(inputs)
+            # outputs = ema_model(inputs)
             loss = F.cross_entropy(outputs, targets)
             prec1, prec5 = accuracy(outputs, targets, topk=(1, 5))
             losses.update(loss.item(), inputs.shape[0])
@@ -435,12 +516,13 @@ def test_known(args, test_loader, model, epoch):
     return top1.avg
 
 
-def test_cluster(args, test_loader, model, epoch, offset=0):
+def test_cluster(args, test_loader, model, ema, epoch, offset=0):
     batch_time = AverageMeter()
     data_time = AverageMeter()
     end = time.time()
     gt_targets = []
     predictions = []
+    # ema_model = ema.apply()
     model.eval()
     if not args.no_progress:
         test_loader = tqdm(test_loader)
@@ -452,6 +534,7 @@ def test_cluster(args, test_loader, model, epoch, offset=0):
             inputs = inputs.cuda()
             targets = targets.cuda()
             outputs = model(inputs)
+            # outputs = ema_model(inputs)
             _, max_idx = torch.max(outputs, dim=1)
             predictions.extend(max_idx.cpu().numpy().tolist())
             gt_targets.extend(targets.cpu().numpy().tolist())

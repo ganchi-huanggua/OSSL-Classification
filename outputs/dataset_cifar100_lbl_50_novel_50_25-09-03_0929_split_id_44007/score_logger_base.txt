@@ -1,0 +1,1422 @@
+[2025-09-03 09:29:11,430] ************************************************************************
+
+### known labeled data + mm25(0-4: 250, 5-9: 250 pseudo) + adapter
+[2025-09-03 09:29:11,430] data_root=/home/lhz/data | split_root=random_splits | out=outputs/dataset_cifar100_lbl_50_novel_50_25-09-03_0929_split_id_44007 | num_workers=4 | dataset=cifar100 | lbl_percent=50 | novel_percent=50 | epochs=30 | batch_size=256 | test_batch_size=512 | lr=0.0025 | resume= | seed=-1 | split_id=44007 | rho=0.3,0.9 | warmup=0 | no_progress=False | chosen_neighbors=100 | entropy_q=0.3 | temparature=0.3 | knn_weight=0.2 | ssl_indexes=random_splits/cifar100_50_50_44007.pkl | exp_name=dataset_cifar100_lbl_50_novel_50_25-09-03_0929_split_id_44007 | img_size=224
+[2025-09-03 09:29:11,430] 
+
+************************************************************************
+
+[2025-09-03 09:29:15,364] using device: 0
+[2025-09-03 09:29:16,574] Pretrained clip model parameters will be saved in ../pretrained/ViT-B-16.pt
+[2025-09-03 09:29:19,359] data_root=/home/lhz/data/cifar100 | split_root=random_splits | out=outputs/dataset_cifar100_lbl_50_novel_50_25-09-03_0929_split_id_44007 | num_workers=4 | dataset=cifar100 | lbl_percent=50 | novel_percent=50 | epochs=30 | batch_size=256 | test_batch_size=512 | lr=0.0025 | resume= | seed=-1 | split_id=44007 | rho=0.3,0.9 | warmup=0 | no_progress=False | chosen_neighbors=100 | entropy_q=0.3 | temparature=0.3 | knn_weight=0.2 | ssl_indexes=random_splits/cifar100_50_50_44007.pkl | exp_name=dataset_cifar100_lbl_50_novel_50_25-09-03_0929_split_id_44007 | img_size=224 | n_gpu=1 | dtype=torch.float32 | no_class=100 | no_known=50 | classname=['apple', 'aquarium_fish', 'baby', 'bear', 'beaver', 'bed', 'bee', 'beetle', 'bicycle', 'bottle', 'bowl', 'boy', 'bridge', 'bus', 'butterfly', 'camel', 'can', 'castle', 'caterpillar', 'cattle', 'chair', 'chimpanzee', 'clock', 'cloud', 'cockroach', 'couch', 'crab', 'crocodile', 'cup', 'dinosaur', 'dolphin', 'elephant', 'flatfish', 'forest', 'fox', 'girl', 'hamster', 'house', 'kangaroo', 'keyboard', 'lamp', 'lawn_mower', 'leopard', 'lion', 'lizard', 'lobster', 'man', 'maple_tree', 'motorcycle', 'mountain', 'mouse', 'mushroom', 'oak_tree', 'orange', 'orchid', 'otter', 'palm_tree', 'pear', 'pickup_truck', 'pine_tree', 'plain', 'plate', 'poppy', 'porcupine', 'possum', 'rabbit', 'raccoon', 'ray', 'road', 'rocket', 'rose', 'sea', 'seal', 'shark', 'shrew', 'skunk', 'skyscraper', 'snail', 'snake', 'spider', 'squirrel', 'streetcar', 'sunflower', 'sweet_pepper', 'table', 'tank', 'telephone', 'television', 'tiger', 'tractor', 'train', 'trout', 'tulip', 'turtle', 'wardrobe', 'whale', 'willow_tree', 'wolf', 'woman', 'worm'] | iteration=196 | rho_start=0.3 | rho_end=0.9
+[2025-09-03 09:31:27,557] updated params: ['clip_model.visual.proj', 'image_encoder.transformer.resblocks.0.adapter.up_proj.weight', 'image_encoder.transformer.resblocks.0.adapter.up_proj.bias', 'image_encoder.transformer.resblocks.1.adapter.up_proj.weight', 'image_encoder.transformer.resblocks.1.adapter.up_proj.bias', 'image_encoder.transformer.resblocks.2.adapter.up_proj.weight', 'image_encoder.transformer.resblocks.2.adapter.up_proj.bias', 'image_encoder.transformer.resblocks.3.adapter.up_proj.weight', 'image_encoder.transformer.resblocks.3.adapter.up_proj.bias', 'image_encoder.transformer.resblocks.4.adapter.up_proj.weight', 'image_encoder.transformer.resblocks.4.adapter.up_proj.bias', 'image_encoder.transformer.resblocks.5.adapter.up_proj.weight', 'image_encoder.transformer.resblocks.5.adapter.up_proj.bias', 'image_encoder.transformer.resblocks.6.adapter.up_proj.weight', 'image_encoder.transformer.resblocks.6.adapter.up_proj.bias', 'image_encoder.transformer.resblocks.7.adapter.up_proj.weight', 'image_encoder.transformer.resblocks.7.adapter.up_proj.bias', 'image_encoder.transformer.resblocks.8.adapter.up_proj.weight', 'image_encoder.transformer.resblocks.8.adapter.up_proj.bias', 'image_encoder.transformer.resblocks.9.adapter.up_proj.weight', 'image_encoder.transformer.resblocks.9.adapter.up_proj.bias', 'image_encoder.transformer.resblocks.10.adapter.up_proj.weight', 'image_encoder.transformer.resblocks.10.adapter.up_proj.bias', 'image_encoder.transformer.resblocks.11.adapter.up_proj.weight', 'image_encoder.transformer.resblocks.11.adapter.up_proj.bias']
+train epoch: 1/  30. itr:    1/ 196. btime: 3.693s. loss: 4.4527. lr: 0.002500
+train epoch: 1/  30. itr:    6/ 196. btime: 1.206s. loss: 12.1527. lr: 0.002497
+train epoch: 1/  30. itr:   11/ 196. btime: 1.016s. loss: 9.4784. lr: 0.002495
+train epoch: 1/  30. itr:   16/ 196. btime: 0.944s. loss: 7.7388. lr: 0.002493
+train epoch: 1/  30. itr:   21/ 196. btime: 0.908s. loss: 6.8053. lr: 0.002491
+train epoch: 1/  30. itr:   26/ 196. btime: 0.885s. loss: 6.1626. lr: 0.002489
+train epoch: 1/  30. itr:   31/ 196. btime: 0.870s. loss: 5.7296. lr: 0.002487
+train epoch: 1/  30. itr:   36/ 196. btime: 0.859s. loss: 5.4065. lr: 0.002485
+train epoch: 1/  30. itr:   41/ 196. btime: 0.851s. loss: 5.1389. lr: 0.002483
+train epoch: 1/  30. itr:   46/ 196. btime: 0.844s. loss: 4.9505. lr: 0.002480
+train epoch: 1/  30. itr:   51/ 196. btime: 0.839s. loss: 4.7735. lr: 0.002478
+train epoch: 1/  30. itr:   56/ 196. btime: 0.835s. loss: 4.6035. lr: 0.002476
+train epoch: 1/  30. itr:   61/ 196. btime: 0.832s. loss: 4.4613. lr: 0.002474
+train epoch: 1/  30. itr:   66/ 196. btime: 0.829s. loss: 4.3416. lr: 0.002472
+train epoch: 1/  30. itr:   71/ 196. btime: 0.827s. loss: 4.2373. lr: 0.002470
+train epoch: 1/  30. itr:   76/ 196. btime: 0.825s. loss: 4.1464. lr: 0.002468
+train epoch: 1/  30. itr:   81/ 196. btime: 0.823s. loss: 4.0246. lr: 0.002466
+train epoch: 1/  30. itr:   86/ 196. btime: 0.822s. loss: 3.9534. lr: 0.002463
+train epoch: 1/  30. itr:   91/ 196. btime: 0.820s. loss: 3.8815. lr: 0.002461
+train epoch: 1/  30. itr:   96/ 196. btime: 0.819s. loss: 3.8310. lr: 0.002459
+train epoch: 1/  30. itr:  101/ 196. btime: 0.818s. loss: 3.7729. lr: 0.002457
+train epoch: 1/  30. itr:  106/ 196. btime: 0.817s. loss: 3.7139. lr: 0.002455
+train epoch: 1/  30. itr:  111/ 196. btime: 0.816s. loss: 3.6667. lr: 0.002453
+train epoch: 1/  30. itr:  116/ 196. btime: 0.816s. loss: 3.6184. lr: 0.002451
+train epoch: 1/  30. itr:  121/ 196. btime: 0.815s. loss: 3.5764. lr: 0.002449
+train epoch: 1/  30. itr:  126/ 196. btime: 0.815s. loss: 3.5396. lr: 0.002446
+train epoch: 1/  30. itr:  131/ 196. btime: 0.814s. loss: 3.5084. lr: 0.002444
+train epoch: 1/  30. itr:  136/ 196. btime: 0.813s. loss: 3.4815. lr: 0.002442
+train epoch: 1/  30. itr:  141/ 196. btime: 0.813s. loss: 3.4477. lr: 0.002440
+train epoch: 1/  30. itr:  146/ 196. btime: 0.812s. loss: 3.4118. lr: 0.002438
+train epoch: 1/  30. itr:  151/ 196. btime: 0.812s. loss: 3.3850. lr: 0.002436
+train epoch: 1/  30. itr:  156/ 196. btime: 0.812s. loss: 3.3537. lr: 0.002434
+train epoch: 1/  30. itr:  161/ 196. btime: 0.811s. loss: 3.3266. lr: 0.002432
+train epoch: 1/  30. itr:  166/ 196. btime: 0.811s. loss: 3.3022. lr: 0.002429
+train epoch: 1/  30. itr:  171/ 196. btime: 0.810s. loss: 3.2730. lr: 0.002427
+train epoch: 1/  30. itr:  176/ 196. btime: 0.810s. loss: 3.2547. lr: 0.002425
+train epoch: 1/  30. itr:  181/ 196. btime: 0.810s. loss: 3.2255. lr: 0.002423
+train epoch: 1/  30. itr:  186/ 196. btime: 0.810s. loss: 3.1994. lr: 0.002421
+train epoch: 1/  30. itr:  191/ 196. btime: 0.809s. loss: 3.1795. lr: 0.002419
+train epoch: 1/  30. itr:  196/ 196. btime: 0.809s. loss: 3.1678. lr: 0.002417
+Total train time: 158.165s
+Total test time: 16.719s
+Total test time: 16.000s
+Total test time: 30.467s
+[2025-09-03 09:35:06,008] epoch: 1, acc-known-trans: 81.27999998779296
+[2025-09-03 09:35:06,009] epoch: 1, acc-novel-trans: 74.65999995117187
+[2025-09-03 09:35:06,009] epoch: 1, acc-all-trans: 77.97000006103515, best-acc: 77.97000006103515, best-acc-novel: 74.65999995117187
+train epoch: 2/  30. itr:    1/ 196. btime: 2.772s. loss: 2.7128. lr: 0.002416
+train epoch: 2/  30. itr:    6/ 196. btime: 1.123s. loss: 2.2001. lr: 0.002414
+train epoch: 2/  30. itr:   11/ 196. btime: 0.973s. loss: 2.3581. lr: 0.002412
+train epoch: 2/  30. itr:   16/ 196. btime: 0.917s. loss: 2.2553. lr: 0.002410
+train epoch: 2/  30. itr:   21/ 196. btime: 0.888s. loss: 2.2339. lr: 0.002408
+train epoch: 2/  30. itr:   26/ 196. btime: 0.870s. loss: 2.2206. lr: 0.002406
+train epoch: 2/  30. itr:   31/ 196. btime: 0.858s. loss: 2.2334. lr: 0.002403
+train epoch: 2/  30. itr:   36/ 196. btime: 0.849s. loss: 2.2661. lr: 0.002401
+train epoch: 2/  30. itr:   41/ 196. btime: 0.843s. loss: 2.2676. lr: 0.002399
+train epoch: 2/  30. itr:   46/ 196. btime: 0.838s. loss: 2.2778. lr: 0.002397
+train epoch: 2/  30. itr:   51/ 196. btime: 0.834s. loss: 2.2699. lr: 0.002395
+train epoch: 2/  30. itr:   56/ 196. btime: 0.831s. loss: 2.2756. lr: 0.002393
+train epoch: 2/  30. itr:   61/ 196. btime: 0.828s. loss: 2.2557. lr: 0.002391
+train epoch: 2/  30. itr:   66/ 196. btime: 0.826s. loss: 2.2437. lr: 0.002389
+train epoch: 2/  30. itr:   71/ 196. btime: 0.824s. loss: 2.2411. lr: 0.002386
+train epoch: 2/  30. itr:   76/ 196. btime: 0.822s. loss: 2.2524. lr: 0.002384
+train epoch: 2/  30. itr:   81/ 196. btime: 0.821s. loss: 2.2514. lr: 0.002382
+train epoch: 2/  30. itr:   86/ 196. btime: 0.820s. loss: 2.2493. lr: 0.002380
+train epoch: 2/  30. itr:   91/ 196. btime: 0.818s. loss: 2.2591. lr: 0.002378
+train epoch: 2/  30. itr:   96/ 196. btime: 0.817s. loss: 2.2650. lr: 0.002376
+train epoch: 2/  30. itr:  101/ 196. btime: 0.816s. loss: 2.2600. lr: 0.002374
+train epoch: 2/  30. itr:  106/ 196. btime: 0.815s. loss: 2.2602. lr: 0.002372
+train epoch: 2/  30. itr:  111/ 196. btime: 0.815s. loss: 2.2693. lr: 0.002369
+train epoch: 2/  30. itr:  116/ 196. btime: 0.814s. loss: 2.2753. lr: 0.002367
+train epoch: 2/  30. itr:  121/ 196. btime: 0.813s. loss: 2.2681. lr: 0.002365
+train epoch: 2/  30. itr:  126/ 196. btime: 0.813s. loss: 2.2618. lr: 0.002363
+train epoch: 2/  30. itr:  131/ 196. btime: 0.812s. loss: 2.2580. lr: 0.002361
+train epoch: 2/  30. itr:  136/ 196. btime: 0.812s. loss: 2.2547. lr: 0.002359
+train epoch: 2/  30. itr:  141/ 196. btime: 0.812s. loss: 2.2522. lr: 0.002357
+train epoch: 2/  30. itr:  146/ 196. btime: 0.811s. loss: 2.2553. lr: 0.002355
+train epoch: 2/  30. itr:  151/ 196. btime: 0.811s. loss: 2.2551. lr: 0.002352
+train epoch: 2/  30. itr:  156/ 196. btime: 0.810s. loss: 2.2448. lr: 0.002350
+train epoch: 2/  30. itr:  161/ 196. btime: 0.810s. loss: 2.2437. lr: 0.002348
+train epoch: 2/  30. itr:  166/ 196. btime: 0.810s. loss: 2.2394. lr: 0.002346
+train epoch: 2/  30. itr:  171/ 196. btime: 0.809s. loss: 2.2386. lr: 0.002344
+train epoch: 2/  30. itr:  176/ 196. btime: 0.809s. loss: 2.2334. lr: 0.002342
+train epoch: 2/  30. itr:  181/ 196. btime: 0.809s. loss: 2.2328. lr: 0.002340
+train epoch: 2/  30. itr:  186/ 196. btime: 0.809s. loss: 2.2334. lr: 0.002338
+train epoch: 2/  30. itr:  191/ 196. btime: 0.808s. loss: 2.2314. lr: 0.002335
+train epoch: 2/  30. itr:  196/ 196. btime: 0.808s. loss: 2.2326. lr: 0.002333
+Total train time: 157.814s
+Total test time: 16.352s
+Total test time: 15.989s
+Total test time: 30.395s
+[2025-09-03 09:38:48,719] epoch: 2, acc-known-trans: 82.33999997558594
+[2025-09-03 09:38:48,719] epoch: 2, acc-novel-trans: 71.96000004882812
+[2025-09-03 09:38:48,719] epoch: 2, acc-all-trans: 77.14999992675781, best-acc: 77.97000006103515, best-acc-novel: 74.65999995117187
+train epoch: 3/  30. itr:    1/ 196. btime: 3.045s. loss: 1.6899. lr: 0.002333
+train epoch: 3/  30. itr:    6/ 196. btime: 1.165s. loss: 1.9586. lr: 0.002331
+train epoch: 3/  30. itr:   11/ 196. btime: 0.996s. loss: 1.9310. lr: 0.002329
+train epoch: 3/  30. itr:   16/ 196. btime: 0.932s. loss: 2.0467. lr: 0.002327
+train epoch: 3/  30. itr:   21/ 196. btime: 0.899s. loss: 2.0417. lr: 0.002324
+train epoch: 3/  30. itr:   26/ 196. btime: 0.879s. loss: 2.0218. lr: 0.002322
+train epoch: 3/  30. itr:   31/ 196. btime: 0.865s. loss: 2.0391. lr: 0.002320
+train epoch: 3/  30. itr:   36/ 196. btime: 0.855s. loss: 2.0562. lr: 0.002318
+train epoch: 3/  30. itr:   41/ 196. btime: 0.847s. loss: 2.0655. lr: 0.002316
+train epoch: 3/  30. itr:   46/ 196. btime: 0.841s. loss: 2.0496. lr: 0.002314
+train epoch: 3/  30. itr:   51/ 196. btime: 0.837s. loss: 2.0402. lr: 0.002312
+train epoch: 3/  30. itr:   56/ 196. btime: 0.833s. loss: 2.0423. lr: 0.002310
+train epoch: 3/  30. itr:   61/ 196. btime: 0.830s. loss: 2.0335. lr: 0.002307
+train epoch: 3/  30. itr:   66/ 196. btime: 0.827s. loss: 2.0384. lr: 0.002305
+train epoch: 3/  30. itr:   71/ 196. btime: 0.825s. loss: 2.0482. lr: 0.002303
+train epoch: 3/  30. itr:   76/ 196. btime: 0.824s. loss: 2.0416. lr: 0.002301
+train epoch: 3/  30. itr:   81/ 196. btime: 0.822s. loss: 2.0417. lr: 0.002299
+train epoch: 3/  30. itr:   86/ 196. btime: 0.821s. loss: 2.0557. lr: 0.002297
+train epoch: 3/  30. itr:   91/ 196. btime: 0.820s. loss: 2.0613. lr: 0.002295
+train epoch: 3/  30. itr:   96/ 196. btime: 0.818s. loss: 2.0622. lr: 0.002293
+train epoch: 3/  30. itr:  101/ 196. btime: 0.818s. loss: 2.0700. lr: 0.002290
+train epoch: 3/  30. itr:  106/ 196. btime: 0.817s. loss: 2.0612. lr: 0.002288
+train epoch: 3/  30. itr:  111/ 196. btime: 0.816s. loss: 2.0591. lr: 0.002286
+train epoch: 3/  30. itr:  116/ 196. btime: 0.815s. loss: 2.0628. lr: 0.002284
+train epoch: 3/  30. itr:  121/ 196. btime: 0.815s. loss: 2.0579. lr: 0.002282
+train epoch: 3/  30. itr:  126/ 196. btime: 0.814s. loss: 2.0585. lr: 0.002280
+train epoch: 3/  30. itr:  131/ 196. btime: 0.813s. loss: 2.0589. lr: 0.002278
+train epoch: 3/  30. itr:  136/ 196. btime: 0.813s. loss: 2.0584. lr: 0.002276
+train epoch: 3/  30. itr:  141/ 196. btime: 0.812s. loss: 2.0554. lr: 0.002273
+train epoch: 3/  30. itr:  146/ 196. btime: 0.812s. loss: 2.0622. lr: 0.002271
+train epoch: 3/  30. itr:  151/ 196. btime: 0.812s. loss: 2.0666. lr: 0.002269
+train epoch: 3/  30. itr:  156/ 196. btime: 0.811s. loss: 2.0643. lr: 0.002267
+train epoch: 3/  30. itr:  161/ 196. btime: 0.811s. loss: 2.0621. lr: 0.002265
+train epoch: 3/  30. itr:  166/ 196. btime: 0.811s. loss: 2.0610. lr: 0.002263
+train epoch: 3/  30. itr:  171/ 196. btime: 0.810s. loss: 2.0605. lr: 0.002261
+train epoch: 3/  30. itr:  176/ 196. btime: 0.810s. loss: 2.0643. lr: 0.002259
+train epoch: 3/  30. itr:  181/ 196. btime: 0.810s. loss: 2.0693. lr: 0.002256
+train epoch: 3/  30. itr:  186/ 196. btime: 0.809s. loss: 2.0678. lr: 0.002254
+train epoch: 3/  30. itr:  191/ 196. btime: 0.809s. loss: 2.0672. lr: 0.002252
+train epoch: 3/  30. itr:  196/ 196. btime: 0.808s. loss: 2.0654. lr: 0.002250
+Total train time: 157.940s
+Total test time: 16.218s
+Total test time: 16.348s
+Total test time: 30.329s
+[2025-09-03 09:42:36,629] epoch: 3, acc-known-trans: 82.01999981689453
+[2025-09-03 09:42:36,629] epoch: 3, acc-novel-trans: 75.77999975585938
+[2025-09-03 09:42:36,629] epoch: 3, acc-all-trans: 78.9000000366211, best-acc: 78.9000000366211, best-acc-novel: 75.77999975585938
+train epoch: 4/  30. itr:    1/ 196. btime: 2.751s. loss: 1.9685. lr: 0.002250
+train epoch: 4/  30. itr:    6/ 196. btime: 1.116s. loss: 1.9348. lr: 0.002247
+train epoch: 4/  30. itr:   11/ 196. btime: 0.967s. loss: 2.0283. lr: 0.002245
+train epoch: 4/  30. itr:   16/ 196. btime: 0.912s. loss: 2.0357. lr: 0.002243
+train epoch: 4/  30. itr:   21/ 196. btime: 0.883s. loss: 1.9837. lr: 0.002241
+train epoch: 4/  30. itr:   26/ 196. btime: 0.865s. loss: 1.9508. lr: 0.002239
+train epoch: 4/  30. itr:   31/ 196. btime: 0.853s. loss: 1.9627. lr: 0.002237
+train epoch: 4/  30. itr:   36/ 196. btime: 0.844s. loss: 1.9691. lr: 0.002235
+train epoch: 4/  30. itr:   41/ 196. btime: 0.838s. loss: 1.9765. lr: 0.002233
+train epoch: 4/  30. itr:   46/ 196. btime: 0.833s. loss: 1.9835. lr: 0.002230
+train epoch: 4/  30. itr:   51/ 196. btime: 0.829s. loss: 1.9807. lr: 0.002228
+train epoch: 4/  30. itr:   56/ 196. btime: 0.826s. loss: 1.9898. lr: 0.002226
+train epoch: 4/  30. itr:   61/ 196. btime: 0.823s. loss: 1.9679. lr: 0.002224
+train epoch: 4/  30. itr:   66/ 196. btime: 0.821s. loss: 1.9611. lr: 0.002222
+train epoch: 4/  30. itr:   71/ 196. btime: 0.819s. loss: 1.9689. lr: 0.002220
+train epoch: 4/  30. itr:   76/ 196. btime: 0.817s. loss: 1.9810. lr: 0.002218
+train epoch: 4/  30. itr:   81/ 196. btime: 0.816s. loss: 1.9753. lr: 0.002216
+train epoch: 4/  30. itr:   86/ 196. btime: 0.815s. loss: 1.9842. lr: 0.002213
+train epoch: 4/  30. itr:   91/ 196. btime: 0.814s. loss: 1.9838. lr: 0.002211
+train epoch: 4/  30. itr:   96/ 196. btime: 0.813s. loss: 1.9802. lr: 0.002209
+train epoch: 4/  30. itr:  101/ 196. btime: 0.812s. loss: 1.9785. lr: 0.002207
+train epoch: 4/  30. itr:  106/ 196. btime: 0.811s. loss: 1.9866. lr: 0.002205
+train epoch: 4/  30. itr:  111/ 196. btime: 0.811s. loss: 1.9933. lr: 0.002203
+train epoch: 4/  30. itr:  116/ 196. btime: 0.810s. loss: 1.9861. lr: 0.002201
+train epoch: 4/  30. itr:  121/ 196. btime: 0.810s. loss: 1.9820. lr: 0.002199
+train epoch: 4/  30. itr:  126/ 196. btime: 0.809s. loss: 1.9819. lr: 0.002196
+train epoch: 4/  30. itr:  131/ 196. btime: 0.809s. loss: 1.9729. lr: 0.002194
+train epoch: 4/  30. itr:  136/ 196. btime: 0.809s. loss: 1.9770. lr: 0.002192
+train epoch: 4/  30. itr:  141/ 196. btime: 0.808s. loss: 1.9771. lr: 0.002190
+train epoch: 4/  30. itr:  146/ 196. btime: 0.808s. loss: 1.9755. lr: 0.002188
+train epoch: 4/  30. itr:  151/ 196. btime: 0.808s. loss: 1.9814. lr: 0.002186
+train epoch: 4/  30. itr:  156/ 196. btime: 0.807s. loss: 1.9820. lr: 0.002184
+train epoch: 4/  30. itr:  161/ 196. btime: 0.807s. loss: 1.9840. lr: 0.002182
+train epoch: 4/  30. itr:  166/ 196. btime: 0.807s. loss: 1.9800. lr: 0.002179
+train epoch: 4/  30. itr:  171/ 196. btime: 0.807s. loss: 1.9814. lr: 0.002177
+train epoch: 4/  30. itr:  176/ 196. btime: 0.807s. loss: 1.9786. lr: 0.002175
+train epoch: 4/  30. itr:  181/ 196. btime: 0.806s. loss: 1.9737. lr: 0.002173
+train epoch: 4/  30. itr:  186/ 196. btime: 0.806s. loss: 1.9723. lr: 0.002171
+train epoch: 4/  30. itr:  191/ 196. btime: 0.806s. loss: 1.9719. lr: 0.002169
+train epoch: 4/  30. itr:  196/ 196. btime: 0.805s. loss: 1.9723. lr: 0.002167
+Total train time: 157.356s
+Total test time: 16.302s
+Total test time: 16.004s
+Total test time: 30.297s
+[2025-09-03 09:46:31,135] epoch: 4, acc-known-trans: 82.57999997558593
+[2025-09-03 09:46:31,135] epoch: 4, acc-novel-trans: 74.57999970703125
+[2025-09-03 09:46:31,135] epoch: 4, acc-all-trans: 78.57999993896485, best-acc: 78.9000000366211, best-acc-novel: 75.77999975585938
+train epoch: 5/  30. itr:    1/ 196. btime: 2.761s. loss: 2.0070. lr: 0.002166
+train epoch: 5/  30. itr:    6/ 196. btime: 1.122s. loss: 1.9059. lr: 0.002164
+train epoch: 5/  30. itr:   11/ 196. btime: 0.971s. loss: 1.9387. lr: 0.002162
+train epoch: 5/  30. itr:   16/ 196. btime: 0.915s. loss: 1.8990. lr: 0.002160
+train epoch: 5/  30. itr:   21/ 196. btime: 0.886s. loss: 1.8770. lr: 0.002158
+train epoch: 5/  30. itr:   26/ 196. btime: 0.868s. loss: 1.8817. lr: 0.002156
+train epoch: 5/  30. itr:   31/ 196. btime: 0.856s. loss: 1.8606. lr: 0.002153
+train epoch: 5/  30. itr:   36/ 196. btime: 0.847s. loss: 1.8549. lr: 0.002151
+train epoch: 5/  30. itr:   41/ 196. btime: 0.841s. loss: 1.8462. lr: 0.002149
+train epoch: 5/  30. itr:   46/ 196. btime: 0.836s. loss: 1.8617. lr: 0.002147
+train epoch: 5/  30. itr:   51/ 196. btime: 0.832s. loss: 1.8757. lr: 0.002145
+train epoch: 5/  30. itr:   56/ 196. btime: 0.829s. loss: 1.8663. lr: 0.002143
+train epoch: 5/  30. itr:   61/ 196. btime: 0.826s. loss: 1.8526. lr: 0.002141
+train epoch: 5/  30. itr:   66/ 196. btime: 0.824s. loss: 1.8435. lr: 0.002139
+train epoch: 5/  30. itr:   71/ 196. btime: 0.822s. loss: 1.8513. lr: 0.002136
+train epoch: 5/  30. itr:   76/ 196. btime: 0.820s. loss: 1.8521. lr: 0.002134
+train epoch: 5/  30. itr:   81/ 196. btime: 0.819s. loss: 1.8544. lr: 0.002132
+train epoch: 5/  30. itr:   86/ 196. btime: 0.818s. loss: 1.8629. lr: 0.002130
+train epoch: 5/  30. itr:   91/ 196. btime: 0.817s. loss: 1.8667. lr: 0.002128
+train epoch: 5/  30. itr:   96/ 196. btime: 0.816s. loss: 1.8772. lr: 0.002126
+train epoch: 5/  30. itr:  101/ 196. btime: 0.815s. loss: 1.8754. lr: 0.002124
+train epoch: 5/  30. itr:  106/ 196. btime: 0.815s. loss: 1.8718. lr: 0.002122
+train epoch: 5/  30. itr:  111/ 196. btime: 0.814s. loss: 1.8643. lr: 0.002119
+train epoch: 5/  30. itr:  116/ 196. btime: 0.813s. loss: 1.8641. lr: 0.002117
+train epoch: 5/  30. itr:  121/ 196. btime: 0.813s. loss: 1.8656. lr: 0.002115
+train epoch: 5/  30. itr:  126/ 196. btime: 0.812s. loss: 1.8755. lr: 0.002113
+train epoch: 5/  30. itr:  131/ 196. btime: 0.812s. loss: 1.8771. lr: 0.002111
+train epoch: 5/  30. itr:  136/ 196. btime: 0.811s. loss: 1.8775. lr: 0.002109
+train epoch: 5/  30. itr:  141/ 196. btime: 0.811s. loss: 1.8795. lr: 0.002107
+train epoch: 5/  30. itr:  146/ 196. btime: 0.811s. loss: 1.8757. lr: 0.002105
+train epoch: 5/  30. itr:  151/ 196. btime: 0.810s. loss: 1.8797. lr: 0.002102
+train epoch: 5/  30. itr:  156/ 196. btime: 0.810s. loss: 1.8862. lr: 0.002100
+train epoch: 5/  30. itr:  161/ 196. btime: 0.809s. loss: 1.8993. lr: 0.002098
+train epoch: 5/  30. itr:  166/ 196. btime: 0.809s. loss: 1.8961. lr: 0.002096
+train epoch: 5/  30. itr:  171/ 196. btime: 0.809s. loss: 1.8906. lr: 0.002094
+train epoch: 5/  30. itr:  176/ 196. btime: 0.809s. loss: 1.8927. lr: 0.002092
+train epoch: 5/  30. itr:  181/ 196. btime: 0.808s. loss: 1.8959. lr: 0.002090
+train epoch: 5/  30. itr:  186/ 196. btime: 0.808s. loss: 1.8921. lr: 0.002088
+train epoch: 5/  30. itr:  191/ 196. btime: 0.808s. loss: 1.8890. lr: 0.002085
+train epoch: 5/  30. itr:  196/ 196. btime: 0.807s. loss: 1.8887. lr: 0.002083
+Total train time: 157.718s
+Total test time: 16.152s
+Total test time: 16.133s
+Total test time: 30.389s
+[2025-09-03 09:50:17,562] epoch: 5, acc-known-trans: 82.91999974365234
+[2025-09-03 09:50:17,562] epoch: 5, acc-novel-trans: 74.58000004882813
+[2025-09-03 09:50:17,562] epoch: 5, acc-all-trans: 78.75, best-acc: 78.9000000366211, best-acc-novel: 75.77999975585938
+train epoch: 6/  30. itr:    1/ 196. btime: 2.948s. loss: 2.1113. lr: 0.002083
+train epoch: 6/  30. itr:    6/ 196. btime: 1.151s. loss: 1.7687. lr: 0.002081
+train epoch: 6/  30. itr:   11/ 196. btime: 0.988s. loss: 1.8358. lr: 0.002079
+train epoch: 6/  30. itr:   16/ 196. btime: 0.927s. loss: 1.7810. lr: 0.002077
+train epoch: 6/  30. itr:   21/ 196. btime: 0.895s. loss: 1.7576. lr: 0.002074
+train epoch: 6/  30. itr:   26/ 196. btime: 0.876s. loss: 1.7606. lr: 0.002072
+train epoch: 6/  30. itr:   31/ 196. btime: 0.862s. loss: 1.7692. lr: 0.002070
+train epoch: 6/  30. itr:   36/ 196. btime: 0.853s. loss: 1.7493. lr: 0.002068
+train epoch: 6/  30. itr:   41/ 196. btime: 0.845s. loss: 1.7382. lr: 0.002066
+train epoch: 6/  30. itr:   46/ 196. btime: 0.840s. loss: 1.7390. lr: 0.002064
+train epoch: 6/  30. itr:   51/ 196. btime: 0.836s. loss: 1.7528. lr: 0.002062
+train epoch: 6/  30. itr:   56/ 196. btime: 0.832s. loss: 1.7463. lr: 0.002060
+train epoch: 6/  30. itr:   61/ 196. btime: 0.829s. loss: 1.7490. lr: 0.002057
+train epoch: 6/  30. itr:   66/ 196. btime: 0.827s. loss: 1.7459. lr: 0.002055
+train epoch: 6/  30. itr:   71/ 196. btime: 0.825s. loss: 1.7640. lr: 0.002053
+train epoch: 6/  30. itr:   76/ 196. btime: 0.823s. loss: 1.7680. lr: 0.002051
+train epoch: 6/  30. itr:   81/ 196. btime: 0.822s. loss: 1.7763. lr: 0.002049
+train epoch: 6/  30. itr:   86/ 196. btime: 0.820s. loss: 1.7810. lr: 0.002047
+train epoch: 6/  30. itr:   91/ 196. btime: 0.819s. loss: 1.7845. lr: 0.002045
+train epoch: 6/  30. itr:   96/ 196. btime: 0.818s. loss: 1.7868. lr: 0.002043
+train epoch: 6/  30. itr:  101/ 196. btime: 0.817s. loss: 1.7800. lr: 0.002040
+train epoch: 6/  30. itr:  106/ 196. btime: 0.817s. loss: 1.7733. lr: 0.002038
+train epoch: 6/  30. itr:  111/ 196. btime: 0.816s. loss: 1.7813. lr: 0.002036
+train epoch: 6/  30. itr:  116/ 196. btime: 0.815s. loss: 1.7748. lr: 0.002034
+train epoch: 6/  30. itr:  121/ 196. btime: 0.814s. loss: 1.7753. lr: 0.002032
+train epoch: 6/  30. itr:  126/ 196. btime: 0.814s. loss: 1.7793. lr: 0.002030
+train epoch: 6/  30. itr:  131/ 196. btime: 0.813s. loss: 1.7798. lr: 0.002028
+train epoch: 6/  30. itr:  136/ 196. btime: 0.813s. loss: 1.7764. lr: 0.002026
+train epoch: 6/  30. itr:  141/ 196. btime: 0.812s. loss: 1.7850. lr: 0.002023
+train epoch: 6/  30. itr:  146/ 196. btime: 0.812s. loss: 1.7846. lr: 0.002021
+train epoch: 6/  30. itr:  151/ 196. btime: 0.812s. loss: 1.7869. lr: 0.002019
+train epoch: 6/  30. itr:  156/ 196. btime: 0.811s. loss: 1.7802. lr: 0.002017
+train epoch: 6/  30. itr:  161/ 196. btime: 0.811s. loss: 1.7759. lr: 0.002015
+train epoch: 6/  30. itr:  166/ 196. btime: 0.810s. loss: 1.7702. lr: 0.002013
+train epoch: 6/  30. itr:  171/ 196. btime: 0.810s. loss: 1.7688. lr: 0.002011
+train epoch: 6/  30. itr:  176/ 196. btime: 0.810s. loss: 1.7716. lr: 0.002009
+train epoch: 6/  30. itr:  181/ 196. btime: 0.810s. loss: 1.7760. lr: 0.002006
+train epoch: 6/  30. itr:  186/ 196. btime: 0.809s. loss: 1.7778. lr: 0.002004
+train epoch: 6/  30. itr:  191/ 196. btime: 0.809s. loss: 1.7838. lr: 0.002002
+train epoch: 6/  30. itr:  196/ 196. btime: 0.808s. loss: 1.7875. lr: 0.002000
+Total train time: 157.895s
+Total test time: 16.244s
+Total test time: 16.338s
+Total test time: 30.355s
+[2025-09-03 09:54:04,277] epoch: 6, acc-known-trans: 83.07999982910157
+[2025-09-03 09:54:04,277] epoch: 6, acc-novel-trans: 73.77999998779296
+[2025-09-03 09:54:04,277] epoch: 6, acc-all-trans: 78.42999998779297, best-acc: 78.9000000366211, best-acc-novel: 75.77999975585938
+train epoch: 7/  30. itr:    1/ 196. btime: 2.928s. loss: 2.0460. lr: 0.002000
+train epoch: 7/  30. itr:    6/ 196. btime: 1.147s. loss: 1.9885. lr: 0.001997
+train epoch: 7/  30. itr:   11/ 196. btime: 0.986s. loss: 1.9271. lr: 0.001995
+train epoch: 7/  30. itr:   16/ 196. btime: 0.925s. loss: 1.8971. lr: 0.001993
+train epoch: 7/  30. itr:   21/ 196. btime: 0.894s. loss: 1.8680. lr: 0.001991
+train epoch: 7/  30. itr:   26/ 196. btime: 0.875s. loss: 1.8646. lr: 0.001989
+train epoch: 7/  30. itr:   31/ 196. btime: 0.862s. loss: 1.8195. lr: 0.001987
+train epoch: 7/  30. itr:   36/ 196. btime: 0.852s. loss: 1.8031. lr: 0.001985
+train epoch: 7/  30. itr:   41/ 196. btime: 0.845s. loss: 1.8113. lr: 0.001983
+train epoch: 7/  30. itr:   46/ 196. btime: 0.840s. loss: 1.8160. lr: 0.001980
+train epoch: 7/  30. itr:   51/ 196. btime: 0.836s. loss: 1.8078. lr: 0.001978
+train epoch: 7/  30. itr:   56/ 196. btime: 0.832s. loss: 1.7827. lr: 0.001976
+train epoch: 7/  30. itr:   61/ 196. btime: 0.830s. loss: 1.7702. lr: 0.001974
+train epoch: 7/  30. itr:   66/ 196. btime: 0.827s. loss: 1.7724. lr: 0.001972
+train epoch: 7/  30. itr:   71/ 196. btime: 0.825s. loss: 1.7761. lr: 0.001970
+train epoch: 7/  30. itr:   76/ 196. btime: 0.824s. loss: 1.7719. lr: 0.001968
+train epoch: 7/  30. itr:   81/ 196. btime: 0.822s. loss: 1.7712. lr: 0.001966
+train epoch: 7/  30. itr:   86/ 196. btime: 0.821s. loss: 1.7753. lr: 0.001963
+train epoch: 7/  30. itr:   91/ 196. btime: 0.820s. loss: 1.7655. lr: 0.001961
+train epoch: 7/  30. itr:   96/ 196. btime: 0.819s. loss: 1.7546. lr: 0.001959
+train epoch: 7/  30. itr:  101/ 196. btime: 0.818s. loss: 1.7558. lr: 0.001957
+train epoch: 7/  30. itr:  106/ 196. btime: 0.817s. loss: 1.7639. lr: 0.001955
+train epoch: 7/  30. itr:  111/ 196. btime: 0.816s. loss: 1.7604. lr: 0.001953
+train epoch: 7/  30. itr:  116/ 196. btime: 0.816s. loss: 1.7627. lr: 0.001951
+train epoch: 7/  30. itr:  121/ 196. btime: 0.815s. loss: 1.7640. lr: 0.001949
+train epoch: 7/  30. itr:  126/ 196. btime: 0.814s. loss: 1.7634. lr: 0.001946
+train epoch: 7/  30. itr:  131/ 196. btime: 0.814s. loss: 1.7661. lr: 0.001944
+train epoch: 7/  30. itr:  136/ 196. btime: 0.813s. loss: 1.7588. lr: 0.001942
+train epoch: 7/  30. itr:  141/ 196. btime: 0.813s. loss: 1.7576. lr: 0.001940
+train epoch: 7/  30. itr:  146/ 196. btime: 0.812s. loss: 1.7539. lr: 0.001938
+train epoch: 7/  30. itr:  151/ 196. btime: 0.812s. loss: 1.7531. lr: 0.001936
+train epoch: 7/  30. itr:  156/ 196. btime: 0.811s. loss: 1.7522. lr: 0.001934
+train epoch: 7/  30. itr:  161/ 196. btime: 0.811s. loss: 1.7555. lr: 0.001932
+train epoch: 7/  30. itr:  166/ 196. btime: 0.811s. loss: 1.7663. lr: 0.001929
+train epoch: 7/  30. itr:  171/ 196. btime: 0.810s. loss: 1.7665. lr: 0.001927
+train epoch: 7/  30. itr:  176/ 196. btime: 0.810s. loss: 1.7647. lr: 0.001925
+train epoch: 7/  30. itr:  181/ 196. btime: 0.810s. loss: 1.7633. lr: 0.001923
+train epoch: 7/  30. itr:  186/ 196. btime: 0.810s. loss: 1.7629. lr: 0.001921
+train epoch: 7/  30. itr:  191/ 196. btime: 0.809s. loss: 1.7622. lr: 0.001919
+train epoch: 7/  30. itr:  196/ 196. btime: 0.808s. loss: 1.7653. lr: 0.001917
+Total train time: 158.002s
+Total test time: 16.253s
+Total test time: 16.082s
+Total test time: 30.315s
+[2025-09-03 09:57:50,873] epoch: 7, acc-known-trans: 83.41999998779296
+[2025-09-03 09:57:50,873] epoch: 7, acc-novel-trans: 74.59999997558593
+[2025-09-03 09:57:50,874] epoch: 7, acc-all-trans: 79.00999991455078, best-acc: 79.00999991455078, best-acc-novel: 75.77999975585938
+train epoch: 8/  30. itr:    1/ 196. btime: 2.878s. loss: 1.6915. lr: 0.001916
+train epoch: 8/  30. itr:    6/ 196. btime: 1.140s. loss: 1.6768. lr: 0.001914
+train epoch: 8/  30. itr:   11/ 196. btime: 0.984s. loss: 1.6840. lr: 0.001912
+train epoch: 8/  30. itr:   16/ 196. btime: 0.924s. loss: 1.6921. lr: 0.001910
+train epoch: 8/  30. itr:   21/ 196. btime: 0.893s. loss: 1.7022. lr: 0.001908
+train epoch: 8/  30. itr:   26/ 196. btime: 0.873s. loss: 1.6871. lr: 0.001906
+train epoch: 8/  30. itr:   31/ 196. btime: 0.861s. loss: 1.6705. lr: 0.001903
+train epoch: 8/  30. itr:   36/ 196. btime: 0.851s. loss: 1.6719. lr: 0.001901
+train epoch: 8/  30. itr:   41/ 196. btime: 0.845s. loss: 1.6703. lr: 0.001899
+train epoch: 8/  30. itr:   46/ 196. btime: 0.839s. loss: 1.6797. lr: 0.001897
+train epoch: 8/  30. itr:   51/ 196. btime: 0.835s. loss: 1.6738. lr: 0.001895
+train epoch: 8/  30. itr:   56/ 196. btime: 0.832s. loss: 1.6683. lr: 0.001893
+train epoch: 8/  30. itr:   61/ 196. btime: 0.829s. loss: 1.6821. lr: 0.001891
+train epoch: 8/  30. itr:   66/ 196. btime: 0.827s. loss: 1.6697. lr: 0.001889
+train epoch: 8/  30. itr:   71/ 196. btime: 0.825s. loss: 1.6828. lr: 0.001886
+train epoch: 8/  30. itr:   76/ 196. btime: 0.823s. loss: 1.6896. lr: 0.001884
+train epoch: 8/  30. itr:   81/ 196. btime: 0.822s. loss: 1.6912. lr: 0.001882
+train epoch: 8/  30. itr:   86/ 196. btime: 0.821s. loss: 1.6988. lr: 0.001880
+train epoch: 8/  30. itr:   91/ 196. btime: 0.819s. loss: 1.7033. lr: 0.001878
+train epoch: 8/  30. itr:   96/ 196. btime: 0.818s. loss: 1.7092. lr: 0.001876
+train epoch: 8/  30. itr:  101/ 196. btime: 0.817s. loss: 1.7090. lr: 0.001874
+train epoch: 8/  30. itr:  106/ 196. btime: 0.816s. loss: 1.7123. lr: 0.001872
+train epoch: 8/  30. itr:  111/ 196. btime: 0.816s. loss: 1.7108. lr: 0.001869
+train epoch: 8/  30. itr:  116/ 196. btime: 0.815s. loss: 1.7045. lr: 0.001867
+train epoch: 8/  30. itr:  121/ 196. btime: 0.814s. loss: 1.7034. lr: 0.001865
+train epoch: 8/  30. itr:  126/ 196. btime: 0.814s. loss: 1.6941. lr: 0.001863
+train epoch: 8/  30. itr:  131/ 196. btime: 0.813s. loss: 1.6922. lr: 0.001861
+train epoch: 8/  30. itr:  136/ 196. btime: 0.813s. loss: 1.6997. lr: 0.001859
+train epoch: 8/  30. itr:  141/ 196. btime: 0.812s. loss: 1.6999. lr: 0.001857
+train epoch: 8/  30. itr:  146/ 196. btime: 0.812s. loss: 1.6960. lr: 0.001855
+train epoch: 8/  30. itr:  151/ 196. btime: 0.811s. loss: 1.6957. lr: 0.001852
+train epoch: 8/  30. itr:  156/ 196. btime: 0.811s. loss: 1.6953. lr: 0.001850
+train epoch: 8/  30. itr:  161/ 196. btime: 0.811s. loss: 1.6914. lr: 0.001848
+train epoch: 8/  30. itr:  166/ 196. btime: 0.810s. loss: 1.6852. lr: 0.001846
+train epoch: 8/  30. itr:  171/ 196. btime: 0.810s. loss: 1.6793. lr: 0.001844
+train epoch: 8/  30. itr:  176/ 196. btime: 0.810s. loss: 1.6764. lr: 0.001842
+train epoch: 8/  30. itr:  181/ 196. btime: 0.809s. loss: 1.6816. lr: 0.001840
+train epoch: 8/  30. itr:  186/ 196. btime: 0.809s. loss: 1.6879. lr: 0.001838
+train epoch: 8/  30. itr:  191/ 196. btime: 0.809s. loss: 1.6827. lr: 0.001835
+train epoch: 8/  30. itr:  196/ 196. btime: 0.808s. loss: 1.6797. lr: 0.001833
+Total train time: 157.927s
+Total test time: 16.373s
+Total test time: 15.978s
+Total test time: 30.397s
+[2025-09-03 10:01:37,612] epoch: 8, acc-known-trans: 84.59999997558593
+[2025-09-03 10:01:37,612] epoch: 8, acc-novel-trans: 74.38000004882812
+[2025-09-03 10:01:37,612] epoch: 8, acc-all-trans: 79.48999998779297, best-acc: 79.48999998779297, best-acc-novel: 75.77999975585938
+train epoch: 9/  30. itr:    1/ 196. btime: 2.811s. loss: 1.7584. lr: 0.001833
+train epoch: 9/  30. itr:    6/ 196. btime: 1.128s. loss: 1.7611. lr: 0.001831
+train epoch: 9/  30. itr:   11/ 196. btime: 0.976s. loss: 1.6678. lr: 0.001829
+train epoch: 9/  30. itr:   16/ 196. btime: 0.919s. loss: 1.6893. lr: 0.001827
+train epoch: 9/  30. itr:   21/ 196. btime: 0.888s. loss: 1.6862. lr: 0.001824
+train epoch: 9/  30. itr:   26/ 196. btime: 0.870s. loss: 1.6892. lr: 0.001822
+train epoch: 9/  30. itr:   31/ 196. btime: 0.858s. loss: 1.6874. lr: 0.001820
+train epoch: 9/  30. itr:   36/ 196. btime: 0.849s. loss: 1.6610. lr: 0.001818
+train epoch: 9/  30. itr:   41/ 196. btime: 0.842s. loss: 1.6444. lr: 0.001816
+train epoch: 9/  30. itr:   46/ 196. btime: 0.837s. loss: 1.6540. lr: 0.001814
+train epoch: 9/  30. itr:   51/ 196. btime: 0.833s. loss: 1.6434. lr: 0.001812
+train epoch: 9/  30. itr:   56/ 196. btime: 0.830s. loss: 1.6397. lr: 0.001810
+train epoch: 9/  30. itr:   61/ 196. btime: 0.826s. loss: 1.6323. lr: 0.001807
+train epoch: 9/  30. itr:   66/ 196. btime: 0.824s. loss: 1.6316. lr: 0.001805
+train epoch: 9/  30. itr:   71/ 196. btime: 0.822s. loss: 1.6354. lr: 0.001803
+train epoch: 9/  30. itr:   76/ 196. btime: 0.821s. loss: 1.6448. lr: 0.001801
+train epoch: 9/  30. itr:   81/ 196. btime: 0.819s. loss: 1.6473. lr: 0.001799
+train epoch: 9/  30. itr:   86/ 196. btime: 0.818s. loss: 1.6450. lr: 0.001797
+train epoch: 9/  30. itr:   91/ 196. btime: 0.817s. loss: 1.6474. lr: 0.001795
+train epoch: 9/  30. itr:   96/ 196. btime: 0.816s. loss: 1.6500. lr: 0.001793
+train epoch: 9/  30. itr:  101/ 196. btime: 0.815s. loss: 1.6583. lr: 0.001790
+train epoch: 9/  30. itr:  106/ 196. btime: 0.814s. loss: 1.6599. lr: 0.001788
+train epoch: 9/  30. itr:  111/ 196. btime: 0.813s. loss: 1.6586. lr: 0.001786
+train epoch: 9/  30. itr:  116/ 196. btime: 0.813s. loss: 1.6564. lr: 0.001784
+train epoch: 9/  30. itr:  121/ 196. btime: 0.812s. loss: 1.6531. lr: 0.001782
+train epoch: 9/  30. itr:  126/ 196. btime: 0.812s. loss: 1.6467. lr: 0.001780
+train epoch: 9/  30. itr:  131/ 196. btime: 0.811s. loss: 1.6461. lr: 0.001778
+train epoch: 9/  30. itr:  136/ 196. btime: 0.811s. loss: 1.6512. lr: 0.001776
+train epoch: 9/  30. itr:  141/ 196. btime: 0.810s. loss: 1.6587. lr: 0.001773
+train epoch: 9/  30. itr:  146/ 196. btime: 0.810s. loss: 1.6618. lr: 0.001771
+train epoch: 9/  30. itr:  151/ 196. btime: 0.810s. loss: 1.6563. lr: 0.001769
+train epoch: 9/  30. itr:  156/ 196. btime: 0.809s. loss: 1.6443. lr: 0.001767
+train epoch: 9/  30. itr:  161/ 196. btime: 0.809s. loss: 1.6517. lr: 0.001765
+train epoch: 9/  30. itr:  166/ 196. btime: 0.809s. loss: 1.6500. lr: 0.001763
+train epoch: 9/  30. itr:  171/ 196. btime: 0.809s. loss: 1.6533. lr: 0.001761
+train epoch: 9/  30. itr:  176/ 196. btime: 0.808s. loss: 1.6561. lr: 0.001759
+train epoch: 9/  30. itr:  181/ 196. btime: 0.808s. loss: 1.6602. lr: 0.001756
+train epoch: 9/  30. itr:  186/ 196. btime: 0.808s. loss: 1.6647. lr: 0.001754
+train epoch: 9/  30. itr:  191/ 196. btime: 0.808s. loss: 1.6650. lr: 0.001752
+train epoch: 9/  30. itr:  196/ 196. btime: 0.807s. loss: 1.6664. lr: 0.001750
+Total train time: 157.656s
+Total test time: 16.119s
+Total test time: 16.054s
+Total test time: 30.394s
+[2025-09-03 10:05:23,400] epoch: 9, acc-known-trans: 84.17999985351562
+[2025-09-03 10:05:23,400] epoch: 9, acc-novel-trans: 74.60000020751953
+[2025-09-03 10:05:23,400] epoch: 9, acc-all-trans: 79.38999998779298, best-acc: 79.48999998779297, best-acc-novel: 75.77999975585938
+train epoch: 10/  30. itr:    1/ 196. btime: 2.908s. loss: 1.8028. lr: 0.001750
+train epoch: 10/  30. itr:    6/ 196. btime: 1.142s. loss: 1.8879. lr: 0.001747
+train epoch: 10/  30. itr:   11/ 196. btime: 0.983s. loss: 1.7883. lr: 0.001745
+train epoch: 10/  30. itr:   16/ 196. btime: 0.924s. loss: 1.7072. lr: 0.001743
+train epoch: 10/  30. itr:   21/ 196. btime: 0.893s. loss: 1.6744. lr: 0.001741
+train epoch: 10/  30. itr:   26/ 196. btime: 0.874s. loss: 1.6235. lr: 0.001739
+train epoch: 10/  30. itr:   31/ 196. btime: 0.860s. loss: 1.6206. lr: 0.001737
+train epoch: 10/  30. itr:   36/ 196. btime: 0.851s. loss: 1.6217. lr: 0.001735
+train epoch: 10/  30. itr:   41/ 196. btime: 0.844s. loss: 1.6301. lr: 0.001733
+train epoch: 10/  30. itr:   46/ 196. btime: 0.839s. loss: 1.6405. lr: 0.001730
+train epoch: 10/  30. itr:   51/ 196. btime: 0.834s. loss: 1.6339. lr: 0.001728
+train epoch: 10/  30. itr:   56/ 196. btime: 0.831s. loss: 1.6303. lr: 0.001726
+train epoch: 10/  30. itr:   61/ 196. btime: 0.828s. loss: 1.6407. lr: 0.001724
+train epoch: 10/  30. itr:   66/ 196. btime: 0.825s. loss: 1.6350. lr: 0.001722
+train epoch: 10/  30. itr:   71/ 196. btime: 0.823s. loss: 1.6486. lr: 0.001720
+train epoch: 10/  30. itr:   76/ 196. btime: 0.822s. loss: 1.6408. lr: 0.001718
+train epoch: 10/  30. itr:   81/ 196. btime: 0.820s. loss: 1.6406. lr: 0.001716
+train epoch: 10/  30. itr:   86/ 196. btime: 0.819s. loss: 1.6388. lr: 0.001713
+train epoch: 10/  30. itr:   91/ 196. btime: 0.818s. loss: 1.6474. lr: 0.001711
+train epoch: 10/  30. itr:   96/ 196. btime: 0.817s. loss: 1.6480. lr: 0.001709
+train epoch: 10/  30. itr:  101/ 196. btime: 0.816s. loss: 1.6393. lr: 0.001707
+train epoch: 10/  30. itr:  106/ 196. btime: 0.815s. loss: 1.6336. lr: 0.001705
+train epoch: 10/  30. itr:  111/ 196. btime: 0.814s. loss: 1.6309. lr: 0.001703
+train epoch: 10/  30. itr:  116/ 196. btime: 0.814s. loss: 1.6349. lr: 0.001701
+train epoch: 10/  30. itr:  121/ 196. btime: 0.813s. loss: 1.6269. lr: 0.001699
+train epoch: 10/  30. itr:  126/ 196. btime: 0.813s. loss: 1.6286. lr: 0.001696
+train epoch: 10/  30. itr:  131/ 196. btime: 0.812s. loss: 1.6289. lr: 0.001694
+train epoch: 10/  30. itr:  136/ 196. btime: 0.812s. loss: 1.6252. lr: 0.001692
+train epoch: 10/  30. itr:  141/ 196. btime: 0.811s. loss: 1.6288. lr: 0.001690
+train epoch: 10/  30. itr:  146/ 196. btime: 0.811s. loss: 1.6339. lr: 0.001688
+train epoch: 10/  30. itr:  151/ 196. btime: 0.810s. loss: 1.6330. lr: 0.001686
+train epoch: 10/  30. itr:  156/ 196. btime: 0.810s. loss: 1.6328. lr: 0.001684
+train epoch: 10/  30. itr:  161/ 196. btime: 0.810s. loss: 1.6312. lr: 0.001682
+train epoch: 10/  30. itr:  166/ 196. btime: 0.809s. loss: 1.6335. lr: 0.001679
+train epoch: 10/  30. itr:  171/ 196. btime: 0.809s. loss: 1.6347. lr: 0.001677
+train epoch: 10/  30. itr:  176/ 196. btime: 0.809s. loss: 1.6347. lr: 0.001675
+train epoch: 10/  30. itr:  181/ 196. btime: 0.809s. loss: 1.6352. lr: 0.001673
+train epoch: 10/  30. itr:  186/ 196. btime: 0.808s. loss: 1.6355. lr: 0.001671
+train epoch: 10/  30. itr:  191/ 196. btime: 0.808s. loss: 1.6397. lr: 0.001669
+train epoch: 10/  30. itr:  196/ 196. btime: 0.807s. loss: 1.6384. lr: 0.001667
+Total train time: 157.731s
+Total test time: 16.179s
+Total test time: 16.008s
+Total test time: 30.243s
+[2025-09-03 10:09:08,144] epoch: 10, acc-known-trans: 83.45999970703124
+[2025-09-03 10:09:08,144] epoch: 10, acc-novel-trans: 74.1799997314453
+[2025-09-03 10:09:08,144] epoch: 10, acc-all-trans: 78.81999987792969, best-acc: 79.48999998779297, best-acc-novel: 75.77999975585938
+train epoch: 11/  30. itr:    1/ 196. btime: 2.767s. loss: 1.3761. lr: 0.001666
+train epoch: 11/  30. itr:    6/ 196. btime: 1.120s. loss: 1.6757. lr: 0.001664
+train epoch: 11/  30. itr:   11/ 196. btime: 0.971s. loss: 1.6641. lr: 0.001662
+train epoch: 11/  30. itr:   16/ 196. btime: 0.916s. loss: 1.6094. lr: 0.001660
+train epoch: 11/  30. itr:   21/ 196. btime: 0.886s. loss: 1.6104. lr: 0.001658
+train epoch: 11/  30. itr:   26/ 196. btime: 0.868s. loss: 1.6144. lr: 0.001656
+train epoch: 11/  30. itr:   31/ 196. btime: 0.856s. loss: 1.6208. lr: 0.001653
+train epoch: 11/  30. itr:   36/ 196. btime: 0.848s. loss: 1.5984. lr: 0.001651
+train epoch: 11/  30. itr:   41/ 196. btime: 0.841s. loss: 1.5833. lr: 0.001649
+train epoch: 11/  30. itr:   46/ 196. btime: 0.836s. loss: 1.5787. lr: 0.001647
+train epoch: 11/  30. itr:   51/ 196. btime: 0.832s. loss: 1.5877. lr: 0.001645
+train epoch: 11/  30. itr:   56/ 196. btime: 0.828s. loss: 1.5977. lr: 0.001643
+train epoch: 11/  30. itr:   61/ 196. btime: 0.826s. loss: 1.5906. lr: 0.001641
+train epoch: 11/  30. itr:   66/ 196. btime: 0.823s. loss: 1.5797. lr: 0.001639
+train epoch: 11/  30. itr:   71/ 196. btime: 0.821s. loss: 1.5849. lr: 0.001636
+train epoch: 11/  30. itr:   76/ 196. btime: 0.820s. loss: 1.5699. lr: 0.001634
+train epoch: 11/  30. itr:   81/ 196. btime: 0.818s. loss: 1.5750. lr: 0.001632
+train epoch: 11/  30. itr:   86/ 196. btime: 0.817s. loss: 1.5866. lr: 0.001630
+train epoch: 11/  30. itr:   91/ 196. btime: 0.816s. loss: 1.5962. lr: 0.001628
+train epoch: 11/  30. itr:   96/ 196. btime: 0.815s. loss: 1.5946. lr: 0.001626
+train epoch: 11/  30. itr:  101/ 196. btime: 0.814s. loss: 1.5902. lr: 0.001624
+train epoch: 11/  30. itr:  106/ 196. btime: 0.814s. loss: 1.5892. lr: 0.001622
+train epoch: 11/  30. itr:  111/ 196. btime: 0.813s. loss: 1.5950. lr: 0.001619
+train epoch: 11/  30. itr:  116/ 196. btime: 0.812s. loss: 1.5963. lr: 0.001617
+train epoch: 11/  30. itr:  121/ 196. btime: 0.812s. loss: 1.5958. lr: 0.001615
+train epoch: 11/  30. itr:  126/ 196. btime: 0.811s. loss: 1.5977. lr: 0.001613
+train epoch: 11/  30. itr:  131/ 196. btime: 0.811s. loss: 1.6033. lr: 0.001611
+train epoch: 11/  30. itr:  136/ 196. btime: 0.810s. loss: 1.6003. lr: 0.001609
+train epoch: 11/  30. itr:  141/ 196. btime: 0.810s. loss: 1.6018. lr: 0.001607
+train epoch: 11/  30. itr:  146/ 196. btime: 0.810s. loss: 1.6036. lr: 0.001605
+train epoch: 11/  30. itr:  151/ 196. btime: 0.809s. loss: 1.6087. lr: 0.001602
+train epoch: 11/  30. itr:  156/ 196. btime: 0.809s. loss: 1.6063. lr: 0.001600
+train epoch: 11/  30. itr:  161/ 196. btime: 0.809s. loss: 1.6025. lr: 0.001598
+train epoch: 11/  30. itr:  166/ 196. btime: 0.808s. loss: 1.6003. lr: 0.001596
+train epoch: 11/  30. itr:  171/ 196. btime: 0.808s. loss: 1.6007. lr: 0.001594
+train epoch: 11/  30. itr:  176/ 196. btime: 0.808s. loss: 1.6004. lr: 0.001592
+train epoch: 11/  30. itr:  181/ 196. btime: 0.808s. loss: 1.6047. lr: 0.001590
+train epoch: 11/  30. itr:  186/ 196. btime: 0.807s. loss: 1.6078. lr: 0.001588
+train epoch: 11/  30. itr:  191/ 196. btime: 0.807s. loss: 1.6053. lr: 0.001585
+train epoch: 11/  30. itr:  196/ 196. btime: 0.806s. loss: 1.6068. lr: 0.001583
+Total train time: 157.610s
+Total test time: 16.016s
+Total test time: 15.982s
+Total test time: 30.597s
+[2025-09-03 10:12:54,320] epoch: 11, acc-known-trans: 85.02000017089844
+[2025-09-03 10:12:54,320] epoch: 11, acc-novel-trans: 74.95999997558594
+[2025-09-03 10:12:54,320] epoch: 11, acc-all-trans: 79.98999995117188, best-acc: 79.98999995117188, best-acc-novel: 75.77999975585938
+train epoch: 12/  30. itr:    1/ 196. btime: 2.929s. loss: 1.1044. lr: 0.001583
+train epoch: 12/  30. itr:    6/ 196. btime: 1.149s. loss: 1.3960. lr: 0.001581
+train epoch: 12/  30. itr:   11/ 196. btime: 0.988s. loss: 1.4559. lr: 0.001579
+train epoch: 12/  30. itr:   16/ 196. btime: 0.927s. loss: 1.5404. lr: 0.001577
+train epoch: 12/  30. itr:   21/ 196. btime: 0.896s. loss: 1.4780. lr: 0.001574
+train epoch: 12/  30. itr:   26/ 196. btime: 0.877s. loss: 1.4814. lr: 0.001572
+train epoch: 12/  30. itr:   31/ 196. btime: 0.863s. loss: 1.4929. lr: 0.001570
+train epoch: 12/  30. itr:   36/ 196. btime: 0.854s. loss: 1.5203. lr: 0.001568
+train epoch: 12/  30. itr:   41/ 196. btime: 0.847s. loss: 1.5237. lr: 0.001566
+train epoch: 12/  30. itr:   46/ 196. btime: 0.842s. loss: 1.5234. lr: 0.001564
+train epoch: 12/  30. itr:   51/ 196. btime: 0.837s. loss: 1.5336. lr: 0.001562
+train epoch: 12/  30. itr:   56/ 196. btime: 0.834s. loss: 1.5301. lr: 0.001560
+train epoch: 12/  30. itr:   61/ 196. btime: 0.831s. loss: 1.5375. lr: 0.001557
+train epoch: 12/  30. itr:   66/ 196. btime: 0.829s. loss: 1.5433. lr: 0.001555
+train epoch: 12/  30. itr:   71/ 196. btime: 0.827s. loss: 1.5346. lr: 0.001553
+train epoch: 12/  30. itr:   76/ 196. btime: 0.825s. loss: 1.5410. lr: 0.001551
+train epoch: 12/  30. itr:   81/ 196. btime: 0.823s. loss: 1.5387. lr: 0.001549
+train epoch: 12/  30. itr:   86/ 196. btime: 0.822s. loss: 1.5324. lr: 0.001547
+train epoch: 12/  30. itr:   91/ 196. btime: 0.821s. loss: 1.5220. lr: 0.001545
+train epoch: 12/  30. itr:   96/ 196. btime: 0.820s. loss: 1.5250. lr: 0.001543
+train epoch: 12/  30. itr:  101/ 196. btime: 0.819s. loss: 1.5277. lr: 0.001540
+train epoch: 12/  30. itr:  106/ 196. btime: 0.818s. loss: 1.5297. lr: 0.001538
+train epoch: 12/  30. itr:  111/ 196. btime: 0.817s. loss: 1.5476. lr: 0.001536
+train epoch: 12/  30. itr:  116/ 196. btime: 0.816s. loss: 1.5529. lr: 0.001534
+train epoch: 12/  30. itr:  121/ 196. btime: 0.816s. loss: 1.5471. lr: 0.001532
+train epoch: 12/  30. itr:  126/ 196. btime: 0.815s. loss: 1.5525. lr: 0.001530
+train epoch: 12/  30. itr:  131/ 196. btime: 0.814s. loss: 1.5495. lr: 0.001528
+train epoch: 12/  30. itr:  136/ 196. btime: 0.814s. loss: 1.5530. lr: 0.001526
+train epoch: 12/  30. itr:  141/ 196. btime: 0.813s. loss: 1.5566. lr: 0.001523
+train epoch: 12/  30. itr:  146/ 196. btime: 0.813s. loss: 1.5642. lr: 0.001521
+train epoch: 12/  30. itr:  151/ 196. btime: 0.812s. loss: 1.5680. lr: 0.001519
+train epoch: 12/  30. itr:  156/ 196. btime: 0.812s. loss: 1.5700. lr: 0.001517
+train epoch: 12/  30. itr:  161/ 196. btime: 0.812s. loss: 1.5668. lr: 0.001515
+train epoch: 12/  30. itr:  166/ 196. btime: 0.811s. loss: 1.5658. lr: 0.001513
+train epoch: 12/  30. itr:  171/ 196. btime: 0.811s. loss: 1.5650. lr: 0.001511
+train epoch: 12/  30. itr:  176/ 196. btime: 0.811s. loss: 1.5705. lr: 0.001509
+train epoch: 12/  30. itr:  181/ 196. btime: 0.810s. loss: 1.5671. lr: 0.001506
+train epoch: 12/  30. itr:  186/ 196. btime: 0.810s. loss: 1.5696. lr: 0.001504
+train epoch: 12/  30. itr:  191/ 196. btime: 0.810s. loss: 1.5680. lr: 0.001502
+train epoch: 12/  30. itr:  196/ 196. btime: 0.809s. loss: 1.5646. lr: 0.001500
+Total train time: 158.007s
+Total test time: 16.158s
+Total test time: 16.026s
+Total test time: 30.318s
+[2025-09-03 10:16:39,963] epoch: 12, acc-known-trans: 83.86000004882813
+[2025-09-03 10:16:39,963] epoch: 12, acc-novel-trans: 74.09999976806641
+[2025-09-03 10:16:39,963] epoch: 12, acc-all-trans: 78.97999989013672, best-acc: 79.98999995117188, best-acc-novel: 75.77999975585938
+train epoch: 13/  30. itr:    1/ 196. btime: 2.750s. loss: 1.2517. lr: 0.001500
+train epoch: 13/  30. itr:    6/ 196. btime: 1.121s. loss: 1.5063. lr: 0.001497
+train epoch: 13/  30. itr:   11/ 196. btime: 0.971s. loss: 1.4297. lr: 0.001495
+train epoch: 13/  30. itr:   16/ 196. btime: 0.916s. loss: 1.5042. lr: 0.001493
+train epoch: 13/  30. itr:   21/ 196. btime: 0.886s. loss: 1.5762. lr: 0.001491
+train epoch: 13/  30. itr:   26/ 196. btime: 0.869s. loss: 1.5649. lr: 0.001489
+train epoch: 13/  30. itr:   31/ 196. btime: 0.857s. loss: 1.5542. lr: 0.001487
+train epoch: 13/  30. itr:   36/ 196. btime: 0.848s. loss: 1.5279. lr: 0.001485
+train epoch: 13/  30. itr:   41/ 196. btime: 0.842s. loss: 1.5034. lr: 0.001483
+train epoch: 13/  30. itr:   46/ 196. btime: 0.837s. loss: 1.5182. lr: 0.001480
+train epoch: 13/  30. itr:   51/ 196. btime: 0.833s. loss: 1.5294. lr: 0.001478
+train epoch: 13/  30. itr:   56/ 196. btime: 0.830s. loss: 1.5288. lr: 0.001476
+train epoch: 13/  30. itr:   61/ 196. btime: 0.827s. loss: 1.5352. lr: 0.001474
+train epoch: 13/  30. itr:   66/ 196. btime: 0.825s. loss: 1.5281. lr: 0.001472
+train epoch: 13/  30. itr:   71/ 196. btime: 0.823s. loss: 1.5291. lr: 0.001470
+train epoch: 13/  30. itr:   76/ 196. btime: 0.822s. loss: 1.5311. lr: 0.001468
+train epoch: 13/  30. itr:   81/ 196. btime: 0.820s. loss: 1.5214. lr: 0.001466
+train epoch: 13/  30. itr:   86/ 196. btime: 0.819s. loss: 1.5263. lr: 0.001463
+train epoch: 13/  30. itr:   91/ 196. btime: 0.818s. loss: 1.5284. lr: 0.001461
+train epoch: 13/  30. itr:   96/ 196. btime: 0.817s. loss: 1.5326. lr: 0.001459
+train epoch: 13/  30. itr:  101/ 196. btime: 0.816s. loss: 1.5357. lr: 0.001457
+train epoch: 13/  30. itr:  106/ 196. btime: 0.815s. loss: 1.5292. lr: 0.001455
+train epoch: 13/  30. itr:  111/ 196. btime: 0.815s. loss: 1.5294. lr: 0.001453
+train epoch: 13/  30. itr:  116/ 196. btime: 0.814s. loss: 1.5245. lr: 0.001451
+train epoch: 13/  30. itr:  121/ 196. btime: 0.813s. loss: 1.5212. lr: 0.001449
+train epoch: 13/  30. itr:  126/ 196. btime: 0.813s. loss: 1.5263. lr: 0.001446
+train epoch: 13/  30. itr:  131/ 196. btime: 0.812s. loss: 1.5264. lr: 0.001444
+train epoch: 13/  30. itr:  136/ 196. btime: 0.812s. loss: 1.5237. lr: 0.001442
+train epoch: 13/  30. itr:  141/ 196. btime: 0.811s. loss: 1.5187. lr: 0.001440
+train epoch: 13/  30. itr:  146/ 196. btime: 0.811s. loss: 1.5195. lr: 0.001438
+train epoch: 13/  30. itr:  151/ 196. btime: 0.811s. loss: 1.5233. lr: 0.001436
+train epoch: 13/  30. itr:  156/ 196. btime: 0.810s. loss: 1.5302. lr: 0.001434
+train epoch: 13/  30. itr:  161/ 196. btime: 0.810s. loss: 1.5253. lr: 0.001432
+train epoch: 13/  30. itr:  166/ 196. btime: 0.810s. loss: 1.5261. lr: 0.001429
+train epoch: 13/  30. itr:  171/ 196. btime: 0.809s. loss: 1.5251. lr: 0.001427
+train epoch: 13/  30. itr:  176/ 196. btime: 0.809s. loss: 1.5309. lr: 0.001425
+train epoch: 13/  30. itr:  181/ 196. btime: 0.809s. loss: 1.5335. lr: 0.001423
+train epoch: 13/  30. itr:  186/ 196. btime: 0.809s. loss: 1.5304. lr: 0.001421
+train epoch: 13/  30. itr:  191/ 196. btime: 0.808s. loss: 1.5249. lr: 0.001419
+train epoch: 13/  30. itr:  196/ 196. btime: 0.808s. loss: 1.5251. lr: 0.001417
+Total train time: 157.813s
+Total test time: 16.162s
+Total test time: 16.083s
+Total test time: 30.430s
+[2025-09-03 10:20:25,632] epoch: 13, acc-known-trans: 84.01999976806641
+[2025-09-03 10:20:25,632] epoch: 13, acc-novel-trans: 75.02000013427734
+[2025-09-03 10:20:25,632] epoch: 13, acc-all-trans: 79.5200000366211, best-acc: 79.98999995117188, best-acc-novel: 75.77999975585938
+train epoch: 14/  30. itr:    1/ 196. btime: 2.878s. loss: 1.9469. lr: 0.001416
+train epoch: 14/  30. itr:    6/ 196. btime: 1.138s. loss: 1.5459. lr: 0.001414
+train epoch: 14/  30. itr:   11/ 196. btime: 0.982s. loss: 1.5325. lr: 0.001412
+train epoch: 14/  30. itr:   16/ 196. btime: 0.923s. loss: 1.4892. lr: 0.001410
+train epoch: 14/  30. itr:   21/ 196. btime: 0.892s. loss: 1.5052. lr: 0.001408
+train epoch: 14/  30. itr:   26/ 196. btime: 0.873s. loss: 1.4794. lr: 0.001406
+train epoch: 14/  30. itr:   31/ 196. btime: 0.861s. loss: 1.4991. lr: 0.001403
+train epoch: 14/  30. itr:   36/ 196. btime: 0.852s. loss: 1.4837. lr: 0.001401
+train epoch: 14/  30. itr:   41/ 196. btime: 0.845s. loss: 1.4693. lr: 0.001399
+train epoch: 14/  30. itr:   46/ 196. btime: 0.839s. loss: 1.4753. lr: 0.001397
+train epoch: 14/  30. itr:   51/ 196. btime: 0.835s. loss: 1.4635. lr: 0.001395
+train epoch: 14/  30. itr:   56/ 196. btime: 0.832s. loss: 1.4779. lr: 0.001393
+train epoch: 14/  30. itr:   61/ 196. btime: 0.829s. loss: 1.4764. lr: 0.001391
+train epoch: 14/  30. itr:   66/ 196. btime: 0.827s. loss: 1.4892. lr: 0.001389
+train epoch: 14/  30. itr:   71/ 196. btime: 0.825s. loss: 1.4932. lr: 0.001386
+train epoch: 14/  30. itr:   76/ 196. btime: 0.824s. loss: 1.5016. lr: 0.001384
+train epoch: 14/  30. itr:   81/ 196. btime: 0.822s. loss: 1.4973. lr: 0.001382
+train epoch: 14/  30. itr:   86/ 196. btime: 0.821s. loss: 1.4978. lr: 0.001380
+train epoch: 14/  30. itr:   91/ 196. btime: 0.820s. loss: 1.5013. lr: 0.001378
+train epoch: 14/  30. itr:   96/ 196. btime: 0.819s. loss: 1.4850. lr: 0.001376
+train epoch: 14/  30. itr:  101/ 196. btime: 0.818s. loss: 1.4820. lr: 0.001374
+train epoch: 14/  30. itr:  106/ 196. btime: 0.817s. loss: 1.4879. lr: 0.001372
+train epoch: 14/  30. itr:  111/ 196. btime: 0.816s. loss: 1.4859. lr: 0.001369
+train epoch: 14/  30. itr:  116/ 196. btime: 0.815s. loss: 1.4819. lr: 0.001367
+train epoch: 14/  30. itr:  121/ 196. btime: 0.815s. loss: 1.4809. lr: 0.001365
+train epoch: 14/  30. itr:  126/ 196. btime: 0.814s. loss: 1.4811. lr: 0.001363
+train epoch: 14/  30. itr:  131/ 196. btime: 0.814s. loss: 1.4830. lr: 0.001361
+train epoch: 14/  30. itr:  136/ 196. btime: 0.813s. loss: 1.4848. lr: 0.001359
+train epoch: 14/  30. itr:  141/ 196. btime: 0.813s. loss: 1.4907. lr: 0.001357
+train epoch: 14/  30. itr:  146/ 196. btime: 0.812s. loss: 1.4890. lr: 0.001355
+train epoch: 14/  30. itr:  151/ 196. btime: 0.812s. loss: 1.4873. lr: 0.001352
+train epoch: 14/  30. itr:  156/ 196. btime: 0.811s. loss: 1.4921. lr: 0.001350
+train epoch: 14/  30. itr:  161/ 196. btime: 0.811s. loss: 1.4870. lr: 0.001348
+train epoch: 14/  30. itr:  166/ 196. btime: 0.811s. loss: 1.4866. lr: 0.001346
+train epoch: 14/  30. itr:  171/ 196. btime: 0.810s. loss: 1.4832. lr: 0.001344
+train epoch: 14/  30. itr:  176/ 196. btime: 0.810s. loss: 1.4799. lr: 0.001342
+train epoch: 14/  30. itr:  181/ 196. btime: 0.810s. loss: 1.4792. lr: 0.001340
+train epoch: 14/  30. itr:  186/ 196. btime: 0.809s. loss: 1.4790. lr: 0.001338
+train epoch: 14/  30. itr:  191/ 196. btime: 0.809s. loss: 1.4799. lr: 0.001335
+train epoch: 14/  30. itr:  196/ 196. btime: 0.808s. loss: 1.4850. lr: 0.001333
+Total train time: 157.971s
+Total test time: 16.202s
+Total test time: 16.114s
+Total test time: 30.465s
+[2025-09-03 10:24:11,768] epoch: 14, acc-known-trans: 84.40000004882812
+[2025-09-03 10:24:11,768] epoch: 14, acc-novel-trans: 74.09999992675782
+[2025-09-03 10:24:11,768] epoch: 14, acc-all-trans: 79.25000003662109, best-acc: 79.98999995117188, best-acc-novel: 75.77999975585938
+train epoch: 15/  30. itr:    1/ 196. btime: 2.929s. loss: 1.1926. lr: 0.001333
+train epoch: 15/  30. itr:    6/ 196. btime: 1.148s. loss: 1.3019. lr: 0.001331
+train epoch: 15/  30. itr:   11/ 196. btime: 0.987s. loss: 1.4539. lr: 0.001329
+train epoch: 15/  30. itr:   16/ 196. btime: 0.926s. loss: 1.4761. lr: 0.001327
+train epoch: 15/  30. itr:   21/ 196. btime: 0.895s. loss: 1.4705. lr: 0.001324
+train epoch: 15/  30. itr:   26/ 196. btime: 0.876s. loss: 1.4420. lr: 0.001322
+train epoch: 15/  30. itr:   31/ 196. btime: 5.891s. loss: 1.4472. lr: 0.001320
+train epoch: 15/  30. itr:   36/ 196. btime: 5.181s. loss: 1.4492. lr: 0.001318
+train epoch: 15/  30. itr:   41/ 196. btime: 4.644s. loss: 1.4381. lr: 0.001316
+train epoch: 15/  30. itr:   46/ 196. btime: 4.224s. loss: 1.4090. lr: 0.001314
+train epoch: 15/  30. itr:   51/ 196. btime: 3.886s. loss: 1.3970. lr: 0.001312
+train epoch: 15/  30. itr:   56/ 196. btime: 3.609s. loss: 1.4138. lr: 0.001310
+train epoch: 15/  30. itr:   61/ 196. btime: 3.377s. loss: 1.4199. lr: 0.001307
+train epoch: 15/  30. itr:   66/ 196. btime: 3.181s. loss: 1.4177. lr: 0.001305
+train epoch: 15/  30. itr:   71/ 196. btime: 3.011s. loss: 1.4271. lr: 0.001303
+train epoch: 15/  30. itr:   76/ 196. btime: 2.865s. loss: 1.4311. lr: 0.001301
+train epoch: 15/  30. itr:   81/ 196. btime: 2.736s. loss: 1.4313. lr: 0.001299
+train epoch: 15/  30. itr:   86/ 196. btime: 2.623s. loss: 1.4361. lr: 0.001297
+train epoch: 15/  30. itr:   91/ 196. btime: 2.522s. loss: 1.4357. lr: 0.001295
+train epoch: 15/  30. itr:   96/ 196. btime: 2.432s. loss: 1.4304. lr: 0.001293
+train epoch: 15/  30. itr:  101/ 196. btime: 2.351s. loss: 1.4342. lr: 0.001290
+train epoch: 15/  30. itr:  106/ 196. btime: 2.277s. loss: 1.4326. lr: 0.001288
+train epoch: 15/  30. itr:  111/ 196. btime: 2.210s. loss: 1.4395. lr: 0.001286
+train epoch: 15/  30. itr:  116/ 196. btime: 2.149s. loss: 1.4373. lr: 0.001284
+train epoch: 15/  30. itr:  121/ 196. btime: 2.093s. loss: 1.4329. lr: 0.001282
+train epoch: 15/  30. itr:  126/ 196. btime: 2.041s. loss: 1.4383. lr: 0.001280
+train epoch: 15/  30. itr:  131/ 196. btime: 1.993s. loss: 1.4440. lr: 0.001278
+train epoch: 15/  30. itr:  136/ 196. btime: 1.949s. loss: 1.4471. lr: 0.001276
+train epoch: 15/  30. itr:  141/ 196. btime: 1.908s. loss: 1.4493. lr: 0.001273
+train epoch: 15/  30. itr:  146/ 196. btime: 1.870s. loss: 1.4499. lr: 0.001271
+train epoch: 15/  30. itr:  151/ 196. btime: 1.834s. loss: 1.4498. lr: 0.001269
+train epoch: 15/  30. itr:  156/ 196. btime: 1.801s. loss: 1.4458. lr: 0.001267
+train epoch: 15/  30. itr:  161/ 196. btime: 1.769s. loss: 1.4457. lr: 0.001265
+train epoch: 15/  30. itr:  166/ 196. btime: 1.740s. loss: 1.4512. lr: 0.001263
+train epoch: 15/  30. itr:  171/ 196. btime: 1.712s. loss: 1.4531. lr: 0.001261
+train epoch: 15/  30. itr:  176/ 196. btime: 1.686s. loss: 1.4538. lr: 0.001259
+train epoch: 15/  30. itr:  181/ 196. btime: 1.661s. loss: 1.4557. lr: 0.001256
+train epoch: 15/  30. itr:  186/ 196. btime: 1.638s. loss: 1.4565. lr: 0.001254
+train epoch: 15/  30. itr:  191/ 196. btime: 1.616s. loss: 1.4534. lr: 0.001252
+train epoch: 15/  30. itr:  196/ 196. btime: 1.594s. loss: 1.4521. lr: 0.001250
+Total train time: 311.958s
+Total test time: 16.213s
+Total test time: 15.922s
+Total test time: 30.414s
+[2025-09-03 10:30:31,357] epoch: 15, acc-known-trans: 83.4199997680664
+[2025-09-03 10:30:31,357] epoch: 15, acc-novel-trans: 74.51999989013672
+[2025-09-03 10:30:31,357] epoch: 15, acc-all-trans: 78.97000003662109, best-acc: 79.98999995117188, best-acc-novel: 75.77999975585938
+train epoch: 16/  30. itr:    1/ 196. btime: 3.200s. loss: 1.5749. lr: 0.001250
+train epoch: 16/  30. itr:    6/ 196. btime: 1.192s. loss: 1.4626. lr: 0.001247
+train epoch: 16/  30. itr:   11/ 196. btime: 1.010s. loss: 1.4652. lr: 0.001245
+train epoch: 16/  30. itr:   16/ 196. btime: 0.942s. loss: 1.5068. lr: 0.001243
+train epoch: 16/  30. itr:   21/ 196. btime: 0.906s. loss: 1.4977. lr: 0.001241
+train epoch: 16/  30. itr:   26/ 196. btime: 0.885s. loss: 1.4985. lr: 0.001239
+train epoch: 16/  30. itr:   31/ 196. btime: 0.870s. loss: 1.4728. lr: 0.001237
+train epoch: 16/  30. itr:   36/ 196. btime: 0.859s. loss: 1.4536. lr: 0.001235
+train epoch: 16/  30. itr:   41/ 196. btime: 0.851s. loss: 1.4439. lr: 0.001233
+train epoch: 16/  30. itr:   46/ 196. btime: 0.845s. loss: 1.4257. lr: 0.001230
+train epoch: 16/  30. itr:   51/ 196. btime: 0.840s. loss: 1.4099. lr: 0.001228
+train epoch: 16/  30. itr:   56/ 196. btime: 0.836s. loss: 1.4303. lr: 0.001226
+train epoch: 16/  30. itr:   61/ 196. btime: 0.832s. loss: 1.4287. lr: 0.001224
+train epoch: 16/  30. itr:   66/ 196. btime: 0.829s. loss: 1.4382. lr: 0.001222
+train epoch: 16/  30. itr:   71/ 196. btime: 0.827s. loss: 1.4415. lr: 0.001220
+train epoch: 16/  30. itr:   76/ 196. btime: 0.825s. loss: 1.4511. lr: 0.001218
+train epoch: 16/  30. itr:   81/ 196. btime: 0.823s. loss: 1.4598. lr: 0.001216
+train epoch: 16/  30. itr:   86/ 196. btime: 0.822s. loss: 1.4602. lr: 0.001213
+train epoch: 16/  30. itr:   91/ 196. btime: 0.821s. loss: 1.4583. lr: 0.001211
+train epoch: 16/  30. itr:   96/ 196. btime: 0.820s. loss: 1.4560. lr: 0.001209
+train epoch: 16/  30. itr:  101/ 196. btime: 0.819s. loss: 1.4602. lr: 0.001207
+train epoch: 16/  30. itr:  106/ 196. btime: 0.818s. loss: 1.4567. lr: 0.001205
+train epoch: 16/  30. itr:  111/ 196. btime: 0.817s. loss: 1.4630. lr: 0.001203
+train epoch: 16/  30. itr:  116/ 196. btime: 0.816s. loss: 1.4553. lr: 0.001201
+train epoch: 16/  30. itr:  121/ 196. btime: 0.816s. loss: 1.4573. lr: 0.001199
+train epoch: 16/  30. itr:  126/ 196. btime: 0.815s. loss: 1.4590. lr: 0.001196
+train epoch: 16/  30. itr:  131/ 196. btime: 0.814s. loss: 1.4551. lr: 0.001194
+train epoch: 16/  30. itr:  136/ 196. btime: 0.814s. loss: 1.4602. lr: 0.001192
+train epoch: 16/  30. itr:  141/ 196. btime: 0.813s. loss: 1.4617. lr: 0.001190
+train epoch: 16/  30. itr:  146/ 196. btime: 0.813s. loss: 1.4599. lr: 0.001188
+train epoch: 16/  30. itr:  151/ 196. btime: 0.812s. loss: 1.4513. lr: 0.001186
+train epoch: 16/  30. itr:  156/ 196. btime: 0.812s. loss: 1.4474. lr: 0.001184
+train epoch: 16/  30. itr:  161/ 196. btime: 0.812s. loss: 1.4460. lr: 0.001182
+train epoch: 16/  30. itr:  166/ 196. btime: 0.811s. loss: 1.4471. lr: 0.001179
+train epoch: 16/  30. itr:  171/ 196. btime: 0.811s. loss: 1.4487. lr: 0.001177
+train epoch: 16/  30. itr:  176/ 196. btime: 0.811s. loss: 1.4421. lr: 0.001175
+train epoch: 16/  30. itr:  181/ 196. btime: 0.810s. loss: 1.4391. lr: 0.001173
+train epoch: 16/  30. itr:  186/ 196. btime: 0.810s. loss: 1.4433. lr: 0.001171
+train epoch: 16/  30. itr:  191/ 196. btime: 0.810s. loss: 1.4421. lr: 0.001169
+train epoch: 16/  30. itr:  196/ 196. btime: 0.809s. loss: 1.4435. lr: 0.001167
+Total train time: 158.077s
+Total test time: 16.498s
+Total test time: 16.038s
+Total test time: 30.407s
+[2025-09-03 10:34:16,737] epoch: 16, acc-known-trans: 84.96000008544922
+[2025-09-03 10:34:16,738] epoch: 16, acc-novel-trans: 73.9999998046875
+[2025-09-03 10:34:16,738] epoch: 16, acc-all-trans: 79.47999995117188, best-acc: 79.98999995117188, best-acc-novel: 75.77999975585938
+train epoch: 17/  30. itr:    1/ 196. btime: 3.101s. loss: 1.6135. lr: 0.001166
+train epoch: 17/  30. itr:    6/ 196. btime: 1.176s. loss: 1.4736. lr: 0.001164
+train epoch: 17/  30. itr:   11/ 196. btime: 1.002s. loss: 1.4366. lr: 0.001162
+train epoch: 17/  30. itr:   16/ 196. btime: 0.937s. loss: 1.3977. lr: 0.001160
+train epoch: 17/  30. itr:   21/ 196. btime: 0.902s. loss: 1.3793. lr: 0.001158
+train epoch: 17/  30. itr:   26/ 196. btime: 0.882s. loss: 1.3992. lr: 0.001156
+train epoch: 17/  30. itr:   31/ 196. btime: 0.868s. loss: 1.3684. lr: 0.001153
+train epoch: 17/  30. itr:   36/ 196. btime: 0.857s. loss: 1.3699. lr: 0.001151
+train epoch: 17/  30. itr:   41/ 196. btime: 0.849s. loss: 1.3706. lr: 0.001149
+train epoch: 17/  30. itr:   46/ 196. btime: 0.843s. loss: 1.3659. lr: 0.001147
+train epoch: 17/  30. itr:   51/ 196. btime: 0.839s. loss: 1.3582. lr: 0.001145
+train epoch: 17/  30. itr:   56/ 196. btime: 0.835s. loss: 1.3463. lr: 0.001143
+train epoch: 17/  30. itr:   61/ 196. btime: 0.831s. loss: 1.3615. lr: 0.001141
+train epoch: 17/  30. itr:   66/ 196. btime: 0.829s. loss: 1.3631. lr: 0.001139
+train epoch: 17/  30. itr:   71/ 196. btime: 0.826s. loss: 1.3630. lr: 0.001136
+train epoch: 17/  30. itr:   76/ 196. btime: 0.824s. loss: 1.3807. lr: 0.001134
+train epoch: 17/  30. itr:   81/ 196. btime: 0.823s. loss: 1.3788. lr: 0.001132
+train epoch: 17/  30. itr:   86/ 196. btime: 0.821s. loss: 1.3823. lr: 0.001130
+train epoch: 17/  30. itr:   91/ 196. btime: 0.820s. loss: 1.3872. lr: 0.001128
+train epoch: 17/  30. itr:   96/ 196. btime: 0.819s. loss: 1.3837. lr: 0.001126
+train epoch: 17/  30. itr:  101/ 196. btime: 0.818s. loss: 1.3910. lr: 0.001124
+train epoch: 17/  30. itr:  106/ 196. btime: 0.817s. loss: 1.3910. lr: 0.001122
+train epoch: 17/  30. itr:  111/ 196. btime: 0.817s. loss: 1.3916. lr: 0.001119
+train epoch: 17/  30. itr:  116/ 196. btime: 0.816s. loss: 1.4023. lr: 0.001117
+train epoch: 17/  30. itr:  121/ 196. btime: 0.815s. loss: 1.4074. lr: 0.001115
+train epoch: 17/  30. itr:  126/ 196. btime: 0.814s. loss: 1.4130. lr: 0.001113
+train epoch: 17/  30. itr:  131/ 196. btime: 0.814s. loss: 1.4088. lr: 0.001111
+train epoch: 17/  30. itr:  136/ 196. btime: 0.813s. loss: 1.4150. lr: 0.001109
+train epoch: 17/  30. itr:  141/ 196. btime: 0.813s. loss: 1.4151. lr: 0.001107
+train epoch: 17/  30. itr:  146/ 196. btime: 0.812s. loss: 1.4156. lr: 0.001105
+train epoch: 17/  30. itr:  151/ 196. btime: 0.812s. loss: 1.4218. lr: 0.001102
+train epoch: 17/  30. itr:  156/ 196. btime: 0.812s. loss: 1.4227. lr: 0.001100
+train epoch: 17/  30. itr:  161/ 196. btime: 0.811s. loss: 1.4238. lr: 0.001098
+train epoch: 17/  30. itr:  166/ 196. btime: 0.811s. loss: 1.4182. lr: 0.001096
+train epoch: 17/  30. itr:  171/ 196. btime: 0.811s. loss: 1.4192. lr: 0.001094
+train epoch: 17/  30. itr:  176/ 196. btime: 0.810s. loss: 1.4219. lr: 0.001092
+train epoch: 17/  30. itr:  181/ 196. btime: 0.810s. loss: 1.4248. lr: 0.001090
+train epoch: 17/  30. itr:  186/ 196. btime: 0.810s. loss: 1.4232. lr: 0.001088
+train epoch: 17/  30. itr:  191/ 196. btime: 0.809s. loss: 1.4239. lr: 0.001085
+train epoch: 17/  30. itr:  196/ 196. btime: 0.809s. loss: 1.4292. lr: 0.001083
+Total train time: 157.975s
+Total test time: 16.356s
+Total test time: 16.146s
+Total test time: 30.443s
+[2025-09-03 10:38:01,928] epoch: 17, acc-known-trans: 84.63999998779298
+[2025-09-03 10:38:01,928] epoch: 17, acc-novel-trans: 74.24000008544922
+[2025-09-03 10:38:01,929] epoch: 17, acc-all-trans: 79.43999997558593, best-acc: 79.98999995117188, best-acc-novel: 75.77999975585938
+train epoch: 18/  30. itr:    1/ 196. btime: 2.742s. loss: 1.1652. lr: 0.001083
+train epoch: 18/  30. itr:    6/ 196. btime: 1.116s. loss: 1.3234. lr: 0.001081
+train epoch: 18/  30. itr:   11/ 196. btime: 0.969s. loss: 1.2600. lr: 0.001079
+train epoch: 18/  30. itr:   16/ 196. btime: 0.914s. loss: 1.3659. lr: 0.001077
+train epoch: 18/  30. itr:   21/ 196. btime: 0.885s. loss: 1.3584. lr: 0.001074
+train epoch: 18/  30. itr:   26/ 196. btime: 0.867s. loss: 1.3992. lr: 0.001072
+train epoch: 18/  30. itr:   31/ 196. btime: 0.856s. loss: 1.3957. lr: 0.001070
+train epoch: 18/  30. itr:   36/ 196. btime: 0.847s. loss: 1.3947. lr: 0.001068
+train epoch: 18/  30. itr:   41/ 196. btime: 0.841s. loss: 1.3888. lr: 0.001066
+train epoch: 18/  30. itr:   46/ 196. btime: 0.836s. loss: 1.4044. lr: 0.001064
+train epoch: 18/  30. itr:   51/ 196. btime: 0.832s. loss: 1.3959. lr: 0.001062
+train epoch: 18/  30. itr:   56/ 196. btime: 0.829s. loss: 1.3871. lr: 0.001060
+train epoch: 18/  30. itr:   61/ 196. btime: 0.826s. loss: 1.3904. lr: 0.001057
+train epoch: 18/  30. itr:   66/ 196. btime: 0.824s. loss: 1.3911. lr: 0.001055
+train epoch: 18/  30. itr:   71/ 196. btime: 0.822s. loss: 1.3890. lr: 0.001053
+train epoch: 18/  30. itr:   76/ 196. btime: 0.821s. loss: 1.3908. lr: 0.001051
+train epoch: 18/  30. itr:   81/ 196. btime: 0.819s. loss: 1.3847. lr: 0.001049
+train epoch: 18/  30. itr:   86/ 196. btime: 0.818s. loss: 1.3808. lr: 0.001047
+train epoch: 18/  30. itr:   91/ 196. btime: 0.817s. loss: 1.3804. lr: 0.001045
+train epoch: 18/  30. itr:   96/ 196. btime: 0.816s. loss: 1.3947. lr: 0.001043
+train epoch: 18/  30. itr:  101/ 196. btime: 0.815s. loss: 1.3941. lr: 0.001040
+train epoch: 18/  30. itr:  106/ 196. btime: 0.815s. loss: 1.3909. lr: 0.001038
+train epoch: 18/  30. itr:  111/ 196. btime: 0.814s. loss: 1.3908. lr: 0.001036
+train epoch: 18/  30. itr:  116/ 196. btime: 0.813s. loss: 1.3935. lr: 0.001034
+train epoch: 18/  30. itr:  121/ 196. btime: 0.813s. loss: 1.3987. lr: 0.001032
+train epoch: 18/  30. itr:  126/ 196. btime: 0.812s. loss: 1.3981. lr: 0.001030
+train epoch: 18/  30. itr:  131/ 196. btime: 0.812s. loss: 1.3990. lr: 0.001028
+train epoch: 18/  30. itr:  136/ 196. btime: 0.811s. loss: 1.3970. lr: 0.001026
+train epoch: 18/  30. itr:  141/ 196. btime: 0.811s. loss: 1.3989. lr: 0.001023
+train epoch: 18/  30. itr:  146/ 196. btime: 0.811s. loss: 1.4002. lr: 0.001021
+train epoch: 18/  30. itr:  151/ 196. btime: 0.810s. loss: 1.4024. lr: 0.001019
+train epoch: 18/  30. itr:  156/ 196. btime: 0.810s. loss: 1.4079. lr: 0.001017
+train epoch: 18/  30. itr:  161/ 196. btime: 0.810s. loss: 1.4090. lr: 0.001015
+train epoch: 18/  30. itr:  166/ 196. btime: 0.809s. loss: 1.4117. lr: 0.001013
+train epoch: 18/  30. itr:  171/ 196. btime: 0.809s. loss: 1.4079. lr: 0.001011
+train epoch: 18/  30. itr:  176/ 196. btime: 0.809s. loss: 1.4076. lr: 0.001009
+train epoch: 18/  30. itr:  181/ 196. btime: 0.808s. loss: 1.4078. lr: 0.001006
+train epoch: 18/  30. itr:  186/ 196. btime: 0.808s. loss: 1.4010. lr: 0.001004
+train epoch: 18/  30. itr:  191/ 196. btime: 0.808s. loss: 1.3999. lr: 0.001002
+train epoch: 18/  30. itr:  196/ 196. btime: 0.807s. loss: 1.3971. lr: 0.001000
+Total train time: 157.760s
+Total test time: 16.450s
+Total test time: 16.012s
+Total test time: 30.318s
+[2025-09-03 10:41:46,676] epoch: 18, acc-known-trans: 84.39999978027343
+[2025-09-03 10:41:46,677] epoch: 18, acc-novel-trans: 74.71999990234374
+[2025-09-03 10:41:46,677] epoch: 18, acc-all-trans: 79.56000003662109, best-acc: 79.98999995117188, best-acc-novel: 75.77999975585938
+train epoch: 19/  30. itr:    1/ 196. btime: 2.999s. loss: 1.1325. lr: 0.001000
+train epoch: 19/  30. itr:    6/ 196. btime: 1.158s. loss: 1.2899. lr: 0.000997
+train epoch: 19/  30. itr:   11/ 196. btime: 0.991s. loss: 1.2910. lr: 0.000995
+train epoch: 19/  30. itr:   16/ 196. btime: 0.928s. loss: 1.2888. lr: 0.000993
+train epoch: 19/  30. itr:   21/ 196. btime: 0.896s. loss: 1.2761. lr: 0.000991
+train epoch: 19/  30. itr:   26/ 196. btime: 0.877s. loss: 1.2878. lr: 0.000989
+train epoch: 19/  30. itr:   31/ 196. btime: 0.864s. loss: 1.3088. lr: 0.000987
+train epoch: 19/  30. itr:   36/ 196. btime: 0.854s. loss: 1.3415. lr: 0.000985
+train epoch: 19/  30. itr:   41/ 196. btime: 0.847s. loss: 1.3262. lr: 0.000983
+train epoch: 19/  30. itr:   46/ 196. btime: 0.841s. loss: 1.3373. lr: 0.000980
+train epoch: 19/  30. itr:   51/ 196. btime: 0.837s. loss: 1.3208. lr: 0.000978
+train epoch: 19/  30. itr:   56/ 196. btime: 0.833s. loss: 1.3326. lr: 0.000976
+train epoch: 19/  30. itr:   61/ 196. btime: 0.830s. loss: 1.3313. lr: 0.000974
+train epoch: 19/  30. itr:   66/ 196. btime: 0.828s. loss: 1.3261. lr: 0.000972
+train epoch: 19/  30. itr:   71/ 196. btime: 0.826s. loss: 1.3375. lr: 0.000970
+train epoch: 19/  30. itr:   76/ 196. btime: 0.824s. loss: 1.3406. lr: 0.000968
+train epoch: 19/  30. itr:   81/ 196. btime: 0.822s. loss: 1.3471. lr: 0.000966
+train epoch: 19/  30. itr:   86/ 196. btime: 0.821s. loss: 1.3416. lr: 0.000963
+train epoch: 19/  30. itr:   91/ 196. btime: 0.820s. loss: 1.3337. lr: 0.000961
+train epoch: 19/  30. itr:   96/ 196. btime: 0.819s. loss: 1.3407. lr: 0.000959
+train epoch: 19/  30. itr:  101/ 196. btime: 0.818s. loss: 1.3391. lr: 0.000957
+train epoch: 19/  30. itr:  106/ 196. btime: 0.817s. loss: 1.3408. lr: 0.000955
+train epoch: 19/  30. itr:  111/ 196. btime: 0.816s. loss: 1.3388. lr: 0.000953
+train epoch: 19/  30. itr:  116/ 196. btime: 0.815s. loss: 1.3377. lr: 0.000951
+train epoch: 19/  30. itr:  121/ 196. btime: 0.815s. loss: 1.3369. lr: 0.000949
+train epoch: 19/  30. itr:  126/ 196. btime: 0.814s. loss: 1.3416. lr: 0.000946
+train epoch: 19/  30. itr:  131/ 196. btime: 0.814s. loss: 1.3421. lr: 0.000944
+train epoch: 19/  30. itr:  136/ 196. btime: 0.813s. loss: 1.3410. lr: 0.000942
+train epoch: 19/  30. itr:  141/ 196. btime: 0.813s. loss: 1.3437. lr: 0.000940
+train epoch: 19/  30. itr:  146/ 196. btime: 0.812s. loss: 1.3378. lr: 0.000938
+train epoch: 19/  30. itr:  151/ 196. btime: 0.812s. loss: 1.3352. lr: 0.000936
+train epoch: 19/  30. itr:  156/ 196. btime: 0.811s. loss: 1.3393. lr: 0.000934
+train epoch: 19/  30. itr:  161/ 196. btime: 0.811s. loss: 1.3410. lr: 0.000932
+train epoch: 19/  30. itr:  166/ 196. btime: 0.811s. loss: 1.3372. lr: 0.000929
+train epoch: 19/  30. itr:  171/ 196. btime: 0.810s. loss: 1.3367. lr: 0.000927
+train epoch: 19/  30. itr:  176/ 196. btime: 0.810s. loss: 1.3427. lr: 0.000925
+train epoch: 19/  30. itr:  181/ 196. btime: 0.810s. loss: 1.3481. lr: 0.000923
+train epoch: 19/  30. itr:  186/ 196. btime: 0.809s. loss: 1.3504. lr: 0.000921
+train epoch: 19/  30. itr:  191/ 196. btime: 0.809s. loss: 1.3515. lr: 0.000919
+train epoch: 19/  30. itr:  196/ 196. btime: 0.808s. loss: 1.3519. lr: 0.000917
+Total train time: 157.967s
+Total test time: 16.307s
+Total test time: 16.416s
+Total test time: 30.365s
+[2025-09-03 10:45:32,124] epoch: 19, acc-known-trans: 84.43999973144531
+[2025-09-03 10:45:32,125] epoch: 19, acc-novel-trans: 74.75999991455078
+[2025-09-03 10:45:32,125] epoch: 19, acc-all-trans: 79.60000002441406, best-acc: 79.98999995117188, best-acc-novel: 75.77999975585938
+train epoch: 20/  30. itr:    1/ 196. btime: 2.846s. loss: 1.4044. lr: 0.000916
+train epoch: 20/  30. itr:    6/ 196. btime: 1.135s. loss: 1.3643. lr: 0.000914
+train epoch: 20/  30. itr:   11/ 196. btime: 0.979s. loss: 1.3660. lr: 0.000912
+train epoch: 20/  30. itr:   16/ 196. btime: 0.921s. loss: 1.2749. lr: 0.000910
+train epoch: 20/  30. itr:   21/ 196. btime: 0.890s. loss: 1.2982. lr: 0.000908
+train epoch: 20/  30. itr:   26/ 196. btime: 0.872s. loss: 1.3085. lr: 0.000906
+train epoch: 20/  30. itr:   31/ 196. btime: 0.859s. loss: 1.3028. lr: 0.000903
+train epoch: 20/  30. itr:   36/ 196. btime: 0.850s. loss: 1.3189. lr: 0.000901
+train epoch: 20/  30. itr:   41/ 196. btime: 0.843s. loss: 1.3122. lr: 0.000899
+train epoch: 20/  30. itr:   46/ 196. btime: 0.838s. loss: 1.3025. lr: 0.000897
+train epoch: 20/  30. itr:   51/ 196. btime: 0.834s. loss: 1.3005. lr: 0.000895
+train epoch: 20/  30. itr:   56/ 196. btime: 0.830s. loss: 1.3027. lr: 0.000893
+train epoch: 20/  30. itr:   61/ 196. btime: 0.828s. loss: 1.3101. lr: 0.000891
+train epoch: 20/  30. itr:   66/ 196. btime: 0.825s. loss: 1.3049. lr: 0.000889
+train epoch: 20/  30. itr:   71/ 196. btime: 0.823s. loss: 1.3140. lr: 0.000886
+train epoch: 20/  30. itr:   76/ 196. btime: 0.821s. loss: 1.3149. lr: 0.000884
+train epoch: 20/  30. itr:   81/ 196. btime: 0.820s. loss: 1.3076. lr: 0.000882
+train epoch: 20/  30. itr:   86/ 196. btime: 0.819s. loss: 1.3090. lr: 0.000880
+train epoch: 20/  30. itr:   91/ 196. btime: 0.818s. loss: 1.3068. lr: 0.000878
+train epoch: 20/  30. itr:   96/ 196. btime: 0.817s. loss: 1.2991. lr: 0.000876
+train epoch: 20/  30. itr:  101/ 196. btime: 0.816s. loss: 1.3003. lr: 0.000874
+train epoch: 20/  30. itr:  106/ 196. btime: 0.815s. loss: 1.2980. lr: 0.000872
+train epoch: 20/  30. itr:  111/ 196. btime: 0.814s. loss: 1.3009. lr: 0.000869
+train epoch: 20/  30. itr:  116/ 196. btime: 0.814s. loss: 1.2982. lr: 0.000867
+train epoch: 20/  30. itr:  121/ 196. btime: 0.813s. loss: 1.3037. lr: 0.000865
+train epoch: 20/  30. itr:  126/ 196. btime: 0.813s. loss: 1.3068. lr: 0.000863
+train epoch: 20/  30. itr:  131/ 196. btime: 0.812s. loss: 1.3084. lr: 0.000861
+train epoch: 20/  30. itr:  136/ 196. btime: 0.812s. loss: 1.3160. lr: 0.000859
+train epoch: 20/  30. itr:  141/ 196. btime: 0.811s. loss: 1.3125. lr: 0.000857
+train epoch: 20/  30. itr:  146/ 196. btime: 0.811s. loss: 1.3181. lr: 0.000855
+train epoch: 20/  30. itr:  151/ 196. btime: 0.811s. loss: 1.3221. lr: 0.000852
+train epoch: 20/  30. itr:  156/ 196. btime: 0.810s. loss: 1.3262. lr: 0.000850
+train epoch: 20/  30. itr:  161/ 196. btime: 0.810s. loss: 1.3211. lr: 0.000848
+train epoch: 20/  30. itr:  166/ 196. btime: 0.810s. loss: 1.3202. lr: 0.000846
+train epoch: 20/  30. itr:  171/ 196. btime: 0.809s. loss: 1.3212. lr: 0.000844
+train epoch: 20/  30. itr:  176/ 196. btime: 0.809s. loss: 1.3214. lr: 0.000842
+train epoch: 20/  30. itr:  181/ 196. btime: 0.809s. loss: 1.3268. lr: 0.000840
+train epoch: 20/  30. itr:  186/ 196. btime: 0.808s. loss: 1.3253. lr: 0.000838
+train epoch: 20/  30. itr:  191/ 196. btime: 0.808s. loss: 1.3253. lr: 0.000835
+train epoch: 20/  30. itr:  196/ 196. btime: 0.807s. loss: 1.3282. lr: 0.000833
+Total train time: 157.766s
+Total test time: 16.322s
+Total test time: 16.132s
+Total test time: 30.466s
+[2025-09-03 10:49:17,000] epoch: 20, acc-known-trans: 85.17999975585937
+[2025-09-03 10:49:17,000] epoch: 20, acc-novel-trans: 74.2799998046875
+[2025-09-03 10:49:17,000] epoch: 20, acc-all-trans: 79.73000003662109, best-acc: 79.98999995117188, best-acc-novel: 75.77999975585938
+train epoch: 21/  30. itr:    1/ 196. btime: 2.819s. loss: 1.1426. lr: 0.000833
+train epoch: 21/  30. itr:    6/ 196. btime: 1.128s. loss: 1.2562. lr: 0.000831
+train epoch: 21/  30. itr:   11/ 196. btime: 0.976s. loss: 1.3140. lr: 0.000829
+train epoch: 21/  30. itr:   16/ 196. btime: 0.918s. loss: 1.2670. lr: 0.000827
+train epoch: 21/  30. itr:   21/ 196. btime: 0.888s. loss: 1.2796. lr: 0.000824
+train epoch: 21/  30. itr:   26/ 196. btime: 0.870s. loss: 1.3078. lr: 0.000822
+train epoch: 21/  30. itr:   31/ 196. btime: 0.858s. loss: 1.2753. lr: 0.000820
+train epoch: 21/  30. itr:   36/ 196. btime: 0.849s. loss: 1.2822. lr: 0.000818
+train epoch: 21/  30. itr:   41/ 196. btime: 0.842s. loss: 1.2669. lr: 0.000816
+train epoch: 21/  30. itr:   46/ 196. btime: 0.837s. loss: 1.2768. lr: 0.000814
+train epoch: 21/  30. itr:   51/ 196. btime: 0.833s. loss: 1.2845. lr: 0.000812
+train epoch: 21/  30. itr:   56/ 196. btime: 0.829s. loss: 1.2864. lr: 0.000810
+train epoch: 21/  30. itr:   61/ 196. btime: 0.826s. loss: 1.3046. lr: 0.000807
+train epoch: 21/  30. itr:   66/ 196. btime: 0.824s. loss: 1.2983. lr: 0.000805
+train epoch: 21/  30. itr:   71/ 196. btime: 0.822s. loss: 1.2917. lr: 0.000803
+train epoch: 21/  30. itr:   76/ 196. btime: 0.821s. loss: 1.2882. lr: 0.000801
+train epoch: 21/  30. itr:   81/ 196. btime: 0.819s. loss: 1.2859. lr: 0.000799
+train epoch: 21/  30. itr:   86/ 196. btime: 0.818s. loss: 1.2817. lr: 0.000797
+train epoch: 21/  30. itr:   91/ 196. btime: 0.817s. loss: 1.2843. lr: 0.000795
+train epoch: 21/  30. itr:   96/ 196. btime: 0.816s. loss: 1.2851. lr: 0.000793
+train epoch: 21/  30. itr:  101/ 196. btime: 0.815s. loss: 1.2855. lr: 0.000790
+train epoch: 21/  30. itr:  106/ 196. btime: 0.814s. loss: 1.2857. lr: 0.000788
+train epoch: 21/  30. itr:  111/ 196. btime: 0.813s. loss: 1.2826. lr: 0.000786
+train epoch: 21/  30. itr:  116/ 196. btime: 0.813s. loss: 1.2838. lr: 0.000784
+train epoch: 21/  30. itr:  121/ 196. btime: 0.812s. loss: 1.2772. lr: 0.000782
+train epoch: 21/  30. itr:  126/ 196. btime: 0.812s. loss: 1.2849. lr: 0.000780
+train epoch: 21/  30. itr:  131/ 196. btime: 0.811s. loss: 1.2893. lr: 0.000778
+train epoch: 21/  30. itr:  136/ 196. btime: 0.811s. loss: 1.2899. lr: 0.000776
+train epoch: 21/  30. itr:  141/ 196. btime: 0.810s. loss: 1.2933. lr: 0.000773
+train epoch: 21/  30. itr:  146/ 196. btime: 0.810s. loss: 1.3002. lr: 0.000771
+train epoch: 21/  30. itr:  151/ 196. btime: 0.810s. loss: 1.2975. lr: 0.000769
+train epoch: 21/  30. itr:  156/ 196. btime: 0.809s. loss: 1.3008. lr: 0.000767
+train epoch: 21/  30. itr:  161/ 196. btime: 0.809s. loss: 1.2963. lr: 0.000765
+train epoch: 21/  30. itr:  166/ 196. btime: 0.809s. loss: 1.2959. lr: 0.000763
+train epoch: 21/  30. itr:  171/ 196. btime: 0.808s. loss: 1.2969. lr: 0.000761
+train epoch: 21/  30. itr:  176/ 196. btime: 0.808s. loss: 1.2929. lr: 0.000759
+train epoch: 21/  30. itr:  181/ 196. btime: 0.808s. loss: 1.2903. lr: 0.000756
+train epoch: 21/  30. itr:  186/ 196. btime: 0.808s. loss: 1.2930. lr: 0.000754
+train epoch: 21/  30. itr:  191/ 196. btime: 0.808s. loss: 1.2968. lr: 0.000752
+train epoch: 21/  30. itr:  196/ 196. btime: 0.807s. loss: 1.2954. lr: 0.000750
+Total train time: 157.685s
+Total test time: 16.032s
+Total test time: 16.058s
+Total test time: 30.314s
+[2025-09-03 10:53:01,207] epoch: 21, acc-known-trans: 84.24000013427734
+[2025-09-03 10:53:01,207] epoch: 21, acc-novel-trans: 75.2599998046875
+[2025-09-03 10:53:01,207] epoch: 21, acc-all-trans: 79.75000004882813, best-acc: 79.98999995117188, best-acc-novel: 75.77999975585938
+train epoch: 22/  30. itr:    1/ 196. btime: 2.955s. loss: 1.2423. lr: 0.000750
+train epoch: 22/  30. itr:    6/ 196. btime: 1.153s. loss: 1.2807. lr: 0.000747
+train epoch: 22/  30. itr:   11/ 196. btime: 0.990s. loss: 1.2510. lr: 0.000745
+train epoch: 22/  30. itr:   16/ 196. btime: 0.928s. loss: 1.3119. lr: 0.000743
+train epoch: 22/  30. itr:   21/ 196. btime: 0.896s. loss: 1.2715. lr: 0.000741
+train epoch: 22/  30. itr:   26/ 196. btime: 0.876s. loss: 1.2725. lr: 0.000739
+train epoch: 22/  30. itr:   31/ 196. btime: 0.863s. loss: 1.2408. lr: 0.000737
+train epoch: 22/  30. itr:   36/ 196. btime: 0.853s. loss: 1.2327. lr: 0.000735
+train epoch: 22/  30. itr:   41/ 196. btime: 0.846s. loss: 1.2428. lr: 0.000733
+train epoch: 22/  30. itr:   46/ 196. btime: 0.841s. loss: 1.2413. lr: 0.000730
+train epoch: 22/  30. itr:   51/ 196. btime: 0.836s. loss: 1.2540. lr: 0.000728
+train epoch: 22/  30. itr:   56/ 196. btime: 0.833s. loss: 1.2648. lr: 0.000726
+train epoch: 22/  30. itr:   61/ 196. btime: 0.830s. loss: 1.2619. lr: 0.000724
+train epoch: 22/  30. itr:   66/ 196. btime: 0.827s. loss: 1.2738. lr: 0.000722
+train epoch: 22/  30. itr:   71/ 196. btime: 0.825s. loss: 1.2761. lr: 0.000720
+train epoch: 22/  30. itr:   76/ 196. btime: 0.823s. loss: 1.2858. lr: 0.000718
+train epoch: 22/  30. itr:   81/ 196. btime: 0.822s. loss: 1.2784. lr: 0.000716
+train epoch: 22/  30. itr:   86/ 196. btime: 0.820s. loss: 1.2723. lr: 0.000713
+train epoch: 22/  30. itr:   91/ 196. btime: 0.819s. loss: 1.2612. lr: 0.000711
+train epoch: 22/  30. itr:   96/ 196. btime: 0.818s. loss: 1.2579. lr: 0.000709
+train epoch: 22/  30. itr:  101/ 196. btime: 0.817s. loss: 1.2594. lr: 0.000707
+train epoch: 22/  30. itr:  106/ 196. btime: 0.816s. loss: 1.2605. lr: 0.000705
+train epoch: 22/  30. itr:  111/ 196. btime: 0.815s. loss: 1.2581. lr: 0.000703
+train epoch: 22/  30. itr:  116/ 196. btime: 0.814s. loss: 1.2587. lr: 0.000701
+train epoch: 22/  30. itr:  121/ 196. btime: 0.814s. loss: 1.2561. lr: 0.000699
+train epoch: 22/  30. itr:  126/ 196. btime: 0.813s. loss: 1.2569. lr: 0.000696
+train epoch: 22/  30. itr:  131/ 196. btime: 0.813s. loss: 1.2551. lr: 0.000694
+train epoch: 22/  30. itr:  136/ 196. btime: 0.812s. loss: 1.2547. lr: 0.000692
+train epoch: 22/  30. itr:  141/ 196. btime: 0.812s. loss: 1.2527. lr: 0.000690
+train epoch: 22/  30. itr:  146/ 196. btime: 0.811s. loss: 1.2512. lr: 0.000688
+train epoch: 22/  30. itr:  151/ 196. btime: 0.811s. loss: 1.2535. lr: 0.000686
+train epoch: 22/  30. itr:  156/ 196. btime: 0.811s. loss: 1.2615. lr: 0.000684
+train epoch: 22/  30. itr:  161/ 196. btime: 0.810s. loss: 1.2609. lr: 0.000682
+train epoch: 22/  30. itr:  166/ 196. btime: 0.810s. loss: 1.2607. lr: 0.000679
+train epoch: 22/  30. itr:  171/ 196. btime: 0.810s. loss: 1.2611. lr: 0.000677
+train epoch: 22/  30. itr:  176/ 196. btime: 0.809s. loss: 1.2621. lr: 0.000675
+train epoch: 22/  30. itr:  181/ 196. btime: 0.809s. loss: 1.2628. lr: 0.000673
+train epoch: 22/  30. itr:  186/ 196. btime: 0.809s. loss: 1.2651. lr: 0.000671
+train epoch: 22/  30. itr:  191/ 196. btime: 0.809s. loss: 1.2643. lr: 0.000669
+train epoch: 22/  30. itr:  196/ 196. btime: 0.808s. loss: 1.2670. lr: 0.000667
+Total train time: 157.877s
+Total test time: 16.186s
+Total test time: 15.997s
+Total test time: 30.340s
+[2025-09-03 10:56:45,829] epoch: 22, acc-known-trans: 84.66000006103516
+[2025-09-03 10:56:45,829] epoch: 22, acc-novel-trans: 73.54
+[2025-09-03 10:56:45,830] epoch: 22, acc-all-trans: 79.09999987792969, best-acc: 79.98999995117188, best-acc-novel: 75.77999975585938
+train epoch: 23/  30. itr:    1/ 196. btime: 2.734s. loss: 1.2131. lr: 0.000666
+train epoch: 23/  30. itr:    6/ 196. btime: 1.117s. loss: 1.1868. lr: 0.000664
+train epoch: 23/  30. itr:   11/ 196. btime: 0.969s. loss: 1.1333. lr: 0.000662
+train epoch: 23/  30. itr:   16/ 196. btime: 0.914s. loss: 1.1579. lr: 0.000660
+train epoch: 23/  30. itr:   21/ 196. btime: 0.885s. loss: 1.1357. lr: 0.000658
+train epoch: 23/  30. itr:   26/ 196. btime: 0.868s. loss: 1.1734. lr: 0.000656
+train epoch: 23/  30. itr:   31/ 196. btime: 0.855s. loss: 1.1748. lr: 0.000653
+train epoch: 23/  30. itr:   36/ 196. btime: 0.847s. loss: 1.1844. lr: 0.000651
+train epoch: 23/  30. itr:   41/ 196. btime: 0.840s. loss: 1.1962. lr: 0.000649
+train epoch: 23/  30. itr:   46/ 196. btime: 0.835s. loss: 1.2005. lr: 0.000647
+train epoch: 23/  30. itr:   51/ 196. btime: 0.831s. loss: 1.2018. lr: 0.000645
+train epoch: 23/  30. itr:   56/ 196. btime: 0.828s. loss: 1.2148. lr: 0.000643
+train epoch: 23/  30. itr:   61/ 196. btime: 0.825s. loss: 1.2073. lr: 0.000641
+train epoch: 23/  30. itr:   66/ 196. btime: 0.823s. loss: 1.2127. lr: 0.000639
+train epoch: 23/  30. itr:   71/ 196. btime: 0.822s. loss: 1.2104. lr: 0.000636
+train epoch: 23/  30. itr:   76/ 196. btime: 0.820s. loss: 1.2114. lr: 0.000634
+train epoch: 23/  30. itr:   81/ 196. btime: 0.819s. loss: 1.2134. lr: 0.000632
+train epoch: 23/  30. itr:   86/ 196. btime: 0.818s. loss: 1.2157. lr: 0.000630
+train epoch: 23/  30. itr:   91/ 196. btime: 0.816s. loss: 1.2180. lr: 0.000628
+train epoch: 23/  30. itr:   96/ 196. btime: 0.816s. loss: 1.2120. lr: 0.000626
+train epoch: 23/  30. itr:  101/ 196. btime: 0.815s. loss: 1.2210. lr: 0.000624
+train epoch: 23/  30. itr:  106/ 196. btime: 0.814s. loss: 1.2270. lr: 0.000622
+train epoch: 23/  30. itr:  111/ 196. btime: 0.814s. loss: 1.2300. lr: 0.000619
+train epoch: 23/  30. itr:  116/ 196. btime: 0.813s. loss: 1.2289. lr: 0.000617
+train epoch: 23/  30. itr:  121/ 196. btime: 0.812s. loss: 1.2315. lr: 0.000615
+train epoch: 23/  30. itr:  126/ 196. btime: 0.812s. loss: 1.2367. lr: 0.000613
+train epoch: 23/  30. itr:  131/ 196. btime: 0.811s. loss: 1.2370. lr: 0.000611
+train epoch: 23/  30. itr:  136/ 196. btime: 0.811s. loss: 1.2393. lr: 0.000609
+train epoch: 23/  30. itr:  141/ 196. btime: 0.811s. loss: 1.2356. lr: 0.000607
+train epoch: 23/  30. itr:  146/ 196. btime: 0.810s. loss: 1.2298. lr: 0.000605
+train epoch: 23/  30. itr:  151/ 196. btime: 0.810s. loss: 1.2331. lr: 0.000602
+train epoch: 23/  30. itr:  156/ 196. btime: 0.810s. loss: 1.2386. lr: 0.000600
+train epoch: 23/  30. itr:  161/ 196. btime: 0.809s. loss: 1.2375. lr: 0.000598
+train epoch: 23/  30. itr:  166/ 196. btime: 0.809s. loss: 1.2391. lr: 0.000596
+train epoch: 23/  30. itr:  171/ 196. btime: 0.809s. loss: 1.2364. lr: 0.000594
+train epoch: 23/  30. itr:  176/ 196. btime: 0.808s. loss: 1.2355. lr: 0.000592
+train epoch: 23/  30. itr:  181/ 196. btime: 0.808s. loss: 1.2375. lr: 0.000590
+train epoch: 23/  30. itr:  186/ 196. btime: 0.808s. loss: 1.2327. lr: 0.000588
+train epoch: 23/  30. itr:  191/ 196. btime: 0.808s. loss: 1.2311. lr: 0.000585
+train epoch: 23/  30. itr:  196/ 196. btime: 0.807s. loss: 1.2263. lr: 0.000583
+Total train time: 157.700s
+Total test time: 16.126s
+Total test time: 16.033s
+Total test time: 30.417s
+[2025-09-03 11:00:30,254] epoch: 23, acc-known-trans: 84.73999989013672
+[2025-09-03 11:00:30,254] epoch: 23, acc-novel-trans: 74.2199998046875
+[2025-09-03 11:00:30,254] epoch: 23, acc-all-trans: 79.48000004882813, best-acc: 79.98999995117188, best-acc-novel: 75.77999975585938
+train epoch: 24/  30. itr:    1/ 196. btime: 3.025s. loss: 1.3077. lr: 0.000583
+train epoch: 24/  30. itr:    6/ 196. btime: 1.163s. loss: 1.1599. lr: 0.000581
+train epoch: 24/  30. itr:   11/ 196. btime: 0.994s. loss: 1.1171. lr: 0.000579
+train epoch: 24/  30. itr:   16/ 196. btime: 0.931s. loss: 1.1292. lr: 0.000577
+train epoch: 24/  30. itr:   21/ 196. btime: 0.898s. loss: 1.1716. lr: 0.000574
+train epoch: 24/  30. itr:   26/ 196. btime: 0.878s. loss: 1.1719. lr: 0.000572
+train epoch: 24/  30. itr:   31/ 196. btime: 0.864s. loss: 1.1896. lr: 0.000570
+train epoch: 24/  30. itr:   36/ 196. btime: 0.855s. loss: 1.1984. lr: 0.000568
+train epoch: 24/  30. itr:   41/ 196. btime: 0.847s. loss: 1.2232. lr: 0.000566
+train epoch: 24/  30. itr:   46/ 196. btime: 0.842s. loss: 1.2144. lr: 0.000564
+train epoch: 24/  30. itr:   51/ 196. btime: 0.837s. loss: 1.2177. lr: 0.000562
+train epoch: 24/  30. itr:   56/ 196. btime: 0.833s. loss: 1.2107. lr: 0.000560
+train epoch: 24/  30. itr:   61/ 196. btime: 0.830s. loss: 1.2142. lr: 0.000557
+train epoch: 24/  30. itr:   66/ 196. btime: 0.828s. loss: 1.2048. lr: 0.000555
+train epoch: 24/  30. itr:   71/ 196. btime: 0.825s. loss: 1.2048. lr: 0.000553
+train epoch: 24/  30. itr:   76/ 196. btime: 0.824s. loss: 1.2081. lr: 0.000551
+train epoch: 24/  30. itr:   81/ 196. btime: 0.822s. loss: 1.2031. lr: 0.000549
+train epoch: 24/  30. itr:   86/ 196. btime: 0.821s. loss: 1.2159. lr: 0.000547
+train epoch: 24/  30. itr:   91/ 196. btime: 0.820s. loss: 1.2202. lr: 0.000545
+train epoch: 24/  30. itr:   96/ 196. btime: 0.819s. loss: 1.2238. lr: 0.000543
+train epoch: 24/  30. itr:  101/ 196. btime: 0.818s. loss: 1.2192. lr: 0.000540
+train epoch: 24/  30. itr:  106/ 196. btime: 0.817s. loss: 1.2248. lr: 0.000538
+train epoch: 24/  30. itr:  111/ 196. btime: 0.816s. loss: 1.2186. lr: 0.000536
+train epoch: 24/  30. itr:  116/ 196. btime: 0.815s. loss: 1.2202. lr: 0.000534
+train epoch: 24/  30. itr:  121/ 196. btime: 0.815s. loss: 1.2179. lr: 0.000532
+train epoch: 24/  30. itr:  126/ 196. btime: 0.814s. loss: 1.2166. lr: 0.000530
+train epoch: 24/  30. itr:  131/ 196. btime: 0.813s. loss: 1.2263. lr: 0.000528
+train epoch: 24/  30. itr:  136/ 196. btime: 0.813s. loss: 1.2283. lr: 0.000526
+train epoch: 24/  30. itr:  141/ 196. btime: 0.813s. loss: 1.2329. lr: 0.000523
+train epoch: 24/  30. itr:  146/ 196. btime: 0.812s. loss: 1.2300. lr: 0.000521
+train epoch: 24/  30. itr:  151/ 196. btime: 0.812s. loss: 1.2329. lr: 0.000519
+train epoch: 24/  30. itr:  156/ 196. btime: 0.811s. loss: 1.2319. lr: 0.000517
+train epoch: 24/  30. itr:  161/ 196. btime: 0.811s. loss: 1.2249. lr: 0.000515
+train epoch: 24/  30. itr:  166/ 196. btime: 0.811s. loss: 1.2269. lr: 0.000513
+train epoch: 24/  30. itr:  171/ 196. btime: 0.810s. loss: 1.2271. lr: 0.000511
+train epoch: 24/  30. itr:  176/ 196. btime: 0.810s. loss: 1.2263. lr: 0.000509
+train epoch: 24/  30. itr:  181/ 196. btime: 0.810s. loss: 1.2263. lr: 0.000506
+train epoch: 24/  30. itr:  186/ 196. btime: 0.809s. loss: 1.2283. lr: 0.000504
+train epoch: 24/  30. itr:  191/ 196. btime: 0.809s. loss: 1.2345. lr: 0.000502
+train epoch: 24/  30. itr:  196/ 196. btime: 0.808s. loss: 1.2389. lr: 0.000500
+Total train time: 157.990s
+Total test time: 16.465s
+Total test time: 16.082s
+Total test time: 30.370s
+[2025-09-03 11:04:16,138] epoch: 24, acc-known-trans: 83.84000013427735
+[2025-09-03 11:04:16,138] epoch: 24, acc-novel-trans: 75.29999971923829
+[2025-09-03 11:04:16,138] epoch: 24, acc-all-trans: 79.56999989013671, best-acc: 79.98999995117188, best-acc-novel: 75.77999975585938
+train epoch: 25/  30. itr:    1/ 196. btime: 2.801s. loss: 1.4415. lr: 0.000500
+train epoch: 25/  30. itr:    6/ 196. btime: 1.129s. loss: 1.1348. lr: 0.000497
+train epoch: 25/  30. itr:   11/ 196. btime: 0.976s. loss: 1.1620. lr: 0.000495
+train epoch: 25/  30. itr:   16/ 196. btime: 0.927s. loss: 1.1961. lr: 0.000493
+train epoch: 25/  30. itr:   21/ 196. btime: 0.898s. loss: 1.2082. lr: 0.000491
+train epoch: 25/  30. itr:   26/ 196. btime: 0.877s. loss: 1.2175. lr: 0.000489
+train epoch: 25/  30. itr:   31/ 196. btime: 0.864s. loss: 1.2308. lr: 0.000487
+train epoch: 25/  30. itr:   36/ 196. btime: 0.854s. loss: 1.2247. lr: 0.000485
+train epoch: 25/  30. itr:   41/ 196. btime: 0.847s. loss: 1.2104. lr: 0.000483
+train epoch: 25/  30. itr:   46/ 196. btime: 0.842s. loss: 1.2045. lr: 0.000480
+train epoch: 25/  30. itr:   51/ 196. btime: 0.837s. loss: 1.2147. lr: 0.000478
+train epoch: 25/  30. itr:   56/ 196. btime: 0.834s. loss: 1.2202. lr: 0.000476
+train epoch: 25/  30. itr:   61/ 196. btime: 0.831s. loss: 1.2174. lr: 0.000474
+train epoch: 25/  30. itr:   66/ 196. btime: 0.828s. loss: 1.2011. lr: 0.000472
+train epoch: 25/  30. itr:   71/ 196. btime: 0.826s. loss: 1.1981. lr: 0.000470
+train epoch: 25/  30. itr:   76/ 196. btime: 0.824s. loss: 1.2031. lr: 0.000468
+train epoch: 25/  30. itr:   81/ 196. btime: 0.823s. loss: 1.2103. lr: 0.000466
+train epoch: 25/  30. itr:   86/ 196. btime: 0.821s. loss: 1.2077. lr: 0.000463
+train epoch: 25/  30. itr:   91/ 196. btime: 0.820s. loss: 1.2051. lr: 0.000461
+train epoch: 25/  30. itr:   96/ 196. btime: 0.819s. loss: 1.1983. lr: 0.000459
+train epoch: 25/  30. itr:  101/ 196. btime: 0.818s. loss: 1.1970. lr: 0.000457
+train epoch: 25/  30. itr:  106/ 196. btime: 0.817s. loss: 1.1981. lr: 0.000455
+train epoch: 25/  30. itr:  111/ 196. btime: 0.817s. loss: 1.2026. lr: 0.000453
+train epoch: 25/  30. itr:  116/ 196. btime: 0.816s. loss: 1.1986. lr: 0.000451
+train epoch: 25/  30. itr:  121/ 196. btime: 0.815s. loss: 1.2009. lr: 0.000449
+train epoch: 25/  30. itr:  126/ 196. btime: 0.815s. loss: 1.1940. lr: 0.000446
+train epoch: 25/  30. itr:  131/ 196. btime: 0.814s. loss: 1.1968. lr: 0.000444
+train epoch: 25/  30. itr:  136/ 196. btime: 0.813s. loss: 1.2039. lr: 0.000442
+train epoch: 25/  30. itr:  141/ 196. btime: 0.813s. loss: 1.1980. lr: 0.000440
+train epoch: 25/  30. itr:  146/ 196. btime: 0.812s. loss: 1.1974. lr: 0.000438
+train epoch: 25/  30. itr:  151/ 196. btime: 0.812s. loss: 1.1970. lr: 0.000436
+train epoch: 25/  30. itr:  156/ 196. btime: 0.812s. loss: 1.1968. lr: 0.000434
+train epoch: 25/  30. itr:  161/ 196. btime: 0.811s. loss: 1.1966. lr: 0.000432
+train epoch: 25/  30. itr:  166/ 196. btime: 0.811s. loss: 1.1992. lr: 0.000429
+train epoch: 25/  30. itr:  171/ 196. btime: 0.811s. loss: 1.1969. lr: 0.000427
+train epoch: 25/  30. itr:  176/ 196. btime: 0.810s. loss: 1.1952. lr: 0.000425
+train epoch: 25/  30. itr:  181/ 196. btime: 0.810s. loss: 1.1972. lr: 0.000423
+train epoch: 25/  30. itr:  186/ 196. btime: 0.810s. loss: 1.1975. lr: 0.000421
+train epoch: 25/  30. itr:  191/ 196. btime: 0.809s. loss: 1.1970. lr: 0.000419
+train epoch: 25/  30. itr:  196/ 196. btime: 0.809s. loss: 1.1982. lr: 0.000417
+Total train time: 158.020s
+Total test time: 16.461s
+Total test time: 16.228s
+Total test time: 30.457s
+[2025-09-03 11:08:01,543] epoch: 25, acc-known-trans: 84.88000012207031
+[2025-09-03 11:08:01,544] epoch: 25, acc-novel-trans: 73.48000001220703
+[2025-09-03 11:08:01,544] epoch: 25, acc-all-trans: 79.18000002441406, best-acc: 79.98999995117188, best-acc-novel: 75.77999975585938
+train epoch: 26/  30. itr:    1/ 196. btime: 2.827s. loss: 1.1853. lr: 0.000416
+train epoch: 26/  30. itr:    6/ 196. btime: 1.132s. loss: 1.2196. lr: 0.000414
+train epoch: 26/  30. itr:   11/ 196. btime: 0.976s. loss: 1.1709. lr: 0.000412
+train epoch: 26/  30. itr:   16/ 196. btime: 0.920s. loss: 1.1615. lr: 0.000410
+train epoch: 26/  30. itr:   21/ 196. btime: 0.889s. loss: 1.1525. lr: 0.000408
+train epoch: 26/  30. itr:   26/ 196. btime: 0.871s. loss: 1.1373. lr: 0.000406
+train epoch: 26/  30. itr:   31/ 196. btime: 0.858s. loss: 1.1539. lr: 0.000403
+train epoch: 26/  30. itr:   36/ 196. btime: 0.850s. loss: 1.1418. lr: 0.000401
+train epoch: 26/  30. itr:   41/ 196. btime: 0.843s. loss: 1.1627. lr: 0.000399
+train epoch: 26/  30. itr:   46/ 196. btime: 0.838s. loss: 1.1511. lr: 0.000397
+train epoch: 26/  30. itr:   51/ 196. btime: 0.833s. loss: 1.1625. lr: 0.000395
+train epoch: 26/  30. itr:   56/ 196. btime: 0.830s. loss: 1.1681. lr: 0.000393
+train epoch: 26/  30. itr:   61/ 196. btime: 0.827s. loss: 1.1530. lr: 0.000391
+train epoch: 26/  30. itr:   66/ 196. btime: 0.825s. loss: 1.1447. lr: 0.000389
+train epoch: 26/  30. itr:   71/ 196. btime: 0.823s. loss: 1.1550. lr: 0.000386
+train epoch: 26/  30. itr:   76/ 196. btime: 0.821s. loss: 1.1528. lr: 0.000384
+train epoch: 26/  30. itr:   81/ 196. btime: 0.819s. loss: 1.1656. lr: 0.000382
+train epoch: 26/  30. itr:   86/ 196. btime: 0.818s. loss: 1.1633. lr: 0.000380
+train epoch: 26/  30. itr:   91/ 196. btime: 0.817s. loss: 1.1641. lr: 0.000378
+train epoch: 26/  30. itr:   96/ 196. btime: 0.816s. loss: 1.1711. lr: 0.000376
+train epoch: 26/  30. itr:  101/ 196. btime: 0.815s. loss: 1.1632. lr: 0.000374
+train epoch: 26/  30. itr:  106/ 196. btime: 0.814s. loss: 1.1624. lr: 0.000372
+train epoch: 26/  30. itr:  111/ 196. btime: 0.813s. loss: 1.1553. lr: 0.000369
+train epoch: 26/  30. itr:  116/ 196. btime: 0.812s. loss: 1.1507. lr: 0.000367
+train epoch: 26/  30. itr:  121/ 196. btime: 0.812s. loss: 1.1563. lr: 0.000365
+train epoch: 26/  30. itr:  126/ 196. btime: 0.811s. loss: 1.1622. lr: 0.000363
+train epoch: 26/  30. itr:  131/ 196. btime: 0.811s. loss: 1.1616. lr: 0.000361
+train epoch: 26/  30. itr:  136/ 196. btime: 0.810s. loss: 1.1592. lr: 0.000359
+train epoch: 26/  30. itr:  141/ 196. btime: 0.810s. loss: 1.1643. lr: 0.000357
+train epoch: 26/  30. itr:  146/ 196. btime: 0.810s. loss: 1.1676. lr: 0.000355
+train epoch: 26/  30. itr:  151/ 196. btime: 0.809s. loss: 1.1657. lr: 0.000352
+train epoch: 26/  30. itr:  156/ 196. btime: 0.809s. loss: 1.1676. lr: 0.000350
+train epoch: 26/  30. itr:  161/ 196. btime: 0.809s. loss: 1.1692. lr: 0.000348
+train epoch: 26/  30. itr:  166/ 196. btime: 0.808s. loss: 1.1667. lr: 0.000346
+train epoch: 26/  30. itr:  171/ 196. btime: 0.808s. loss: 1.1659. lr: 0.000344
+train epoch: 26/  30. itr:  176/ 196. btime: 0.808s. loss: 1.1696. lr: 0.000342
+train epoch: 26/  30. itr:  181/ 196. btime: 0.808s. loss: 1.1695. lr: 0.000340
+train epoch: 26/  30. itr:  186/ 196. btime: 0.807s. loss: 1.1680. lr: 0.000338
+train epoch: 26/  30. itr:  191/ 196. btime: 0.807s. loss: 1.1721. lr: 0.000335
+train epoch: 26/  30. itr:  196/ 196. btime: 0.806s. loss: 1.1687. lr: 0.000333
+Total train time: 157.535s
+Total test time: 16.253s
+Total test time: 16.077s
+Total test time: 30.391s
+[2025-09-03 11:11:45,991] epoch: 26, acc-known-trans: 84.20000013427735
+[2025-09-03 11:11:45,991] epoch: 26, acc-novel-trans: 74.51999989013672
+[2025-09-03 11:11:45,991] epoch: 26, acc-all-trans: 79.35999997558594, best-acc: 79.98999995117188, best-acc-novel: 75.77999975585938
+train epoch: 27/  30. itr:    1/ 196. btime: 2.816s. loss: 0.9253. lr: 0.000333
+train epoch: 27/  30. itr:    6/ 196. btime: 1.129s. loss: 1.1957. lr: 0.000331
+train epoch: 27/  30. itr:   11/ 196. btime: 0.976s. loss: 1.1401. lr: 0.000329
+train epoch: 27/  30. itr:   16/ 196. btime: 0.919s. loss: 1.1051. lr: 0.000327
+train epoch: 27/  30. itr:   21/ 196. btime: 0.889s. loss: 1.1084. lr: 0.000324
+train epoch: 27/  30. itr:   26/ 196. btime: 0.871s. loss: 1.0923. lr: 0.000322
+train epoch: 27/  30. itr:   31/ 196. btime: 0.858s. loss: 1.1023. lr: 0.000320
+train epoch: 27/  30. itr:   36/ 196. btime: 0.849s. loss: 1.1093. lr: 0.000318
+train epoch: 27/  30. itr:   41/ 196. btime: 0.843s. loss: 1.1023. lr: 0.000316
+train epoch: 27/  30. itr:   46/ 196. btime: 0.838s. loss: 1.1162. lr: 0.000314
+train epoch: 27/  30. itr:   51/ 196. btime: 0.833s. loss: 1.1332. lr: 0.000312
+train epoch: 27/  30. itr:   56/ 196. btime: 0.830s. loss: 1.1500. lr: 0.000310
+train epoch: 27/  30. itr:   61/ 196. btime: 0.827s. loss: 1.1491. lr: 0.000307
+train epoch: 27/  30. itr:   66/ 196. btime: 0.825s. loss: 1.1503. lr: 0.000305
+train epoch: 27/  30. itr:   71/ 196. btime: 0.823s. loss: 1.1408. lr: 0.000303
+train epoch: 27/  30. itr:   76/ 196. btime: 0.821s. loss: 1.1444. lr: 0.000301
+train epoch: 27/  30. itr:   81/ 196. btime: 0.819s. loss: 1.1364. lr: 0.000299
+train epoch: 27/  30. itr:   86/ 196. btime: 0.818s. loss: 1.1279. lr: 0.000297
+train epoch: 27/  30. itr:   91/ 196. btime: 0.817s. loss: 1.1246. lr: 0.000295
+train epoch: 27/  30. itr:   96/ 196. btime: 0.815s. loss: 1.1172. lr: 0.000293
+train epoch: 27/  30. itr:  101/ 196. btime: 0.814s. loss: 1.1220. lr: 0.000290
+train epoch: 27/  30. itr:  106/ 196. btime: 0.814s. loss: 1.1240. lr: 0.000288
+train epoch: 27/  30. itr:  111/ 196. btime: 0.813s. loss: 1.1297. lr: 0.000286
+train epoch: 27/  30. itr:  116/ 196. btime: 0.812s. loss: 1.1342. lr: 0.000284
+train epoch: 27/  30. itr:  121/ 196. btime: 0.812s. loss: 1.1342. lr: 0.000282
+train epoch: 27/  30. itr:  126/ 196. btime: 0.811s. loss: 1.1320. lr: 0.000280
+train epoch: 27/  30. itr:  131/ 196. btime: 0.811s. loss: 1.1317. lr: 0.000278
+train epoch: 27/  30. itr:  136/ 196. btime: 0.810s. loss: 1.1323. lr: 0.000276
+train epoch: 27/  30. itr:  141/ 196. btime: 0.810s. loss: 1.1418. lr: 0.000273
+train epoch: 27/  30. itr:  146/ 196. btime: 0.810s. loss: 1.1492. lr: 0.000271
+train epoch: 27/  30. itr:  151/ 196. btime: 0.809s. loss: 1.1447. lr: 0.000269
+train epoch: 27/  30. itr:  156/ 196. btime: 0.809s. loss: 1.1485. lr: 0.000267
+train epoch: 27/  30. itr:  161/ 196. btime: 0.809s. loss: 1.1483. lr: 0.000265
+train epoch: 27/  30. itr:  166/ 196. btime: 0.808s. loss: 1.1481. lr: 0.000263
+train epoch: 27/  30. itr:  171/ 196. btime: 0.808s. loss: 1.1474. lr: 0.000261
+train epoch: 27/  30. itr:  176/ 196. btime: 0.808s. loss: 1.1495. lr: 0.000259
+train epoch: 27/  30. itr:  181/ 196. btime: 0.808s. loss: 1.1503. lr: 0.000256
+train epoch: 27/  30. itr:  186/ 196. btime: 0.807s. loss: 1.1479. lr: 0.000254
+train epoch: 27/  30. itr:  191/ 196. btime: 0.807s. loss: 1.1503. lr: 0.000252
+train epoch: 27/  30. itr:  196/ 196. btime: 0.806s. loss: 1.1503. lr: 0.000250
+Total train time: 157.603s
+Total test time: 16.348s
+Total test time: 16.187s
+Total test time: 30.432s
+[2025-09-03 11:15:30,726] epoch: 27, acc-known-trans: 84.56000004882813
+[2025-09-03 11:15:30,727] epoch: 27, acc-novel-trans: 73.73999973144531
+[2025-09-03 11:15:30,727] epoch: 27, acc-all-trans: 79.14999987792969, best-acc: 79.98999995117188, best-acc-novel: 75.77999975585938
+train epoch: 28/  30. itr:    1/ 196. btime: 2.822s. loss: 0.8951. lr: 0.000250
+train epoch: 28/  30. itr:    6/ 196. btime: 1.131s. loss: 1.2040. lr: 0.000247
+train epoch: 28/  30. itr:   11/ 196. btime: 0.977s. loss: 1.1351. lr: 0.000245
+train epoch: 28/  30. itr:   16/ 196. btime: 0.920s. loss: 1.1036. lr: 0.000243
+train epoch: 28/  30. itr:   21/ 196. btime: 0.890s. loss: 1.1290. lr: 0.000241
+train epoch: 28/  30. itr:   26/ 196. btime: 0.871s. loss: 1.1023. lr: 0.000239
+train epoch: 28/  30. itr:   31/ 196. btime: 0.859s. loss: 1.1196. lr: 0.000237
+train epoch: 28/  30. itr:   36/ 196. btime: 0.850s. loss: 1.1149. lr: 0.000235
+train epoch: 28/  30. itr:   41/ 196. btime: 0.843s. loss: 1.1113. lr: 0.000233
+train epoch: 28/  30. itr:   46/ 196. btime: 0.838s. loss: 1.1229. lr: 0.000230
+train epoch: 28/  30. itr:   51/ 196. btime: 0.834s. loss: 1.1083. lr: 0.000228
+train epoch: 28/  30. itr:   56/ 196. btime: 0.830s. loss: 1.1130. lr: 0.000226
+train epoch: 28/  30. itr:   61/ 196. btime: 0.827s. loss: 1.1119. lr: 0.000224
+train epoch: 28/  30. itr:   66/ 196. btime: 0.825s. loss: 1.1091. lr: 0.000222
+train epoch: 28/  30. itr:   71/ 196. btime: 0.823s. loss: 1.1025. lr: 0.000220
+train epoch: 28/  30. itr:   76/ 196. btime: 0.821s. loss: 1.1096. lr: 0.000218
+train epoch: 28/  30. itr:   81/ 196. btime: 0.819s. loss: 1.1166. lr: 0.000216
+train epoch: 28/  30. itr:   86/ 196. btime: 0.818s. loss: 1.1136. lr: 0.000213
+train epoch: 28/  30. itr:   91/ 196. btime: 0.817s. loss: 1.1211. lr: 0.000211
+train epoch: 28/  30. itr:   96/ 196. btime: 0.816s. loss: 1.1201. lr: 0.000209
+train epoch: 28/  30. itr:  101/ 196. btime: 0.815s. loss: 1.1168. lr: 0.000207
+train epoch: 28/  30. itr:  106/ 196. btime: 0.814s. loss: 1.1120. lr: 0.000205
+train epoch: 28/  30. itr:  111/ 196. btime: 0.813s. loss: 1.1164. lr: 0.000203
+train epoch: 28/  30. itr:  116/ 196. btime: 0.813s. loss: 1.1156. lr: 0.000201
+train epoch: 28/  30. itr:  121/ 196. btime: 0.812s. loss: 1.1209. lr: 0.000199
+train epoch: 28/  30. itr:  126/ 196. btime: 0.812s. loss: 1.1220. lr: 0.000196
+train epoch: 28/  30. itr:  131/ 196. btime: 0.811s. loss: 1.1216. lr: 0.000194
+train epoch: 28/  30. itr:  136/ 196. btime: 0.811s. loss: 1.1174. lr: 0.000192
+train epoch: 28/  30. itr:  141/ 196. btime: 0.810s. loss: 1.1143. lr: 0.000190
+train epoch: 28/  30. itr:  146/ 196. btime: 0.810s. loss: 1.1151. lr: 0.000188
+train epoch: 28/  30. itr:  151/ 196. btime: 0.810s. loss: 1.1226. lr: 0.000186
+train epoch: 28/  30. itr:  156/ 196. btime: 0.809s. loss: 1.1244. lr: 0.000184
+train epoch: 28/  30. itr:  161/ 196. btime: 0.809s. loss: 1.1196. lr: 0.000182
+train epoch: 28/  30. itr:  166/ 196. btime: 0.809s. loss: 1.1238. lr: 0.000179
+train epoch: 28/  30. itr:  171/ 196. btime: 0.808s. loss: 1.1261. lr: 0.000177
+train epoch: 28/  30. itr:  176/ 196. btime: 0.808s. loss: 1.1238. lr: 0.000175
+train epoch: 28/  30. itr:  181/ 196. btime: 0.808s. loss: 1.1245. lr: 0.000173
+train epoch: 28/  30. itr:  186/ 196. btime: 0.808s. loss: 1.1206. lr: 0.000171
+train epoch: 28/  30. itr:  191/ 196. btime: 0.807s. loss: 1.1234. lr: 0.000169
+train epoch: 28/  30. itr:  196/ 196. btime: 0.807s. loss: 1.1272. lr: 0.000167
+Total train time: 157.601s
+Total test time: 16.462s
+Total test time: 16.169s
+Total test time: 30.287s
+[2025-09-03 11:19:15,505] epoch: 28, acc-known-trans: 84.90000020751953
+[2025-09-03 11:19:15,505] epoch: 28, acc-novel-trans: 73.9399999267578
+[2025-09-03 11:19:15,505] epoch: 28, acc-all-trans: 79.42000004882813, best-acc: 79.98999995117188, best-acc-novel: 75.77999975585938
+train epoch: 29/  30. itr:    1/ 196. btime: 3.480s. loss: 0.8477. lr: 0.000166
+train epoch: 29/  30. itr:    6/ 196. btime: 1.240s. loss: 0.9484. lr: 0.000164
+train epoch: 29/  30. itr:   11/ 196. btime: 1.036s. loss: 1.0412. lr: 0.000162
+train epoch: 29/  30. itr:   16/ 196. btime: 0.960s. loss: 1.0900. lr: 0.000160
+train epoch: 29/  30. itr:   21/ 196. btime: 0.920s. loss: 1.1107. lr: 0.000158
+train epoch: 29/  30. itr:   26/ 196. btime: 0.896s. loss: 1.1080. lr: 0.000156
+train epoch: 29/  30. itr:   31/ 196. btime: 0.879s. loss: 1.0869. lr: 0.000153
+train epoch: 29/  30. itr:   36/ 196. btime: 0.868s. loss: 1.0791. lr: 0.000151
+train epoch: 29/  30. itr:   41/ 196. btime: 0.859s. loss: 1.0876. lr: 0.000149
+train epoch: 29/  30. itr:   46/ 196. btime: 0.851s. loss: 1.0876. lr: 0.000147
+train epoch: 29/  30. itr:   51/ 196. btime: 0.846s. loss: 1.0933. lr: 0.000145
+train epoch: 29/  30. itr:   56/ 196. btime: 0.841s. loss: 1.0958. lr: 0.000143
+train epoch: 29/  30. itr:   61/ 196. btime: 0.837s. loss: 1.1060. lr: 0.000141
+train epoch: 29/  30. itr:   66/ 196. btime: 0.834s. loss: 1.1083. lr: 0.000139
+train epoch: 29/  30. itr:   71/ 196. btime: 0.832s. loss: 1.1113. lr: 0.000136
+train epoch: 29/  30. itr:   76/ 196. btime: 0.829s. loss: 1.1056. lr: 0.000134
+train epoch: 29/  30. itr:   81/ 196. btime: 0.827s. loss: 1.0944. lr: 0.000132
+train epoch: 29/  30. itr:   86/ 196. btime: 0.826s. loss: 1.0995. lr: 0.000130
+train epoch: 29/  30. itr:   91/ 196. btime: 0.824s. loss: 1.1007. lr: 0.000128
+train epoch: 29/  30. itr:   96/ 196. btime: 0.823s. loss: 1.1001. lr: 0.000126
+train epoch: 29/  30. itr:  101/ 196. btime: 0.822s. loss: 1.0996. lr: 0.000124
+train epoch: 29/  30. itr:  106/ 196. btime: 0.821s. loss: 1.1091. lr: 0.000122
+train epoch: 29/  30. itr:  111/ 196. btime: 0.820s. loss: 1.1093. lr: 0.000119
+train epoch: 29/  30. itr:  116/ 196. btime: 0.819s. loss: 1.1149. lr: 0.000117
+train epoch: 29/  30. itr:  121/ 196. btime: 0.818s. loss: 1.1121. lr: 0.000115
+train epoch: 29/  30. itr:  126/ 196. btime: 0.817s. loss: 1.1075. lr: 0.000113
+train epoch: 29/  30. itr:  131/ 196. btime: 0.817s. loss: 1.1027. lr: 0.000111
+train epoch: 29/  30. itr:  136/ 196. btime: 0.816s. loss: 1.1068. lr: 0.000109
+train epoch: 29/  30. itr:  141/ 196. btime: 0.816s. loss: 1.1089. lr: 0.000107
+train epoch: 29/  30. itr:  146/ 196. btime: 0.815s. loss: 1.1053. lr: 0.000105
+train epoch: 29/  30. itr:  151/ 196. btime: 0.814s. loss: 1.1129. lr: 0.000102
+train epoch: 29/  30. itr:  156/ 196. btime: 0.814s. loss: 1.1166. lr: 0.000100
+train epoch: 29/  30. itr:  161/ 196. btime: 0.814s. loss: 1.1158. lr: 0.000098
+train epoch: 29/  30. itr:  166/ 196. btime: 0.813s. loss: 1.1144. lr: 0.000096
+train epoch: 29/  30. itr:  171/ 196. btime: 0.813s. loss: 1.1118. lr: 0.000094
+train epoch: 29/  30. itr:  176/ 196. btime: 0.812s. loss: 1.1161. lr: 0.000092
+train epoch: 29/  30. itr:  181/ 196. btime: 0.812s. loss: 1.1133. lr: 0.000090
+train epoch: 29/  30. itr:  186/ 196. btime: 0.812s. loss: 1.1113. lr: 0.000088
+train epoch: 29/  30. itr:  191/ 196. btime: 0.811s. loss: 1.1165. lr: 0.000085
+train epoch: 29/  30. itr:  196/ 196. btime: 0.810s. loss: 1.1130. lr: 0.000083
+Total train time: 158.412s
+Total test time: 16.229s
+Total test time: 15.972s
+Total test time: 30.537s
+[2025-09-03 11:23:00,902] epoch: 29, acc-known-trans: 84.54000001220703
+[2025-09-03 11:23:00,903] epoch: 29, acc-novel-trans: 74.26000012207031
+[2025-09-03 11:23:00,903] epoch: 29, acc-all-trans: 79.39999989013671, best-acc: 79.98999995117188, best-acc-novel: 75.77999975585938
+train epoch: 30/  30. itr:    1/ 196. btime: 2.767s. loss: 1.1890. lr: 0.000083
+train epoch: 30/  30. itr:    6/ 196. btime: 1.121s. loss: 1.0504. lr: 0.000081
+train epoch: 30/  30. itr:   11/ 196. btime: 0.972s. loss: 1.0631. lr: 0.000079
+train epoch: 30/  30. itr:   16/ 196. btime: 0.917s. loss: 1.0995. lr: 0.000077
+train epoch: 30/  30. itr:   21/ 196. btime: 0.888s. loss: 1.0947. lr: 0.000074
+train epoch: 30/  30. itr:   26/ 196. btime: 0.870s. loss: 1.0704. lr: 0.000072
+train epoch: 30/  30. itr:   31/ 196. btime: 0.858s. loss: 1.0564. lr: 0.000070
+train epoch: 30/  30. itr:   36/ 196. btime: 0.849s. loss: 1.0550. lr: 0.000068
+train epoch: 30/  30. itr:   41/ 196. btime: 0.842s. loss: 1.0594. lr: 0.000066
+train epoch: 30/  30. itr:   46/ 196. btime: 0.838s. loss: 1.0767. lr: 0.000064
+train epoch: 30/  30. itr:   51/ 196. btime: 0.834s. loss: 1.0800. lr: 0.000062
+train epoch: 30/  30. itr:   56/ 196. btime: 0.831s. loss: 1.0828. lr: 0.000060
+train epoch: 30/  30. itr:   61/ 196. btime: 0.828s. loss: 1.0801. lr: 0.000057
+train epoch: 30/  30. itr:   66/ 196. btime: 0.826s. loss: 1.0896. lr: 0.000055
+train epoch: 30/  30. itr:   71/ 196. btime: 0.824s. loss: 1.1034. lr: 0.000053
+train epoch: 30/  30. itr:   76/ 196. btime: 0.823s. loss: 1.1035. lr: 0.000051
+train epoch: 30/  30. itr:   81/ 196. btime: 0.821s. loss: 1.0967. lr: 0.000049
+train epoch: 30/  30. itr:   86/ 196. btime: 0.820s. loss: 1.1003. lr: 0.000047
+train epoch: 30/  30. itr:   91/ 196. btime: 0.819s. loss: 1.1096. lr: 0.000045
+train epoch: 30/  30. itr:   96/ 196. btime: 0.818s. loss: 1.1045. lr: 0.000043
+train epoch: 30/  30. itr:  101/ 196. btime: 0.817s. loss: 1.1000. lr: 0.000040
+train epoch: 30/  30. itr:  106/ 196. btime: 0.816s. loss: 1.0916. lr: 0.000038
+train epoch: 30/  30. itr:  111/ 196. btime: 0.815s. loss: 1.0895. lr: 0.000036
+train epoch: 30/  30. itr:  116/ 196. btime: 0.814s. loss: 1.0856. lr: 0.000034
+train epoch: 30/  30. itr:  121/ 196. btime: 0.814s. loss: 1.0814. lr: 0.000032
+train epoch: 30/  30. itr:  126/ 196. btime: 0.813s. loss: 1.0785. lr: 0.000030
+train epoch: 30/  30. itr:  131/ 196. btime: 0.813s. loss: 1.0795. lr: 0.000028
+train epoch: 30/  30. itr:  136/ 196. btime: 0.812s. loss: 1.0811. lr: 0.000026
+train epoch: 30/  30. itr:  141/ 196. btime: 0.812s. loss: 1.0799. lr: 0.000023
+train epoch: 30/  30. itr:  146/ 196. btime: 0.811s. loss: 1.0765. lr: 0.000021
+train epoch: 30/  30. itr:  151/ 196. btime: 0.811s. loss: 1.0772. lr: 0.000019
+train epoch: 30/  30. itr:  156/ 196. btime: 0.811s. loss: 1.0809. lr: 0.000017
+train epoch: 30/  30. itr:  161/ 196. btime: 0.810s. loss: 1.0822. lr: 0.000015
+train epoch: 30/  30. itr:  166/ 196. btime: 0.810s. loss: 1.0835. lr: 0.000013
+train epoch: 30/  30. itr:  171/ 196. btime: 0.810s. loss: 1.0842. lr: 0.000011
+train epoch: 30/  30. itr:  176/ 196. btime: 0.809s. loss: 1.0852. lr: 0.000009
+train epoch: 30/  30. itr:  181/ 196. btime: 0.809s. loss: 1.0850. lr: 0.000006
+train epoch: 30/  30. itr:  186/ 196. btime: 0.809s. loss: 1.0917. lr: 0.000004
+train epoch: 30/  30. itr:  191/ 196. btime: 0.809s. loss: 1.0919. lr: 0.000002
+train epoch: 30/  30. itr:  196/ 196. btime: 0.808s. loss: 1.0901. lr: 0.000000
+Total train time: 157.832s
+Total test time: 16.408s
+Total test time: 16.071s
+Total test time: 30.319s
+[2025-09-03 11:26:45,757] epoch: 30, acc-known-trans: 84.69999985351562
+[2025-09-03 11:26:45,757] epoch: 30, acc-novel-trans: 74.28
+[2025-09-03 11:26:45,757] epoch: 30, acc-all-trans: 79.48999989013672, best-acc: 79.98999995117188, best-acc-novel: 75.77999975585938

@@ -515,7 +515,7 @@ Test overall acc 0.8406, seen acc 0.9150, unseen acc 0.8034
 
 CoOp + TIDA:
 cifar10:
-Test overall acc 10.48, seen acc 20.34, unseen acc 2.39
+Test overall acc 10.00, seen acc 20.00, unseen acc 0.00
 cifar100:
 Test overall acc 1.76, seen acc 2.12, unseen acc 1.4
 imagenet100:

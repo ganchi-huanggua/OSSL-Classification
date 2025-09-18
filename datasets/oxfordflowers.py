@@ -6,7 +6,7 @@ import os
 from PIL import Image
 from .utils import x_u_split_known_novel, TransformWS224, TransformWS32, TransformWS64, read_json
 from collections import defaultdict
-import random
+import json
 from scipy.io import loadmat
 
 imgnet_mean, imgnet_std = (0.485, 0.456, 0.406), (0.229, 0.224, 0.225)
@@ -36,8 +36,17 @@ def get_flowers(args):
         label = int(label)
         tracker[label].append(impath)
         
-    lab2cname = read_json("/home/lhz/data/oxford_flowers/cat_to_name.json")
-    cnames = [lab2cname[k] for k in sorted(lab2cname, key=lambda x: int(x))]
+    # lab2cname = read_json("/home/lhz/data/oxford_flowers/cat_to_name.json")
+    # cnames = [lab2cname[k] for k in sorted(lab2cname, key=lambda x: int(x))]
+    PATH_TO_PROMPTS = f'gpt3_prompts/cleaned_CuPL_prompts_flowers102.json'
+    with open(PATH_TO_PROMPTS) as f:
+        gpt3_prompts = json.load(f)
+    cnames = {}
+    for item in gpt3_prompts.items():
+        cnames[item[0]] = item[1]
+    # train_classes_textnames = [textnames[i] for i in args.train_classes]
+    # unlabeled_classes_textnames = [textnames[i] for i in args.unlabeled_classes]
+    # textnames = train_classes_textnames + unlabeled_classes_textnames
     data, targets = [], []
     for label, impaths in tracker.items():
         data.extend(impaths)
@@ -103,7 +112,7 @@ class GenericSSL(Dataset):
             img = self.transform(img)
 
         target = self.targets[index]
-        return img, target, self.index_list[index]
+        return img, target, index
 
 
 class GenericTEST(Dataset):
