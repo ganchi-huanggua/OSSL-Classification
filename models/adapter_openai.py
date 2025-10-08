@@ -2,12 +2,15 @@ import torch.nn as nn
 import torch
 from models.clip import clip
 from models.clip.simple_tokenizer import SimpleTokenizer as _Tokenizer
+import math
 from torchvision.datasets import CIFAR100, CIFAR10
 from torch.utils.data import DataLoader
 from torchvision import transforms
 import os
+# from datasets.imagenet100 import GenericTEST
+from datasets.cub import get_cub
+from datasets.stanfordcars import get_stanfordcars
 import logging
-import math
 # source /etc/profile.d/clash.sh
 # proxy_on
 
@@ -17,7 +20,7 @@ CUSTOM_TEMPLATES = {
     "FGVCAircraft": "a photo of a {}, a type of aircraft.",
     "DescribableTextures": "{} texture.",
     "EuroSAT": "a centered satellite photo of {}.",
-    "StanfordCars": "a photo of a {}.",
+    "stanfordcars": "a photo of a {}, a type of car.",
     "Food101": "a photo of {}, a type of food.",
     "SUN397": "a photo of a {}.",
     "Caltech101": "a photo of a {}.",
@@ -29,7 +32,8 @@ CUSTOM_TEMPLATES = {
     "ImageNetR": "a photo of a {}.",
     "cifar100": "a photo of a {}.",
     "cifar10": "a photo of a {}.",
-    "imagenet100": "a photo of a {}."
+    "imagenet100": "a photo of a {}.",
+    "cub": "a photo of a {}, a type of bird.",
 }
 
 _tokenizer = _Tokenizer()
@@ -47,7 +51,7 @@ def load_clip_to_cpu(backbone_name):
     model = clip.build_model(state_dict or model.state_dict())
     return model
    
-def adapter(args):
+def adapter_openai(args):
     backbone_name = "ViT-B/16"
     classnames = args.classname
     low_dim = 10
@@ -184,7 +188,7 @@ class CLIPAdapter(nn.Module):
         self.logit_scale = clip_model.logit_scale
         self.dtype = clip_model.dtype
 
-    def forward(self, image, clip_zs=False):
+    def forward(self, image, clip_zs=False, return_feat=False):
         if clip_zs == False:
             image_features = self.image_encoder(image.type(self.dtype))
             image_features = image_features / image_features.norm(dim=-1, keepdim=True)
@@ -192,15 +196,25 @@ class CLIPAdapter(nn.Module):
             logit_scale = self.logit_scale.exp()
             logits = logit_scale * image_features @ self.original_text_features.t()
             # logits = image_features @ text_features.t()
-
-            return logits
+            if return_feat:
+                return logits, image_features
+            else:
+                return logits
         else:
             image_features = self.clip_model.encode_image(image)
             image_features = image_features / image_features.norm(dim=-1, keepdim=True)
             # logit_scale = self.clip_model.logit_scale.exp()
             # logits = logit_scale * image_features @ self.original_text_features.t()
             logits = image_features @ self.original_text_features.T
-            return logits
+            if return_feat:
+                return logits, image_features
+            else:
+                return logits
+            
+    def get_image_feature(self, image):
+        image_features = self.image_encoder(image.type(self.dtype))
+        image_features = image_features / image_features.norm(dim=-1, keepdim=True)
+        return image_features
     
     def get_text_feature(self, dataset_name, classnames):
         if dataset_name in ["cifar10", "cifar100", "imagenet100"]:
@@ -211,10 +225,11 @@ class CLIPAdapter(nn.Module):
             with torch.no_grad():
                 original_text_features = self.clip_model.encode_text(prompts)
                 original_text_features = original_text_features / original_text_features.norm(dim=-1, keepdim=True)
+            logging.info(f"classnames={classnames}")
+
         else:
             all_sentence_features = []  # 存储所有句子的特征
             class_mapping = []          # 存储每个句子对应的“类索引”（如0代表"pink primrose"，1代表"red rose"）
-            class_names = list(classnames.keys())  # 类名列表（用于后续映射）
 
             for class_idx, (class_name, sentences) in enumerate(classnames.items()):
                 # 3.1 Tokenize当前类的所有句子
@@ -235,7 +250,7 @@ class CLIPAdapter(nn.Module):
 
             # ----------------------
             # 4. 步骤2：按类聚合（平均池化）
-            num_classes = len(class_names)
+            num_classes = len(classnames)
             feature_dim = all_sentence_features.shape[1]  # CLIP特征维度（如512）
             class_features = torch.zeros((num_classes, feature_dim), device=sentence_tokens.device)  # 存储类级特征
 
@@ -251,16 +266,75 @@ class CLIPAdapter(nn.Module):
                     # 可选：再次归一化（确保类特征范数为1）
                     class_features[class_idx] = class_features[class_idx] / class_features[class_idx].norm(dim=-1, keepdim=True)
             original_text_features = class_features
-            
+            logging.info(f"classnames={list(classnames.keys())}")
         self.original_text_features = original_text_features
         
+        
+cifar100_mean, cifar100_std = (0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761)  
+cifar10_mean, cifar10_std = (0.4914, 0.4822, 0.4465), (0.2471, 0.2435, 0.2616)
+imgnet_mean, imgnet_std = (0.485, 0.456, 0.406), (0.229, 0.224, 0.225)
+
 if __name__ == "__main__":
+    # test_dataset = CIFAR10(root='/home/lhz/data', train=False, download=True, transform=transforms.Compose([
+    #         transforms.Resize(224, interpolation=transforms.InterpolationMode.BICUBIC),  # 保持结构更好
+    #         # transforms.Resize(224),
+    #         transforms.CenterCrop(224),  # 实际没必要crop，但写上更标准
+    #         transforms.ToTensor(),
+    #         transforms.Normalize(mean=cifar10_mean, std=cifar10_std)
+    #     ]))
     class args:
-        dataset = "cifar100"
-        classname = ["abc"]
-    model = adapter(args)
-    # 打印所有可学习参数的名称
-    print("Learnable parameters:")
-    for name, param in model.named_parameters():
-        if param.requires_grad:
-            print(name)
+        dataset = "stanfordcars"
+        ssl_indexes = f'random_splits/stanfordcars_50_50_44007.pkl'
+        lbl_percent = 50 
+        no_class = 196
+        no_known = 98
+        split_root = 'random_splits'
+        split_id = 44007
+        
+        # classname = test_dataset.classes
+        # classname = ['robin', 'water_ouzel', 
+        # 'box_turtle', 'sea_snake', 'diamondback', 'sidewinder', 'scorpion', 'goose', 'tusker', 'American_coot', 'oystercatcher', 
+        # 'albatross', 'toy_terrier', 'bluetick', 'Staffordshire_bullterrier', 'Border_terrier', 'Norfolk_terrier', 'cairn', 'giant_schnauzer', 
+        # 'Scotch_terrier', 'flat-coated_retriever', 'Irish_setter', 'schipperke', 'Shetland_sheepdog', 'collie', 'Border_collie', 'Doberman', 
+        # 'dalmatian', 'coyote', 'Arctic_fox', 'grey_fox', 'cougar', 'leopard', 'American_black_bear', 'ringlet', 'wood_rabbit', 'guinea_pig', 
+        # 'guenon', 'proboscis_monkey', 'analog_clock', 'ashcan', 'bicycle-built-for-two', 'broom', 'bucket', 'computer_keyboard', 'cowboy_hat', 
+        # 'crash_helmet', 'dam', 'dumbbell', 'electric_guitar', 'envelope', 'file', 'gown', 'hand_blower', 'hatchet', 'honeycomb', 'knee_pad', 
+        # 'lawn_mower', 'maillot', 'manhole_cover', 'maze', 'microphone', 'mitten', 'neck_brace', 'obelisk', 'oboe', 'organ', 'pickelhaube', 
+        # 'picket_fence', 'plane', 'planetarium', 'pop_bottle', 'printer', 'purse', 'recreational_vehicle', 'shoe_shop', 'shower_curtain', 
+        # 'sleeping_bag', 'steel_arch_bridge', 'stole', 'stretcher', 'stupa', 'table_lamp', 'thresher', 'tobacco_shop', 'totem_pole', 'trimaran', 
+        # 'unicycle', 'upright', 'vending_machine', 'washer', 'Windsor_tie', 'wing', 'wreck', 'guacamole', 'trifle', 'bagel', 'mashed_potato', 
+        # 'banana', 'rapeseed']
+
+    _, _, _, _, test_dataset, cnames = get_stanfordcars(args())
+    args.classname = cnames
+    test_loader = DataLoader(test_dataset, batch_size=512, shuffle=False)
+    model = adapter_openai(args())
+    # model, ppp = clip.load("ViT-B/16", device="cuda:5")
+    # 设置默认设备为cuda:0
+    # torch.set_default_device("cuda:4")
+    model.eval()
+    ground_truth = []
+    pred_label = []
+    with torch.no_grad():
+        # all_text = [f"a photo of a {c}." for c in test_dataset.classes]
+        # text = tokenizer(all_text).to(device)
+        # text_features = model.encode_text(text)
+        # print(text_features)
+        for idx, (image, label) in enumerate(test_loader):
+            image = image.cuda()
+            # image_embeds = model.encode_image(image)
+            # image_embeds /= image_embeds.norm(dim=-1, keepdim=True)
+            # text_features /= text_features.norm(dim=-1, keepdim=True)
+            # logits = image_embeds @ text_features.T
+            # preds = logits.argmax(dim=-1)
+            # logits = model(image, text)[0]
+            logits = model(image, True)
+            preds = logits.argmax(dim=1)
+            pred_label.append(preds)
+            ground_truth.append(label)
+            print(idx)
+    
+    ground_truth = torch.cat(ground_truth, dim=0).cpu()
+    pred_label = torch.cat(pred_label, dim=0).cpu()
+    acc = (pred_label == ground_truth).float().mean()
+    print(f"Accuracy: {acc}")

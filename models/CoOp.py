@@ -6,7 +6,9 @@ from torchvision.datasets import CIFAR100, CIFAR10
 from torch.utils.data import DataLoader
 from torchvision import transforms
 import os
-from datasets.imagenet100 import GenericTEST
+# from datasets.imagenet100 import GenericTEST
+from datasets.cub import get_cub
+from datasets.stanfordcars import get_stanfordcars
 import logging
 # source /etc/profile.d/clash.sh
 # proxy_on
@@ -17,7 +19,7 @@ CUSTOM_TEMPLATES = {
     "FGVCAircraft": "a photo of a {}, a type of aircraft.",
     "DescribableTextures": "{} texture.",
     "EuroSAT": "a centered satellite photo of {}.",
-    "StanfordCars": "a photo of a {}.",
+    "stanfordcars": "a photo of a {}, a type of car.",
     "Food101": "a photo of {}, a type of food.",
     "SUN397": "a photo of a {}.",
     "Caltech101": "a photo of a {}.",
@@ -29,7 +31,8 @@ CUSTOM_TEMPLATES = {
     "ImageNetR": "a photo of a {}.",
     "cifar100": "a photo of a {}.",
     "cifar10": "a photo of a {}.",
-    "imagenet100": "a photo of a {}."
+    "imagenet100": "a photo of a {}.",
+    "cub": "a photo of a {}, a type of bird."
 }
 
 _tokenizer = _Tokenizer()
@@ -296,68 +299,3 @@ class CoOp(nn.Module):
 
         self.original_text_features = original_text_features
         
-cifar100_mean, cifar100_std = (0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761)  
-cifar10_mean, cifar10_std = (0.4914, 0.4822, 0.4465), (0.2471, 0.2435, 0.2616)
-imgnet_mean, imgnet_std = (0.485, 0.456, 0.406), (0.229, 0.224, 0.225)
-
-if __name__ == "__main__":
-    test_dataset = CIFAR10(root='/home/lhz/data', train=False, download=True, transform=transforms.Compose([
-            transforms.Resize(224, interpolation=transforms.InterpolationMode.BICUBIC),  # 保持结构更好
-            # transforms.Resize(224),
-            transforms.CenterCrop(224),  # 实际没必要crop，但写上更标准
-            transforms.ToTensor(),
-            transforms.Normalize(mean=cifar10_mean, std=cifar10_std)
-        ]))
-    # test_dataset = GenericTEST(os.path.join("/home/lhz/data/imagenet100", 'val'), no_class=100, transform=transforms.Compose([
-    #         transforms.Resize(224, interpolation=transforms.InterpolationMode.BICUBIC),  # 保持结构更好
-    #         # transforms.Resize(224),
-    #         transforms.CenterCrop(224),  # 实际没必要crop，但写上更标准
-    #         transforms.ToTensor(),
-    #         transforms.Normalize(imgnet_mean, imgnet_std)
-    #     ]))
-    test_loader = DataLoader(test_dataset, batch_size=128, shuffle=False)
-    class args:
-        dataset = "cifar10"
-        classname = test_dataset.classes
-        # classname = ['robin', 'water_ouzel', 
-        # 'box_turtle', 'sea_snake', 'diamondback', 'sidewinder', 'scorpion', 'goose', 'tusker', 'American_coot', 'oystercatcher', 
-        # 'albatross', 'toy_terrier', 'bluetick', 'Staffordshire_bullterrier', 'Border_terrier', 'Norfolk_terrier', 'cairn', 'giant_schnauzer', 
-        # 'Scotch_terrier', 'flat-coated_retriever', 'Irish_setter', 'schipperke', 'Shetland_sheepdog', 'collie', 'Border_collie', 'Doberman', 
-        # 'dalmatian', 'coyote', 'Arctic_fox', 'grey_fox', 'cougar', 'leopard', 'American_black_bear', 'ringlet', 'wood_rabbit', 'guinea_pig', 
-        # 'guenon', 'proboscis_monkey', 'analog_clock', 'ashcan', 'bicycle-built-for-two', 'broom', 'bucket', 'computer_keyboard', 'cowboy_hat', 
-        # 'crash_helmet', 'dam', 'dumbbell', 'electric_guitar', 'envelope', 'file', 'gown', 'hand_blower', 'hatchet', 'honeycomb', 'knee_pad', 
-        # 'lawn_mower', 'maillot', 'manhole_cover', 'maze', 'microphone', 'mitten', 'neck_brace', 'obelisk', 'oboe', 'organ', 'pickelhaube', 
-        # 'picket_fence', 'plane', 'planetarium', 'pop_bottle', 'printer', 'purse', 'recreational_vehicle', 'shoe_shop', 'shower_curtain', 
-        # 'sleeping_bag', 'steel_arch_bridge', 'stole', 'stretcher', 'stupa', 'table_lamp', 'thresher', 'tobacco_shop', 'totem_pole', 'trimaran', 
-        # 'unicycle', 'upright', 'vending_machine', 'washer', 'Windsor_tie', 'wing', 'wreck', 'guacamole', 'trifle', 'bagel', 'mashed_potato', 
-        # 'banana', 'rapeseed']
-    model = coop(args())
-    # model, ppp = clip.load("ViT-B/16", device="cuda:5")
-    # 设置默认设备为cuda:0
-    # torch.set_default_device("cuda:4")
-    model.eval()
-    ground_truth = []
-    pred_label = []
-    with torch.no_grad():
-        # all_text = [f"a photo of a {c}." for c in test_dataset.classes]
-        # text = tokenizer(all_text).to(device)
-        # text_features = model.encode_text(text)
-        # print(text_features)
-        for idx, (image, label) in enumerate(test_loader):
-            image = image.cuda()
-            # image_embeds = model.encode_image(image)
-            # image_embeds /= image_embeds.norm(dim=-1, keepdim=True)
-            # text_features /= text_features.norm(dim=-1, keepdim=True)
-            # logits = image_embeds @ text_features.T
-            # preds = logits.argmax(dim=-1)
-            # logits = model(image, text)[0]
-            logits = model(image, True)
-            preds = logits.argmax(dim=1)
-            pred_label.append(preds)
-            ground_truth.append(label)
-            print(idx)
-    
-    ground_truth = torch.cat(ground_truth, dim=0).cpu()
-    pred_label = torch.cat(pred_label, dim=0).cpu()
-    acc = (pred_label == ground_truth).float().mean()
-    print(f"Accuracy: {acc}")

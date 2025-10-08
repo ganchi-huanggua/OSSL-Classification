@@ -1,11 +1,13 @@
 import torch
 from .CoOp import coop
-from .adapter import adapter
-
+from .adapter_openai import adapter_openai
+from .adapter_open_clip import adapter_open_clip
 import logging
 def build_model(args, ema=False):
 
-    model = adapter(args)
+    # model = adapter_open_clip(args)
+    model = adapter_openai(args)
+    teacher_model = adapter_open_clip(args)
     # model = coop(args)
 
     # use dataparallel if there's multiple gpus
@@ -16,4 +18,4 @@ def build_model(args, ema=False):
         for param in model.parameters():
             param.detach_()
 
-    return model
+    return model, teacher_model

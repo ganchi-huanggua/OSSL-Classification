@@ -22,8 +22,7 @@ from datasets.utils import PseudoLabelDataset
 from utils.evaluate_utils import hungarian_evaluate
 from utils.losses import *
 from utils.utils import *
-from utils.sinkhorn_knopp import SinkhornKnopp
-from utils.energy import energy_discrepancy, energy
+
 
 
 def main():
@@ -34,24 +33,23 @@ def main():
     parser.add_argument('--num-workers', type=int, default=4, help='number of workers')
     parser.add_argument('--dataset', default='cifar10', type=str,
                         choices=['cifar10', 'cifar100', 'svhn', 'tinyimagenet', 'oxfordpets', 'oxfordflowers', 
-                                 'aircraft', 'stanfordcars', 'imagenet100', 'herbarium'], help='dataset name')
+                                 'aircraft', 'stanfordcars', 'imagenet100', 'herbarium', 'cub'], help='dataset name')
     parser.add_argument('--lbl-percent', type=int, default=50, help='percent of labeled data')
     parser.add_argument('--novel-percent', default=50, type=int, help='percentage of novel classes, default 50')
-    parser.add_argument('--epochs', default=30, type=int, help='number of total epochs to run, deafult 50')
-    parser.add_argument('--batch-size', default=128, type=int, help='train batchsize, batch_x + batch_u')
+    parser.add_argument('--epochs', default=200, type=int, help='number of total epochs to run, deafult 50')
+    parser.add_argument('--batch-size', default=32, type=int, help='train batchsize, batch_x + batch_u')
     parser.add_argument('--test-batch-size', default=512, type=int, help='test batchsize')
-    parser.add_argument('--lr', default=0.0025, type=float, help='learning rate, default 1e-3')
+    parser.add_argument('--lr', default=0.0001, type=float, help='learning rate, default 1e-4')
     parser.add_argument('--resume', default='', type=str, help='path to latest checkpoint (default: none)')
     parser.add_argument('--seed', type=int, default=-1, help="random seed (-1: don't use random seed)")
     parser.add_argument('--split-id', default='44007', type=str, help='random data split number')
     # parser.add_argument('--ssl-indexes', default='random_splits/cifar100_50_50_split_70058.pkl', type=str, help='path to random data split')
-    parser.add_argument('--rho', default='0.3,0.9', type=str, help='pseudo-label filtering ratio')
     parser.add_argument('--warmup', default=0, type=int, help='warmup epoch')
+    parser.add_argument('--weight-decay', default=1e-5, type=float, help='weight decay')
     parser.add_argument('--no-progress', action='store_true', help="don't use progress bar")
-    parser.add_argument('--chosen_neighbors', default=100, type=int, help='number of chosen neighbors for KNN contrastive learning')
-    parser.add_argument('--entropy_q', default=0.3, type=float, help='q for entropy loss')
-    parser.add_argument('--temparature', default=0.3, type=float, help='temperature for classification loss')
-    parser.add_argument('--knn_weight', default=0.2, type=float, help='weight of KNN contrastive loss')
+    parser.add_argument('--temperature', default=0.07, type=float, help='temperature for clip zero-shot')
+    # parser.add_argument('--mixup-alpha', default=0.2, type=float)
+    # parser.add_argument('--consistency-weight', type=float, default=1.0, help='Weight for consistency regularization loss')
     args = parser.parse_args()
     run_started = datetime.today().strftime('%y-%m-%d_%H%M%S')
     if args.split_id == "":
@@ -79,9 +77,9 @@ def main():
     
     writer = SummaryWriter(logdir=args.out)
 
-    logging.info('************************************************************************\n\n')
-    logging.info(' | '.join(f'{k}={v}' for k, v in vars(args).items()))
-    logging.info('\n\n************************************************************************\n')
+    # logging.info('************************************************************************\n\n')
+    # logging.info(' | '.join(f'{k}={v}' for k, v in vars(args).items() if k != "classname"))
+    # logging.info('\n\n************************************************************************\n')
     
     args.n_gpu = torch.cuda.device_count()
     args.dtype = torch.float32
@@ -99,13 +97,17 @@ def main():
         args.no_class = 102
     elif args.dataset == 'oxfordpets':
         args.no_class = 37
+    elif args.dataset == 'stanfordcars':
+        args.no_class = 196
+    elif args.dataset == 'cub':
+        args.no_class = 200
 
     args.data_root = os.path.join(args.data_root, args.dataset)
     # os.makedirs(args.data_root, exist_ok=True)
     os.makedirs(args.split_root, exist_ok=True)
 
     # Load dataset
-    args.no_known = args.no_class - int((args.novel_percent * args.no_class) / 100)
+    args.no_known = args.no_class - math.floor((args.novel_percent * args.no_class) / 100)
     lbl_dataset, unlbl_dataset, test_dataset_known, test_dataset_novel, test_dataset_all, classname = get_dataset(args)
     args.classname = classname
     
@@ -123,12 +125,12 @@ def main():
     test_loader_all_trans = DataLoader(test_dataset_all, sampler=SequentialSampler(test_dataset_all), batch_size=args.test_batch_size, num_workers=args.num_workers, drop_last=False)
     torch.cuda.set_device(0)
     logging.info(f"using device: {torch.cuda.current_device()}")
-    [args.rho_start, args.rho_end] = [float(item) for item in args.rho.split(',')]
-    model = build_model(args)
-    ema = EMA(model, decay=0.9999)
+    # [args.rho_start, args.rho_end] = [float(item) for item in args.rho.split(',')]
+    model, teacher_model = build_model(args)
+    # ema = EMA(model, decay=0.999)
     # ema_model = build_model(args,ema=True)
 
-    logging.info(' | '.join(f'{k}={v}' for k, v in vars(args).items()))
+    logging.info(' | '.join(f'{k}={v}' for k, v in vars(args).items() if k != "classname"))
     
     # ema_model = ema_model.cuda()
     # ema_optimizer= WeightEMA(0.95, model, ema_model)
@@ -146,10 +148,10 @@ def main():
         return max(
             0.0, float(args.epochs * args.iteration - current_step) / float(max(1, args.epochs * args.iteration - args.warmup * args.iteration))
         )
-    optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     scheduler = LambdaLR(optimizer, lr_lambda=get_lr_lambda)
-    
     # scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs, eta_min=0.01 * args.lr)
+    # scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs)
     start_epoch = 0
     if args.resume:
         assert os.path.isfile(
@@ -170,7 +172,7 @@ def main():
     #     'prob': np.zeros(len(unlbl_loader.dataset)),
     # }
 
-
+    model.eval()
     # training
     selected_samples = dict()
     # 新增：存储每个样本的真实标签（用于后续计算精度）
@@ -190,25 +192,28 @@ def main():
 
         # 提取真实标签（转为numpy便于存储）
         true_labels = targets_u.numpy()
-
-        model.train()
+        
         with torch.no_grad():
-            zs_logits = model(inputs_u, True)
-            conf = F.softmax(zs_logits, dim=1)
+            zs_logits = teacher_model(inputs_u, True)
+            # print("zs_logits max:", zs_logits.max().item(), "min:", zs_logits.min().item())
+            conf = F.softmax(zs_logits / args.temperature, dim=1)
             max_conf, pseudo_label = torch.max(conf, dim=1)
             max_conf = max_conf.cpu().numpy()
             pseudo_label = pseudo_label.cpu().numpy()
             index_u = index_u.numpy()
+            conf = conf.cpu().numpy()
 
             # 按伪标签分类存储（同时记录真实标签）
-            for idx, pl, cf, tl in zip(index_u, pseudo_label, max_conf, true_labels):
-                all_predictions[pl].append((-cf, idx, tl))  # 增加真实标签tl
+            for idx, pl, mc, tl, conf in zip(index_u, pseudo_label, max_conf, true_labels, conf):
+                all_predictions[pl].append((-mc, idx, tl, conf))  # 增加真实标签tl
 
     # 筛选topk并计算精度
     correct = 0
     total = 0
     topk_conf = int(len(lbl_dataset) / args.no_known)
+    # topk_conf = 16
     
+    index_to_pseudo_label = {}
     for cls in range(args.no_known, args.no_class):
         # 按置信度降序排序
         all_predictions[cls].sort()
@@ -224,20 +229,33 @@ def main():
             # 统计真实标签等于当前伪标签类别的数量
             correct += sum(1 for tl in sample_true_labels[cls] if tl == cls)
             total += len(topk_samples)
+            
+            for item in topk_samples:
+                # item[3]: soft-label, cls: hard-label
+                index_to_pseudo_label[item[1]] = cls
+                # index_to_pseudo_label[item[1]] = item[3]
+    
+    # for cls in range(args.no_class):
+    #     selected_samples[cls] = [item[1] for item in all_predictions[cls]]
+    #     sample_true_labels[cls] = [item[2] for item in all_predictions[cls]]
+        
+    #     if len(selected_samples[cls]) != 0:
+    #         correct += sum(1 for tl in sample_true_labels[cls] if tl == cls)
+    #         total += len(selected_samples[cls])
+            
+    #         for item in selected_samples[cls]:
+    #             # item[3]: soft-label, cls: hard-label
+    #             index_to_pseudo_label[item] = cls
+    #             # index_to_pseudo_label[item[1]] = item[3]
     
     print(f"伪标签精度: {correct / total:.4f} ({correct}/{total})")
-
-    index_to_pseudo_label = {}
-    for pseudo_cls, sample_indices in selected_samples.items():
-        # 遍历当前伪类下的所有样本索引，记录其对应的伪标签
-        for idx in sample_indices:
-            index_to_pseudo_label[idx] = pseudo_cls
 
     original_dataset = unlbl_loader.dataset
 
     pseudo_label_dataset = PseudoLabelDataset(
         original_dataset=original_dataset,
-        index_to_pseudo_label=index_to_pseudo_label
+        index_to_pseudo_label=index_to_pseudo_label,
+        # soft_label=True
     )
     
     pseudo_label_dataloader = DataLoader(
@@ -250,16 +268,16 @@ def main():
 
     for epoch in range(start_epoch, args.epochs):
         #training
-        train(args, lbl_loader, unlbl_loader, pseudo_label_dataloader, model, optimizer, scheduler, epoch, args.epochs, ema)
+        train(args, lbl_loader, unlbl_loader, pseudo_label_dataloader, model, optimizer, scheduler, epoch, teacher_model)
         # train(args, lbl_loader, unlbl_loader, model, optimizer, scheduler, epoch)
         #test
-        test_acc_known_trans = test_known(args, test_loader_known_trans, model, ema, epoch)
+        test_acc_known_trans = test_known(args, test_loader_known_trans, model, epoch)
         # novel_cluster_results_trans = test_cluster(args, test_loader_novel_trans, model, epoch, offset=args.no_known)
         # all_cluster_results_trans = test_cluster(args, test_loader_all_trans, model, epoch)
         # test_acc_trans = all_cluster_results_trans["acc"]
         # test_acc_novel_trans = novel_cluster_results_trans["acc"]
-        novel_cluster_results_trans = test_known(args, test_loader_novel_trans, model, ema, epoch)
-        all_cluster_results_trans = test_known(args, test_loader_all_trans, model, ema, epoch)
+        novel_cluster_results_trans = test_known(args, test_loader_novel_trans, model, epoch)
+        all_cluster_results_trans = test_known(args, test_loader_all_trans, model, epoch)
         test_acc_trans = all_cluster_results_trans
         test_acc_novel_trans = novel_cluster_results_trans
 
@@ -271,14 +289,14 @@ def main():
         logging.info(f'epoch: {epoch + 1}, acc-novel-trans: {test_acc_novel_trans}')
         logging.info(f'epoch: {epoch + 1}, acc-all-trans: {test_acc_trans}, best-acc: {best_acc_trans}, best-acc-novel: {best_acc_novel_trans}')
 
-        model_to_save = model.module if hasattr(model, "module") else model    
-        save_checkpoint({
-            'epoch': epoch + 1,
-            'state_dict': model_to_save,
-            'acc': test_acc_trans,
-            'best_acc': best_acc_trans,
-            'optimizer': optimizer.state_dict()
-        }, is_best_trans, args.out, tag='base')
+        # model_to_save = model.module if hasattr(model, "module") else model    
+        # save_checkpoint({
+        #     'epoch': epoch + 1,
+        #     'state_dict': model_to_save,
+        #     'acc': test_acc_trans,
+        #     'best_acc': best_acc_trans,
+        #     'optimizer': optimizer.state_dict()
+        # }, is_best_trans, args.out, tag='base')
 
     writer.close()
 
@@ -294,9 +312,11 @@ def get_la_loss(tau=1.0):
         logit_adjusted = logits + tau*log_cls_num.unsqueeze(0).to(logits.device)
         return F.cross_entropy(logit_adjusted, target)
     return loss_fn
-        
-    
-def train(args, lbl_loader, unlbl_loader, pseudo_label_dataloader, model, optimizer, scheduler, epoch, total_epochs, ema):
+
+
+thre_sum = 0.0
+thre_count = 0
+def train(args, lbl_loader, unlbl_loader, pseudo_label_dataloader, model, optimizer, scheduler, epoch, teacher_model):
     batch_time = AverageMeter()
     losses = AverageMeter()
     end = time.time()
@@ -311,7 +331,11 @@ def train(args, lbl_loader, unlbl_loader, pseudo_label_dataloader, model, optimi
     train_start_time = time.time()
     model.train()
     # 初始化存储结构
-    LA_loss = get_la_loss()
+    # LA_loss = get_la_loss()
+    
+    text_features_all = model.original_text_features  # (num_classes, dim)
+    text_features_all = text_features_all.cuda()
+    
     for batch_idx, (data_lbl, data_unlbl, data_pseudo) in enumerate(train_loader):
         (inputs_l, inputs_l_w, inputs_l_s), targets_l, index_l = data_lbl 
         (inputs_u, inputs_u_w, inputs_u_s), targets_u, index_u = data_unlbl 
@@ -319,87 +343,50 @@ def train(args, lbl_loader, unlbl_loader, pseudo_label_dataloader, model, optimi
         
         inputs_l = inputs_l.cuda()
         inputs_l_w = inputs_l_w.cuda()
-        # inputs_l_s = inputs_l_s.cuda()
+        inputs_l_s = inputs_l_s.cuda()
         targets_l = targets_l.cuda()
         
         inputs_u = inputs_u.cuda()
-        # inputs_u_w = inputs_u_w.cuda()
+        inputs_u_w = inputs_u_w.cuda()
         inputs_u_s = inputs_u_s.cuda()
         targets_u = targets_u.cuda()
         
-        # inputs_p = inputs_p.cuda()
+        inputs_p = inputs_p.cuda()
         inputs_p_w = inputs_p_w.cuda()
-        # inputs_p_s = inputs_p_s.cuda()
+        inputs_p_s = inputs_p_s.cuda()
         targets_p = targets_p.cuda()
 
         batch_l = index_l.shape[0]
         batch_u = index_u.shape[0]
         batch_p = index_p.shape[0]
-
+        
         with torch.no_grad():
-            ema_model = ema.apply()
-            inputs = torch.cat([inputs_l, inputs_u], dim=0)
-            outputs = ema_model(inputs)
-            outputs = F.softmax(outputs, dim=1)
-            output_l, output_u = torch.split(outputs, [batch_l, batch_u], dim=0)
-            # output_l = sinkhorn(output_l)
-            # output_u = sinkhorn(output_u)
-            max_conf, pseudo_label = torch.max(output_l, dim=1)
-            
-            class_thre = [1.0] * args.no_known
-            for i in range(batch_l):
-                if pseudo_label[i] == targets_l[i]:
-                    class_thre[targets_l[i]] = min(class_thre[pseudo_label[i]], max_conf[i])
-            # 统计class_thre中不为1的值的平均值作为阈值
-            non_one_values = [v for v in class_thre if v != 1.0]
-            thre = sum(non_one_values) / len(non_one_values)
-
-            # conf = F.softmax(output_u, dim=1)
-            max_conf, pseudo_label = torch.max(output_u, dim=1)
-            conf_mask = (max_conf >= thre)
-            novel_mask = (pseudo_label >= args.no_known)
-            mask = conf_mask & novel_mask
-            
-            # total_samples = len(pseudo_label)
-            # correct_all = (pseudo_label == targets_u).sum().item()
-            # acc_all = correct_all / total_samples if total_samples > 0 else 0.0
-
-            # # 2. 高置信度样本的伪标签精度
-            # high_conf_samples = mask.sum().item()
-            # correct_high = 0
-            # if high_conf_samples > 0:
-            #     # 仅统计高置信度样本中伪标签正确的数量
-            #     correct_high = (pseudo_label[mask] == targets_u[mask]).sum().item()
-            #     acc_high = correct_high / high_conf_samples
-            # else:
-            #     acc_high = 0.0  # 无高置信度样本时精度为0
-            # print(f"高置信度精度: {acc_high:.4f} ({correct_high}/{high_conf_samples})")
-            # sorted_conf, sorted_indices = torch.sort(conf, dim=1, descending=True)
-            # tau = compute_tau(sorted_conf, alpha=0.6)
-            # intra_candidate_labels = select_intra_candidate_labels(sorted_conf, sorted_indices, tau)
-            # inter_candidate_labels = select_inter_candidate_labels(conf, beta=0.95)
-            # candidate_labels = merge_candidate_labels(intra_candidate_labels, inter_candidate_labels)
-            # selected_labels = []
-            # for candidate_label in candidate_labels:
-            #     if 0 < len(candidate_label) < 2 and candidate_label[0] in list(range(args.no_known, args.no_class)):
-            #         selected_labels.append(candidate_label)
-            # pseudo_label = convert_to_one_hot(candidate_labels, num_classes=args.no_class).cuda()
-            # count_mask = (pseudo_label.sum(dim=1) > 0) & (pseudo_label.sum(dim=1) < 2)  # choosed 159 pseudo-labeled samples
-            # novel_classes = list(range(args.no_known, args.no_class))
+            output = teacher_model(inputs_u, True)
+            conf = F.softmax(output / args.temperature, dim=1)
+            sorted_conf, sorted_indices = torch.sort(conf, dim=1, descending=True)
+            tau = compute_tau(sorted_conf, alpha=0.6)
+            intra_candidate_labels = select_intra_candidate_labels(sorted_conf, sorted_indices, tau)
+            inter_candidate_labels = select_inter_candidate_labels(conf, beta=0.95)
+            candidate_labels = merge_candidate_labels(intra_candidate_labels, inter_candidate_labels)
+            pseudo_label = convert_to_one_hot(candidate_labels, num_classes=args.no_class).cuda()
+            count_mask = (pseudo_label.sum(dim=1) > 0) & (pseudo_label.sum(dim=1) < 2)
+            novel_classes = list(range(args.no_known, args.no_class))
             # novel_mask = pseudo_label[:, novel_classes].sum(dim=1) > 0
-            # mask = count_mask & novel_mask
+            mask = count_mask
+            # tea_u_prob = F.softmax(output / 3, dim=1)[~mask]
             
-            # correct = 0
+            # # correct = 0
             # # correct_intra = 0
             # # correct_inter = 0
             # correct_filter = 0
-            # total = 0
+            # # total = 0
             # total_filter = 0
             # for i in range(len(targets_u)):
             #     if len(candidate_labels[i]) == 0:
             #         continue  # 无伪标签，不参与统计
-            #     total += 1
-            #     if 0 < len(candidate_labels[i]) < 2 and candidate_labels[i][0] in novel_classes:
+            #     # total += 1
+            #     # if 0 < len(candidate_labels[i]) < 2 and candidate_labels[i][0] in novel_classes:
+            #     if 0 < len(candidate_labels[i]) < 2:
             #         total_filter += 1
             #         if targets_u[i].item() in candidate_labels[i]:
             #             correct_filter += 1
@@ -410,33 +397,60 @@ def train(args, lbl_loader, unlbl_loader, pseudo_label_dataloader, model, optimi
             #     # if targets_u[i].item() in inter_candidate_labels[i]:
             #     #     correct_inter += 1
 
-            # pseudo_accuracy = correct / total if total > 0 else 0.0
-            # print(f"[Batch {batch_idx}] Pseudo-label Accuracy: {pseudo_accuracy:.4f} ({correct}/{total})")
+            # # pseudo_accuracy = correct / total if total > 0 else 0.0
+            # # print(f"[Batch {batch_idx}] Pseudo-label Accuracy: {pseudo_accuracy:.4f} ({correct}/{total})")
             # pseudo_accuracy = correct_filter / total_filter if total_filter > 0 else 0.0
             # print(f"[Batch {batch_idx}] Pseudo-label Accuracy Filter: {pseudo_accuracy:.4f} ({correct_filter}/{total_filter})")
 
-        inputs_concat = torch.cat([inputs_l_w, inputs_u_s, inputs_p_w], dim=0)
-        logits_concat = model(inputs_concat)
         
-        logits_l, logits_u, logits_p = torch.split(logits_concat, [batch_l, batch_u, batch_p], dim=0)
-        ce_loss_l = F.cross_entropy(logits_l, targets_l)
-        # la_loss_l = LA_loss(logits_l, targets_l)
-        ce_loss_u = F.cross_entropy(logits_u[mask], pseudo_label[mask])
-        ce_loss_p = F.cross_entropy(logits_p, targets_p)
-        # la_loss_p = LA_loss(logits_p, targets_p)
+        img_concat = torch.cat([inputs_l_w, inputs_p_w, inputs_u_w, inputs_l_s, inputs_p_s, inputs_u_s], dim=0)
+        img_feat_concat = model.get_image_feature(img_concat)  # (batch_l+batch_p+batch_u, dim)
+        img_feat_l, img_feat_p, img_feat_u, img_feat_l_s, img_feat_p_s, img_feat_u_s = torch.split(img_feat_concat, [batch_l, batch_p, batch_u, batch_l, batch_p, batch_u], dim=0)
         
+        logit_scale = model.logit_scale.exp()
+        logits_l = logit_scale * (img_feat_l @ text_features_all.T)
+        logits_p = logit_scale * (img_feat_p @ text_features_all.T)
+        logits_u = logit_scale * (img_feat_u[mask] @ text_features_all.T)
+        
+        logits_l_s = logit_scale * (img_feat_l_s @ text_features_all.T)
+        logits_p_s = logit_scale * (img_feat_p_s @ text_features_all.T)
+        logits_u_s = logit_scale * (img_feat_u_s[mask] @ text_features_all.T)
+        
+        # stu_logits_u = logit_scale * (img_feat_u[~mask] @ text_features_all.T)
+        # stu_logits_u_s = logit_scale * (img_feat_u_s[~mask] @ text_features_all.T)
+        
+        # stu_prob_u = F.softmax(stu_logits_u, dim=1)
+        # stu_prob_u_s = F.softmax(stu_logits_u_s, dim=1)
 
-        loss = ce_loss_l + ce_loss_u + ce_loss_p
-        # loss = ce_loss_l + 2 * epoch / total_epochs * ce_loss_u + ce_loss_p
-        # loss = la_loss_l + la_loss_p
+        l_ce_loss = F.cross_entropy(logits_l, targets_l)
+        p_ce_loss = F.cross_entropy(logits_p, targets_p)
+        l_ce_loss_s = F.cross_entropy(logits_l_s, targets_l)
+        p_ce_loss_s = F.cross_entropy(logits_p_s, targets_p)
         
-        losses.update(loss.item(), batch_u + batch_l + batch_p)
+        loss = l_ce_loss + p_ce_loss + l_ce_loss_s + p_ce_loss_s
+
+        if mask.sum() > 0:
+            u_ce_loss = F.cross_entropy(logits_u, pseudo_label[mask])
+            u_ce_loss_s = F.cross_entropy(logits_u_s, pseudo_label[mask])
+            loss += u_ce_loss + u_ce_loss_s
+            
+        # if (~mask).sum() > 0:  # 只有存在低置信样本时才加这个损失
+        #     kl_loss_u = F.kl_div(torch.log(stu_prob_u + 1e-8), tea_u_prob, reduction='batchmean')
+        #     kl_loss_u_s = F.kl_div(torch.log(stu_prob_u_s + 1e-8), tea_u_prob, reduction='batchmean')
+        #     print(f"kl_loss_u: {kl_loss_u:.4f}, kl_loss_u_s: {kl_loss_u_s:.4f}")
+        #     loss += kl_loss_u + kl_loss_u_s
+            # kl_loss = F.kl_div(torch.log(stu_prob_u + 1e-8), stu_prob_u_s, reduction='batchmean')
+            # print(f"kl_loss: {kl_loss:.4f}")
+            # loss += kl_loss
+        
+        # 损失更新（原逻辑不变）
+        # losses.update(loss.item(), batch_l + batch_p + batch_u)
+        losses.update(loss.item(), batch_l + batch_p + (mask.sum().item() if mask.sum() > 0 else 0))
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-        # ema_optimizer.step()
         scheduler.step()
-        ema.update(model)
+        # ema.update(model)
         
         if batch_idx == 0 and epoch == 0:
             updated_param = []
@@ -473,7 +487,7 @@ def train(args, lbl_loader, unlbl_loader, pseudo_label_dataloader, model, optimi
     # return train_stat
 
 
-def test_known(args, test_loader, model, ema, epoch):
+def test_known(args, test_loader, model, epoch):
     batch_time = AverageMeter()
     losses = AverageMeter()
     top1 = AverageMeter()
@@ -516,7 +530,7 @@ def test_known(args, test_loader, model, ema, epoch):
     return top1.avg
 
 
-def test_cluster(args, test_loader, model, ema, epoch, offset=0):
+def test_cluster(args, test_loader, model, epoch, offset=0):
     batch_time = AverageMeter()
     data_time = AverageMeter()
     end = time.time()
@@ -566,3 +580,180 @@ def test_cluster(args, test_loader, model, ema, epoch, offset=0):
 if __name__ == '__main__':
     cudnn.benchmark = True
     main()
+
+
+        #     # 2. 高置信度样本的伪标签精度
+        #     high_conf_samples = mask.sum().item()
+        #     correct_high = 0
+        #     if high_conf_samples > 0:
+        #         # 仅统计高置信度样本中伪标签正确的数量
+        #         correct_high = (pseudo_label[mask] == targets_u[mask]).sum().item()
+        #         acc_high = correct_high / high_conf_samples
+        #     else:
+        #         acc_high = 0.0  # 无高置信度样本时精度为0
+        #     print(f"高置信度精度: {acc_high:.4f} ({correct_high}/{high_conf_samples})")
+        #     sorted_conf, sorted_indices = torch.sort(conf, dim=1, descending=True)
+        #     tau = compute_tau(sorted_conf, alpha=0.6)
+        #     intra_candidate_labels = select_intra_candidate_labels(sorted_conf, sorted_indices, tau)
+        #     inter_candidate_labels = select_inter_candidate_labels(conf, beta=0.95)
+        #     candidate_labels = merge_candidate_labels(intra_candidate_labels, inter_candidate_labels)
+        #     selected_labels = []
+        #     for candidate_label in candidate_labels:
+        #         if 0 < len(candidate_label) < 2 and candidate_label[0] in list(range(args.no_known, args.no_class)):
+        #             selected_labels.append(candidate_label)
+        #     pseudo_label = convert_to_one_hot(candidate_labels, num_classes=args.no_class).cuda()
+        #     count_mask = (pseudo_label.sum(dim=1) > 0) & (pseudo_label.sum(dim=1) < 2)  # choosed 159 pseudo-labeled samples
+        #     novel_classes = list(range(args.no_known, args.no_class))
+        #     novel_mask = pseudo_label[:, novel_classes].sum(dim=1) > 0
+        #     mask = count_mask & novel_mask
+            
+        #     correct = 0
+        #     # correct_intra = 0
+        #     # correct_inter = 0
+        #     correct_filter = 0
+        #     total = 0
+        #     total_filter = 0
+        #     for i in range(len(targets_u)):
+        #         if len(candidate_labels[i]) == 0:
+        #             continue  # 无伪标签，不参与统计
+        #         total += 1
+        #         if 0 < len(candidate_labels[i]) < 2 and candidate_labels[i][0] in novel_classes:
+        #             total_filter += 1
+        #             if targets_u[i].item() in candidate_labels[i]:
+        #                 correct_filter += 1
+        #         # if targets_u[i].item() in candidate_labels[i]:
+        #         #     correct += 1
+        #         # if targets_u[i].item() in intra_candidate_labels[i]:
+        #         #     correct_intra += 1
+        #         # if targets_u[i].item() in inter_candidate_labels[i]:
+        #         #     correct_inter += 1
+
+        #     pseudo_accuracy = correct / total if total > 0 else 0.0
+        #     print(f"[Batch {batch_idx}] Pseudo-label Accuracy: {pseudo_accuracy:.4f} ({correct}/{total})")
+        #     pseudo_accuracy = correct_filter / total_filter if total_filter > 0 else 0.0
+        #     print(f"[Batch {batch_idx}] Pseudo-label Accuracy Filter: {pseudo_accuracy:.4f} ({correct_filter}/{total_filter})")
+        
+        ############################################################
+        
+        # inputs_u = inputs_u[mask]
+        # inputs_u_w = inputs_u_w[mask]
+        # inputs_u_s = inputs_u_s[mask]
+        # pseudo_label = pseudo_label[mask]
+        # targets_u = targets_u[mask]
+        
+        ############################################################
+        
+        # if mask.sum() > 0:
+        #     inputs_concat = torch.cat([inputs_l_w, inputs_u_w, inputs_p_w], dim=0)
+        #     logits_concat = model(inputs_concat)
+            
+        #     logits_l, logits_u, logits_p = torch.split(logits_concat, [batch_l, batch_u, batch_p], dim=0)
+        #     ce_loss_l = F.cross_entropy(logits_l, targets_l)
+        #     # la_loss_l = LA_loss(logits_l, targets_l)
+            
+        #     ce_loss_u = F.cross_entropy(logits_u[mask], pseudo_label[mask])
+        #     ce_loss_p = F.cross_entropy(logits_p, targets_p)
+        #     # la_loss_p = LA_loss(logits_p, targets_p)
+        
+        #     loss = ce_loss_l + ce_loss_u + ce_loss_p
+        #     # loss = ce_loss_l + 2 * epoch / total_epochs * ce_loss_u + ce_loss_p
+        #     # loss = la_loss_l + la_loss_p
+        
+        #     losses.update(loss.item(), batch_u + batch_l + batch_p)
+        # else:
+        #     inputs_concat = torch.cat([inputs_l_w, inputs_p_w], dim=0)
+        #     logits_concat = model(inputs_concat)
+            
+        #     logits_l, logits_p = torch.split(logits_concat, [batch_l, batch_p], dim=0)
+        #     ce_loss_l = F.cross_entropy(logits_l, targets_l)
+        #     ce_loss_p = F.cross_entropy(logits_p, targets_p)
+        
+        #     loss = ce_loss_l + ce_loss_p
+        #     losses.update(loss.item(), batch_l + batch_p)
+        
+        ############################################################
+        
+        # text_feat_l = text_features_all[targets_l]
+        # text_feat_u = text_features_all[targets_u]
+        # text_feat_p = text_features_all[targets_p]
+        
+        # img_concat = torch.cat([inputs_l_w, inputs_p_w, inputs_u_w], dim=0)
+        # img_feat_concat = model.get_image_feature(img_concat)  # (batch_l+batch_p+batch_u, dim)
+        # img_feat_l, img_feat_p, img_feat_u = torch.split(img_feat_concat, [batch_l, batch_p, batch_u], dim=0)
+        
+        # mix_batch_size = min(batch_l, batch_p)  # 取两个 batch 的最小 size（避免维度不匹配）
+        # # lam = np.random.beta(args.mixup_alpha, args.mixup_alpha)
+        # lam = 0.5
+        # rand_idx = torch.randperm(mix_batch_size).cuda()  # 随机排列的索引
+
+        # img_feat_mix = lam * img_feat_l[:mix_batch_size] + (1 - lam) * img_feat_p[rand_idx]
+        # img_feat_mix = img_feat_mix / img_feat_mix.norm(dim=-1, keepdim=True)
+        
+        # text_feat_mix = lam * text_feat_l[:mix_batch_size] + (1 - lam) * text_feat_p[rand_idx]
+        # text_feat_mix = text_feat_mix / text_feat_mix.norm(dim=-1, keepdim=True)
+
+        # y_l_onehot = F.one_hot(targets_l[:mix_batch_size], num_classes=args.no_class).float()
+        # y_p_onehot = F.one_hot(targets_p[rand_idx], num_classes=args.no_class).float()
+        # y_mix = lam * y_l_onehot + (1 - lam) * y_p_onehot
+
+        # logit_scale = model.logit_scale.exp()
+        # logits_mix = img_feat_mix @ text_features_all.T
+        # logits_l = logit_scale * (img_feat_l @ text_features_all.T)
+        # logits_p = img_feat_p @ text_features_all.T
+        # logits_u_selected = logit_scale * (img_feat_u[mask] @ text_features_all.T)
+        
+        # text_feat_mix = lam * text_feat_l[:mix_batch_size] + (1 - lam) * text_feat_p[rand_idx]
+        # text_feat_mix = text_feat_mix / text_feat_mix.norm(dim=-1, keepdim=True)
+        # sim = torch.sum(img_feat_mix * text_feat_mix, dim=1)
+        # mix_loss = -torch.log(torch.sigmoid(sim)).mean()
+        
+        # mix_loss = F.kl_div(F.log_softmax(logits_mix, dim=1), y_mix, reduction='batchmean')
+
+        # l_ce_loss = F.cross_entropy(logits_l, targets_l)
+        # p_ce_loss = F.cross_entropy(logits_p, targets_p)
+        # p_ce_loss = -torch.sum(targets_p * F.log_softmax(logits_p, dim=1), dim=1).mean()
+        # p_ce_loss = F.kl_div(F.log_softmax(logits_p, dim=1), targets_p, reduction='batchmean')
+
+        # if mask.sum() > 0:
+        #     u_ce_loss = F.cross_entropy(logits_u_selected, pseudo_label[mask])
+        #     loss = l_ce_loss + p_ce_loss + u_ce_loss
+            # print(l_ce_loss.item(), p_ce_loss.item(), u_ce_loss.item())
+        # else:
+        #     loss = l_ce_loss + p_ce_loss
+            # print(l_ce_loss.item(), p_ce_loss.item())
+        
+        # 损失更新（原逻辑不变）
+        # losses.update(loss.item(), batch_l + batch_p + (mask.sum().item() if mask.sum() > 0 else 0))  # 用实际数据量更新损失
+        
+        ############################################################
+        
+        # with torch.no_grad():
+        #     ema_model = ema.apply()
+        #     inputs = torch.cat([inputs_l, inputs_u], dim=0)
+        #     outputs = teacher_model(inputs, True)
+        #     outputs = F.softmax(outputs / args.temperature, dim=1)
+        #     output_l, output_u = torch.split(outputs, [batch_l, batch_u], dim=0)
+        #     # output_l = sinkhorn(output_l)
+        #     # output_u = sinkhorn(output_u)
+        #     max_conf, pseudo_label = torch.max(output_l, dim=1)
+        #     class_thre = [1.0] * args.no_known
+        #     for i in range(batch_l):
+        #         if pseudo_label[i] == targets_l[i]:
+        #             class_thre[targets_l[i]] = min(class_thre[pseudo_label[i]], max_conf[i])
+        #     # 统计class_thre中不为2的值的平均值作为阈值
+        #     non_one_values = [v for v in class_thre if v != 1.0]
+        #     global thre_sum, thre_count
+        #     thre_sum += sum(non_one_values)
+        #     thre_count += len(non_one_values)
+        #     thre = thre_sum / thre_count if thre_count > 0 else 1.0
+
+        #     max_conf, pseudo_label = torch.max(output_u, dim=1)
+        #     conf_mask = (max_conf >= thre)
+        #     # novel_mask = (pseudo_label >= args.no_known)
+        #     mask = conf_mask
+            
+        #     total_samples = len(pseudo_label)
+        #     correct_all = (pseudo_label == targets_u).sum().item()
+        #     acc_all = correct_all / total_samples if total_samples > 0 else 0.0
+        #     acc_mask = (pseudo_label[mask] == targets_u[mask]).sum().item() / mask.sum().item() if mask.sum().item() > 0 else 0.0
+        #     print(f"acc_all: {acc_all}, acc_mask: {acc_mask}")

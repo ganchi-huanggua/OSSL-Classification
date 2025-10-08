@@ -4,6 +4,7 @@ from .randaugment import RandAugmentMC
 import math
 import json
 import logging
+import torch
 from torch.utils.data import Dataset
 
 def x_u_split_known_novel(labels, lbl_percent, no_classes, lbl_set, unlbl_set, val_percent=False):
@@ -37,8 +38,6 @@ def x_u_split_known_novel(labels, lbl_percent, no_classes, lbl_set, unlbl_set, v
             #     last_n = unlabeled_idx[-n:]
             #     unlabeled_idx = unlabeled_idx[:-n]
             #     labeled_idx.extend(last_n)
-    logging.info(f"{len(labeled_idx)}, {len(unlabeled_idx)}")
-    logging.info(f"{set(labels[labeled_idx])}, {set(labels[unlabeled_idx])}")
     return labeled_idx, unlabeled_idx, val_idx
 
 
@@ -100,7 +99,7 @@ class TransformWS64(object):
 
 
 class TransformWS224(object):
-    def __init__(self, mean, std):
+    def __init__(self, mean=None, std=None):
         self.origin = transforms.Compose([
             transforms.Resize(224, interpolation=transforms.InterpolationMode.BICUBIC),  # 保持结构更好
             transforms.CenterCrop(224),
@@ -115,9 +114,14 @@ class TransformWS224(object):
             transforms.Resize((int(math.floor(224 / 0.875)), int(math.floor(224 / 0.875)))),
             transforms.RandomResizedCrop(224),
             RandAugmentMC(n=2, m=10)])
-        self.normalize = transforms.Compose([
-            transforms.ToTensor(),
-            transforms.Normalize(mean=mean, std=std)])
+        if mean is None or std is None:
+            self.normalize = transforms.Compose([
+                transforms.ToTensor()
+            ])
+        else:
+            self.normalize = transforms.Compose([
+                transforms.ToTensor(),
+                transforms.Normalize(mean=mean, std=std)])
 
     def __call__(self, x):
         origin = self.origin(x)
@@ -127,7 +131,7 @@ class TransformWS224(object):
     
     
 class PseudoLabelDataset(Dataset):
-    def __init__(self, original_dataset, index_to_pseudo_label):
+    def __init__(self, original_dataset, index_to_pseudo_label, soft_label=False):
         """
         Args:
             original_dataset: 原始无标签数据集（unlbl_loader.dataset）
@@ -137,6 +141,7 @@ class PseudoLabelDataset(Dataset):
         self.index_to_pseudo_label = index_to_pseudo_label
         # 筛选出原始数据集中“被选中的样本”（避免加载无关样本）
         self.selected_indices = list(index_to_pseudo_label.keys())
+        self.soft_label = soft_label
 
     def __len__(self):
         # 数据集长度 = 被选中的样本数量
@@ -162,6 +167,8 @@ class PseudoLabelDataset(Dataset):
         # （根据你的原始数据格式调整解构方式，这里匹配你之前的data_unlbl格式）
         (inputs_u, inputs_u_w, inputs_u_s), _, original_idx = original_sample
         pseudo_label = self.index_to_pseudo_label[original_idx]  # 获取伪标签
+        if self.soft_label:
+            pseudo_label = torch.from_numpy(pseudo_label).float()
         
         # 4. 返回与原始格式一致的样本（数据部分不变，标签改为伪标签）
         return (inputs_u, inputs_u_w, inputs_u_s), pseudo_label, idx_in_subset

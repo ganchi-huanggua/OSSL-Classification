@@ -9,11 +9,10 @@ from collections import defaultdict
 import json
 from scipy.io import loadmat
 import logging
-
 imgnet_mean, imgnet_std = (0.485, 0.456, 0.406), (0.229, 0.224, 0.225)
 
 
-def get_flowers(args):
+def get_stanfordcars(args):
     # augmentations
     # transform_labeled = transforms.Compose([
     #     transforms.RandomResizedCrop(224),
@@ -28,18 +27,26 @@ def get_flowers(args):
         transforms.ToTensor(),
         transforms.Normalize(mean=imgnet_mean, std=imgnet_std)
     ])
-    
+    filepath = os.path.join("/home/lhz/data/stanford_cars", "split_zhou_StanfordCars.json")
+    image_dir = f"/home/lhz/data/stanford_cars"
     tracker = defaultdict(list)
-    label_file = loadmat("/home/lhz/data/oxford_flowers/imagelabels.mat")["labels"][0]
-    for i, label in enumerate(label_file):
-        imname = f"image_{str(i + 1).zfill(5)}.jpg"
-        impath = os.path.join("/home/lhz/data/oxford_flowers/jpg", imname)
-        label = int(label)
-        tracker[label].append(impath)
-        
-    # lab2cname = read_json("/home/lhz/data/oxford_flowers/cat_to_name.json")
+    lab2cname = dict()
+    def _convert(items):
+        for impath, label, classname in items:
+            impath = os.path.join(image_dir, impath)
+            label = int(label)
+            tracker[label].append(impath)
+            if label not in lab2cname.keys():
+                lab2cname[label] = classname
+            
+    with open(filepath, "r") as f:
+        split = json.load(f)
+    _convert(split["train"])
+    _convert(split["val"])
+    _convert(split["test"])
+    
     # cnames = [lab2cname[k] for k in sorted(lab2cname, key=lambda x: int(x))]
-    PATH_TO_PROMPTS = f'gpt3_prompts/cleaned_CuPL_prompts_flowers102.json'
+    PATH_TO_PROMPTS = f'gpt3_prompts/cleaned_CuPL_prompts_stanford_cars.json'
     with open(PATH_TO_PROMPTS) as f:
         gpt3_prompts = json.load(f)
     cnames = {}
@@ -48,10 +55,11 @@ def get_flowers(args):
     # train_classes_textnames = [textnames[i] for i in args.train_classes]
     # unlabeled_classes_textnames = [textnames[i] for i in args.unlabeled_classes]
     # textnames = train_classes_textnames + unlabeled_classes_textnames
+    
     data, targets = [], []
     for label, impaths in tracker.items():
         data.extend(impaths)
-        targets.extend([label - 1] * len(impaths))
+        targets.extend([label] * len(impaths))
             # generate random labeled/unlabeled split or use a saved labeled/unlabeled split
     if not os.path.exists(args.ssl_indexes):
         train_labeled_idxs, train_unlabeled_idxs, val_idxs = x_u_split_known_novel(

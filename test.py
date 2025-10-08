@@ -4,9 +4,23 @@
 # dataset = CIFAR10(root='/home/lhz/data', train=True, download=True)
 # print(dataset.classes)
 
-a = [1,2 ,3 ]
-b = [1, 2, 3, 4]
-c = [1,2,3]
-z = zip(a, b, c)
-for idx, i in enumerate(z):
-    print(idx, i)
+# a = [1,2 ,3 ]
+# b = [1, 2, 3, 4]
+# c = [1,2,3]
+# z = zip(a, b, c)
+# for idx, i in enumerate(z):
+#     print(idx, i)
+
+# import torch
+# a = torch.randn((10, 3, 32, 32))
+# print(a)
+# mask = torch.randn(10) > 0.5 
+# print(mask)
+# print(a[mask].shape)
+
+
+d = dict()
+d[1] = 'a'
+d[2] = 'b'
+d[3] = 'c'
+print(1 in d.keys())

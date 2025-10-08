@@ -4,7 +4,7 @@ import pickle
 from PIL import Image
 import os
 from .utils import x_u_split_known_novel, TransformWS224, TransformWS32, TransformWS64
-
+import logging
 cifar10_mean, cifar10_std = (0.4914, 0.4822, 0.4465), (0.2471, 0.2435, 0.2616)
 cifar100_mean, cifar100_std = (0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761)
 
@@ -46,7 +46,8 @@ def get_cifar10(args):
         label_unlabel_dict = pickle.load(open(args.ssl_indexes, 'rb'))
         train_labeled_idxs = label_unlabel_dict['labeled_idx']
         train_unlabeled_idxs = label_unlabel_dict['unlabeled_idx']
-
+    logging.info(f"{len(train_labeled_idxs)}, {len(train_unlabeled_idxs)}")
+    logging.info(f"{set(np.array(targets)[train_labeled_idxs])}, {set(np.array(targets)[train_unlabeled_idxs])}")
     # balance the labeled and unlabeled data
     # import ipdb;ipdb.set_trace()
     # if len(train_unlabeled_idxs) > len(train_labeled_idxs):

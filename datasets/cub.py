@@ -9,11 +9,10 @@ from collections import defaultdict
 import json
 from scipy.io import loadmat
 import logging
-
 imgnet_mean, imgnet_std = (0.485, 0.456, 0.406), (0.229, 0.224, 0.225)
+clip_mean, clip_std = (0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711)
 
-
-def get_flowers(args):
+def get_cub(args):
     # augmentations
     # transform_labeled = transforms.Compose([
     #     transforms.RandomResizedCrop(224),
@@ -28,18 +27,10 @@ def get_flowers(args):
         transforms.ToTensor(),
         transforms.Normalize(mean=imgnet_mean, std=imgnet_std)
     ])
-    
-    tracker = defaultdict(list)
-    label_file = loadmat("/home/lhz/data/oxford_flowers/imagelabels.mat")["labels"][0]
-    for i, label in enumerate(label_file):
-        imname = f"image_{str(i + 1).zfill(5)}.jpg"
-        impath = os.path.join("/home/lhz/data/oxford_flowers/jpg", imname)
-        label = int(label)
-        tracker[label].append(impath)
-        
+
     # lab2cname = read_json("/home/lhz/data/oxford_flowers/cat_to_name.json")
     # cnames = [lab2cname[k] for k in sorted(lab2cname, key=lambda x: int(x))]
-    PATH_TO_PROMPTS = f'gpt3_prompts/cleaned_CuPL_prompts_flowers102.json'
+    PATH_TO_PROMPTS = f'gpt3_prompts/cleaned_CuPL_prompts_cub.json'
     with open(PATH_TO_PROMPTS) as f:
         gpt3_prompts = json.load(f)
     cnames = {}
@@ -48,14 +39,47 @@ def get_flowers(args):
     # train_classes_textnames = [textnames[i] for i in args.train_classes]
     # unlabeled_classes_textnames = [textnames[i] for i in args.unlabeled_classes]
     # textnames = train_classes_textnames + unlabeled_classes_textnames
-    data, targets = [], []
-    for label, impaths in tracker.items():
-        data.extend(impaths)
-        targets.extend([label - 1] * len(impaths))
-            # generate random labeled/unlabeled split or use a saved labeled/unlabeled split
+    dataset_dir = "/home/lhz/data/CUB_200_2011"
+    # dset = datasets.ImageFolder(dataset_dir)
+
+    split_file = os.path.join(dataset_dir, 'train_test_split.txt')
+    train_indices = []
+    test_indices = []
+    
+    with open(split_file, 'r') as f:
+        for line in f:
+            img_id, is_train = line.strip().split()
+            # CUB的ID是从1开始的，转换为0基索引
+            idx = int(img_id) - 1
+            if is_train == '1':
+                train_indices.append(idx)
+            else:
+                test_indices.append(idx)
+    
+    image_paths = {}
+    with open(os.path.join(dataset_dir, 'images.txt'), 'r') as f:
+        for line in f:
+            img_id, path = line.strip().split()
+            image_paths[int(img_id)-1] = path  # 转换为0基索引
+    
+    # 加载图像标签
+    image_labels = {}
+    with open(os.path.join(dataset_dir, 'image_class_labels.txt'), 'r') as f:
+        for line in f:
+            img_id, class_id = line.strip().split()
+            # 转换为0基索引（CUB原始类别从1开始）
+            image_labels[int(img_id)-1] = int(class_id) - 1   
+    
+    all_indices = np.arange(len(image_paths))
+    data = [os.path.join(dataset_dir, "images", image_paths[idx]) for idx in all_indices]
+    targets = [image_labels[idx] for idx in all_indices]
+    
+    train_data = [data[idx] for idx in train_indices]
+    train_targets = [targets[idx] for idx in train_indices]
+
     if not os.path.exists(args.ssl_indexes):
         train_labeled_idxs, train_unlabeled_idxs, val_idxs = x_u_split_known_novel(
-            targets, args.lbl_percent, args.no_class, list(range(0,args.no_known)), list(range(args.no_known, args.no_class)), val_percent=True)
+            train_targets, args.lbl_percent, args.no_class, list(range(0,args.no_known)), list(range(args.no_known, args.no_class)))
         f = open(os.path.join(args.split_root, f'{args.dataset}_{args.lbl_percent}_{args.novel_percent}_{args.split_id}.pkl'),"wb")
         label_unlabel_dict = {'labeled_idx': train_labeled_idxs, 'unlabeled_idx': train_unlabeled_idxs, 'val_idx': val_idxs}
         pickle.dump(label_unlabel_dict, f)
@@ -65,26 +89,18 @@ def get_flowers(args):
         train_labeled_idxs = label_unlabel_dict['labeled_idx']
         train_unlabeled_idxs = label_unlabel_dict['unlabeled_idx']
         val_idxs = label_unlabel_dict['val_idx']
+        
     logging.info(f"{len(train_labeled_idxs)}, {len(train_unlabeled_idxs)}")
-    logging.info(f"{set(np.array(targets)[train_labeled_idxs])}, {set(np.array(targets)[train_unlabeled_idxs])}")
-    # balance the labeled and unlabeled data
-    # if len(train_unlabeled_idxs) > len(train_labeled_idxs):
-    #     exapand_labeled = len(train_unlabeled_idxs) // len(train_labeled_idxs)
-    #     train_labeled_idxs = np.hstack([train_labeled_idxs for _ in range(exapand_labeled)])
-
-    #     if len(train_labeled_idxs) < len(train_unlabeled_idxs):
-    #         diff = len(train_unlabeled_idxs) - len(train_labeled_idxs)
-    #         train_labeled_idxs = np.hstack((train_labeled_idxs, np.random.choice(train_labeled_idxs, diff)))
-    #     else:
-    #         assert len(train_labeled_idxs) == len(train_unlabeled_idxs)
-
+    logging.info(f"{set(np.array(train_targets)[train_labeled_idxs])}, {set(np.array(train_targets)[train_unlabeled_idxs])}")
     # generate datasets
-    train_labeled_dataset = GenericSSL(data, targets, train_labeled_idxs, transform=TransformWS224(imgnet_mean, imgnet_std))
-    train_unlabeled_dataset = GenericSSL(data, targets, train_unlabeled_idxs, transform=TransformWS224(imgnet_mean, imgnet_std))
+    train_labeled_dataset = GenericSSL(train_data, train_targets, train_labeled_idxs, transform=TransformWS224(imgnet_mean, imgnet_std))
+    train_unlabeled_dataset = GenericSSL(train_data, train_targets, train_unlabeled_idxs, transform=TransformWS224(imgnet_mean, imgnet_std))
     
-    test_dataset_known = GenericTEST(data, targets, val_idxs, transform=transform_val, labeled_set=list(range(0, args.no_known)))
-    test_dataset_novel = GenericTEST(data, targets, val_idxs, transform=transform_val, labeled_set=list(range(args.no_known, args.no_class)))
-    test_dataset_all = GenericTEST(data, targets, val_idxs, transform=transform_val)
+    test_data = [data[idx] for idx in test_indices]
+    test_targets = [targets[idx] for idx in test_indices]
+    test_dataset_known = GenericTEST(test_data, test_targets, transform=transform_val, labeled_set=list(range(0, args.no_known)))
+    test_dataset_novel = GenericTEST(test_data, test_targets, transform=transform_val, labeled_set=list(range(args.no_known, args.no_class)))
+    test_dataset_all = GenericTEST(test_data, test_targets, transform=transform_val)
     return train_labeled_dataset, train_unlabeled_dataset, test_dataset_known, test_dataset_novel, test_dataset_all, cnames
 
 
@@ -118,26 +134,33 @@ class GenericSSL(Dataset):
 
 
 class GenericTEST(Dataset):
-    def __init__(self, data, targets, val_idxs, transform=None, labeled_set=None):
+    def __init__(self, data, targets, transform=None, labeled_set=None):
         """
         Args:
-            data: list[str] → 图片路径
-            targets: list[int] → 标签
-            val_idxs: list[int] → 验证集索引
+            data: list[str] → 图片路径（已经是测试集）
+            targets: list[int] → 标签（已经是测试集）
             transform: torchvision transforms
-            labeled_set: list[int] → 如果指定，只保留 val_idxs 中标签属于 labeled_set 的样本
+            labeled_set: list[int] or None → 已知类的标签集合
+                         如果为 None，保留所有样本（test_dataset_all）
+                         如果为 list，只保留标签在 labeled_set 中的样本（已知类）
+                         新颖类则传入 novel_classes 列表
         """
-        self.data = []
-        self.targets = []
-        self.indices = []
         self.transform = transform
 
-        for idx in val_idxs:
-            label = targets[idx]
-            if labeled_set is None or label in labeled_set:
-                self.data.append(data[idx])
-                self.targets.append(label)
-                self.indices.append(idx)
+        if labeled_set is None:
+            # 保留所有样本
+            self.data = data
+            self.targets = targets
+        else:
+            # 过滤出属于 labeled_set 的样本
+            labeled_set = set(labeled_set)
+            self.data = []
+            self.targets = []
+            for img_path, label in zip(data, targets):
+                if label in labeled_set:
+                    self.data.append(img_path)
+                    self.targets.append(label)
+
     def __len__(self):
         return len(self.data)
 

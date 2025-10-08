@@ -4,7 +4,7 @@ import pickle
 import os
 from PIL import Image
 from .utils import x_u_split_known_novel, TransformWS224, TransformWS32, TransformWS64
-
+import logging
 imgnet_mean, imgnet_std = (0.485, 0.456, 0.406), (0.229, 0.224, 0.225)
 
 
@@ -40,7 +40,8 @@ def get_dataset224(args):
         label_unlabel_dict = pickle.load(open(args.ssl_indexes, 'rb'))
         train_labeled_idxs = label_unlabel_dict['labeled_idx']
         train_unlabeled_idxs = label_unlabel_dict['unlabeled_idx']
-
+    logging.info(f"{len(train_labeled_idxs)}, {len(train_unlabeled_idxs)}")
+    logging.info(f"{set(np.array(targets)[train_labeled_idxs])}, {set(np.array(targets)[train_unlabeled_idxs])}")
     # balance the labeled and unlabeled data
     # if len(train_unlabeled_idxs) > len(train_labeled_idxs):
     #     exapand_labeled = len(train_unlabeled_idxs) // len(train_labeled_idxs)
