@@ -25,11 +25,11 @@ def get_dataset224(args):
     ])
 
     # generate random labeled/unlabeled split or use a saved labeled/unlabeled split
+    base_dataset = datasets.ImageFolder(os.path.join(args.data_root, 'train'))
+    base_dataset_targets = np.array(base_dataset.imgs)
+    base_dataset_targets = base_dataset_targets[:, 1]
+    base_dataset_targets = list(map(int, base_dataset_targets.tolist()))
     if not os.path.exists(args.ssl_indexes):
-        base_dataset = datasets.ImageFolder(os.path.join(args.data_root, 'train'))
-        base_dataset_targets = np.array(base_dataset.imgs)
-        base_dataset_targets = base_dataset_targets[:, 1]
-        base_dataset_targets = list(map(int, base_dataset_targets.tolist()))
         train_labeled_idxs, train_unlabeled_idxs, train_val_idxs = x_u_split_known_novel(base_dataset_targets, args.lbl_percent, args.no_class, list(range(0,args.no_known)), list(range(args.no_known, args.no_class)))
 
         f = open(os.path.join(args.split_root, f'{args.dataset}_{args.lbl_percent}_{args.novel_percent}_{args.split_id}.pkl'),"wb")
@@ -41,7 +41,7 @@ def get_dataset224(args):
         train_labeled_idxs = label_unlabel_dict['labeled_idx']
         train_unlabeled_idxs = label_unlabel_dict['unlabeled_idx']
     logging.info(f"{len(train_labeled_idxs)}, {len(train_unlabeled_idxs)}")
-    logging.info(f"{set(np.array(targets)[train_labeled_idxs])}, {set(np.array(targets)[train_unlabeled_idxs])}")
+    logging.info(f"{set(np.array(base_dataset_targets)[train_labeled_idxs])}, {set(np.array(base_dataset_targets)[train_unlabeled_idxs])}")
     # balance the labeled and unlabeled data
     # if len(train_unlabeled_idxs) > len(train_labeled_idxs):
     #     exapand_labeled = len(train_unlabeled_idxs) // len(train_labeled_idxs)

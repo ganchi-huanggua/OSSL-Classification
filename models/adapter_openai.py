@@ -40,7 +40,7 @@ _tokenizer = _Tokenizer()
 
 def load_clip_to_cpu(backbone_name):
     url = clip._MODELS[backbone_name]
-    model_path = clip._download(url, root="../pretrained")
+    model_path = clip._download(url, root="./pretrained")
     logging.info("Pretrained clip model parameters will be saved in {}".format(model_path))
     try:
         # loading JIT archive
@@ -217,7 +217,7 @@ class CLIPAdapter(nn.Module):
         return image_features
     
     def get_text_feature(self, dataset_name, classnames):
-        if dataset_name in ["cifar10", "cifar100", "imagenet100"]:
+        if dataset_name == "imagenet100":
             temp = CUSTOM_TEMPLATES[dataset_name]
             prompts = [temp.format(c.replace("_", " ")) for c in classnames]
             prompts = torch.cat([clip.tokenize(p) for p in prompts])

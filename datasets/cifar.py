@@ -5,6 +5,8 @@ from PIL import Image
 import os
 from .utils import x_u_split_known_novel, TransformWS224, TransformWS32, TransformWS64
 import logging
+import json
+
 cifar10_mean, cifar10_std = (0.4914, 0.4822, 0.4465), (0.2471, 0.2435, 0.2616)
 cifar100_mean, cifar100_std = (0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761)
 
@@ -33,7 +35,13 @@ def get_cifar10(args):
         ])
     base_dataset = datasets.CIFAR10(args.data_root, train=True, download=True)
     # 从CIFAR10数据集中获取类别名称
-    classes = base_dataset.classes
+    # classes = base_dataset.classes
+    PATH_TO_PROMPTS = f'gpt3_prompts/cleaned_CuPL_prompts_cifar10.json'
+    with open(PATH_TO_PROMPTS) as f:
+        gpt3_prompts = json.load(f)
+    cnames = {}
+    for item in gpt3_prompts.items():
+        cnames[item[0]] = item[1]
     # generate random labeled/unlabeled split or use a saved labeled/unlabeled split
     if not os.path.exists(args.ssl_indexes):
         train_labeled_idxs, train_unlabeled_idxs, train_val_idxs = x_u_split_known_novel(base_dataset.targets, args.lbl_percent, args.no_class, list(range(0,args.no_known)), list(range(args.no_known, args.no_class)))
@@ -47,7 +55,7 @@ def get_cifar10(args):
         train_labeled_idxs = label_unlabel_dict['labeled_idx']
         train_unlabeled_idxs = label_unlabel_dict['unlabeled_idx']
     logging.info(f"{len(train_labeled_idxs)}, {len(train_unlabeled_idxs)}")
-    logging.info(f"{set(np.array(targets)[train_labeled_idxs])}, {set(np.array(targets)[train_unlabeled_idxs])}")
+    logging.info(f"{set(np.array(base_dataset.targets)[train_labeled_idxs])}, {set(np.array(base_dataset.targets)[train_unlabeled_idxs])}")
     # balance the labeled and unlabeled data
     # import ipdb;ipdb.set_trace()
     # if len(train_unlabeled_idxs) > len(train_labeled_idxs):
@@ -77,7 +85,7 @@ def get_cifar10(args):
     # test_dataset_all = CIFAR10SSL_trans(args.data_root, train_unlabeled_idxs, train=True, transform=transform_val, download=False)
 
 
-    return train_labeled_dataset, train_unlabeled_dataset, test_dataset_known, test_dataset_novel, test_dataset_all, classes
+    return train_labeled_dataset, train_unlabeled_dataset, test_dataset_known, test_dataset_novel, test_dataset_all, cnames
 
 
 def get_cifar100(args):
@@ -107,7 +115,13 @@ def get_cifar100(args):
     # generate random labeled/unlabeled split or use a saved labeled/unlabeled split
     base_dataset = datasets.CIFAR100(args.data_root, train=True, download=True)
     # 从CIFAR100数据集中获取类别名称
-    classes = base_dataset.classes
+    # classes = base_dataset.classes
+    PATH_TO_PROMPTS = f'gpt3_prompts/cleaned_CuPL_prompts_cifar100.json'
+    with open(PATH_TO_PROMPTS) as f:
+        gpt3_prompts = json.load(f)
+    cnames = {}
+    for item in gpt3_prompts.items():
+        cnames[item[0]] = item[1]
     if not os.path.exists(args.ssl_indexes):
         train_labeled_idxs, train_unlabeled_idxs, train_val_idxs = x_u_split_known_novel(base_dataset.targets, args.lbl_percent, args.no_class, list(range(0,args.no_known)), list(range(args.no_known, args.no_class)))
 
@@ -119,7 +133,8 @@ def get_cifar100(args):
         label_unlabel_dict = pickle.load(open(args.ssl_indexes, 'rb'))
         train_labeled_idxs = label_unlabel_dict['labeled_idx']
         train_unlabeled_idxs = label_unlabel_dict['unlabeled_idx']
-
+    logging.info(f"{len(train_labeled_idxs)}, {len(train_unlabeled_idxs)}")
+    logging.info(f"{set(np.array(base_dataset.targets)[train_labeled_idxs])}, {set(np.array(base_dataset.targets)[train_unlabeled_idxs])}")
     # # balance the labeled and unlabeled data
     # if len(train_unlabeled_idxs) > len(train_labeled_idxs):
     #     exapand_labeled = len(train_unlabeled_idxs) // len(train_labeled_idxs)
@@ -146,7 +161,7 @@ def get_cifar100(args):
     # test_dataset_known = CIFAR100SSL_trans(args.data_root, train_unlabeled_idxs, train=True, transform=transform_val, download=False, labeled_set=list(range(0,args.no_known)))
     # test_dataset_novel = CIFAR100SSL_trans(args.data_root, train_unlabeled_idxs, train=True, transform=transform_val, download=False, labeled_set=list(range(args.no_known, args.no_class)))
     # test_dataset_all = CIFAR100SSL_trans(args.data_root, train_unlabeled_idxs, train=True, transform=transform_val, download=False)
-    return train_labeled_dataset, train_unlabeled_dataset, test_dataset_known, test_dataset_novel, test_dataset_all, classes
+    return train_labeled_dataset, train_unlabeled_dataset, test_dataset_known, test_dataset_novel, test_dataset_all, cnames
 
 
 class CIFAR10SSL(datasets.CIFAR10):

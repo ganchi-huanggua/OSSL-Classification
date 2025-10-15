@@ -313,7 +313,7 @@ class CLIPAdapter(nn.Module):
         
     def get_text_feature(self, dataset_name, classnames):
         tokenizer = open_clip.get_tokenizer("ViT-H-14")
-        if dataset_name in ["cifar10", "cifar100", "imagenet100"]:
+        if dataset_name == "imagenet100":
             # 保留原有的模板逻辑（需确保 CUSTOM_TEMPLATES 已定义）
             temp = CUSTOM_TEMPLATES[dataset_name]
             prompts = [temp.format(c.replace("_", " ")) for c in classnames]

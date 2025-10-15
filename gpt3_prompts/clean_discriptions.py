@@ -2,7 +2,7 @@ import json
 import re
 import os
 # 1. 读取原始JSON文件（请确保文件路径正确，若文件在同级目录可直接用文件名）
-with open('./gpt3_prompts/CuPL_prompts_cub.json', 'r', encoding='utf-8') as f:
+with open('./gpt3_prompts/CuPL_prompts_imagenet100.json', 'r', encoding='utf-8') as f:
     data = json.load(f)
 
 # 2. 定义清洗规则所需的辅助内容（可根据实际需求修改）
@@ -72,7 +72,7 @@ for class_name in data:
     data[class_name] = list(set(cleaned_descriptions))
 
 # 4. 保存清洗后的数据到新JSON文件（避免覆盖原始文件）
-with open('./gpt3_prompts/cleaned_CuPL_prompts_cub.json', 'w', encoding='utf-8') as f:
+with open('./gpt3_prompts/cleaned_CuPL_prompts_imagenet100.json', 'w', encoding='utf-8') as f:
     # ensure_ascii=False：保留中文等非ASCII字符；indent=2：格式化显示，便于查看
     json.dump(data, f, ensure_ascii=False, indent=2)
 

@@ -371,8 +371,11 @@ def train(args, lbl_loader, unlbl_loader, pseudo_label_dataloader, model, optimi
             pseudo_label = convert_to_one_hot(candidate_labels, num_classes=args.no_class).cuda()
             count_mask = (pseudo_label.sum(dim=1) > 0) & (pseudo_label.sum(dim=1) < 2)
             novel_classes = list(range(args.no_known, args.no_class))
-            # novel_mask = pseudo_label[:, novel_classes].sum(dim=1) > 0
-            mask = count_mask
+            novel_mask = pseudo_label[:, novel_classes].sum(dim=1) > 0
+            if args.dataset in ["cifar10", "cifar100", "imagenet100"]:
+                mask = count_mask & novel_mask
+            else:
+                mask = count_mask
             # tea_u_prob = F.softmax(output / 3, dim=1)[~mask]
             
             # # correct = 0
