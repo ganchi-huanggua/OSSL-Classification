@@ -48,6 +48,7 @@ def main():
     parser.add_argument('--weight-decay', default=1e-5, type=float, help='weight decay')
     parser.add_argument('--no-progress', action='store_true', help="don't use progress bar")
     parser.add_argument('--temperature', default=0.07, type=float, help='temperature for clip zero-shot')
+    parser.add_argument('--low-dim', default=10, type=int, help='low dimension for adapter')
     # parser.add_argument('--mixup-alpha', default=0.2, type=float)
     # parser.add_argument('--consistency-weight', type=float, default=1.0, help='Weight for consistency regularization loss')
     args = parser.parse_args()
@@ -314,8 +315,8 @@ def get_la_loss(tau=1.0):
     return loss_fn
 
 
-thre_sum = 0.0
-thre_count = 0
+# thre_sum = 0.0
+# thre_count = 0
 def train(args, lbl_loader, unlbl_loader, pseudo_label_dataloader, model, optimizer, scheduler, epoch, teacher_model):
     batch_time = AverageMeter()
     losses = AverageMeter()
@@ -378,34 +379,33 @@ def train(args, lbl_loader, unlbl_loader, pseudo_label_dataloader, model, optimi
                 mask = count_mask
             # tea_u_prob = F.softmax(output / 3, dim=1)[~mask]
             
-            # # correct = 0
-            # # correct_intra = 0
-            # # correct_inter = 0
-            # correct_filter = 0
-            # # total = 0
-            # total_filter = 0
-            # for i in range(len(targets_u)):
-            #     if len(candidate_labels[i]) == 0:
-            #         continue  # 无伪标签，不参与统计
-            #     # total += 1
-            #     # if 0 < len(candidate_labels[i]) < 2 and candidate_labels[i][0] in novel_classes:
-            #     if 0 < len(candidate_labels[i]) < 2:
-            #         total_filter += 1
-            #         if targets_u[i].item() in candidate_labels[i]:
-            #             correct_filter += 1
-            #     # if targets_u[i].item() in candidate_labels[i]:
-            #     #     correct += 1
-            #     # if targets_u[i].item() in intra_candidate_labels[i]:
-            #     #     correct_intra += 1
-            #     # if targets_u[i].item() in inter_candidate_labels[i]:
-            #     #     correct_inter += 1
+            correct = 0
+            correct_filter = 0
+            total = 0
+            total_filter = 0
+            for i in range(len(targets_u)):
+                if len(candidate_labels[i]) == 0:
+                    continue  # 无伪标签，不参与统计
+                total += 1
+                if args.dataset in ["cifar10", "cifar100", "imagenet100"]:
+                    if 0 < len(candidate_labels[i]) < 2 and candidate_labels[i][0] in novel_classes:
+                        total_filter += 1
+                        if targets_u[i].item() in candidate_labels[i]:
+                            correct_filter += 1
+                else:
+                    if 0 < len(candidate_labels[i]) < 2:
+                        total_filter += 1
+                        if targets_u[i].item() in candidate_labels[i]:
+                            correct_filter += 1
+                if targets_u[i].item() in candidate_labels[i]:
+                    correct += 1
 
-            # # pseudo_accuracy = correct / total if total > 0 else 0.0
-            # # print(f"[Batch {batch_idx}] Pseudo-label Accuracy: {pseudo_accuracy:.4f} ({correct}/{total})")
-            # pseudo_accuracy = correct_filter / total_filter if total_filter > 0 else 0.0
-            # print(f"[Batch {batch_idx}] Pseudo-label Accuracy Filter: {pseudo_accuracy:.4f} ({correct_filter}/{total_filter})")
+            pseudo_accuracy = correct / total if total > 0 else 0.0
+            logging.info(f"[Batch {batch_idx}] Pseudo-label Accuracy: {pseudo_accuracy:.4f} ({correct}/{total})")
+            pseudo_accuracy = correct_filter / total_filter if total_filter > 0 else 0.0
+            logging.info(f"[Batch {batch_idx}] Pseudo-label Accuracy Filter: {pseudo_accuracy:.4f} ({correct_filter}/{total_filter})")
 
-        
+        # mask = torch.tensor([0], device=inputs_l.device)
         img_concat = torch.cat([inputs_l_w, inputs_p_w, inputs_u_w, inputs_l_s, inputs_p_s, inputs_u_s], dim=0)
         img_feat_concat = model.get_image_feature(img_concat)  # (batch_l+batch_p+batch_u, dim)
         img_feat_l, img_feat_p, img_feat_u, img_feat_l_s, img_feat_p_s, img_feat_u_s = torch.split(img_feat_concat, [batch_l, batch_p, batch_u, batch_l, batch_p, batch_u], dim=0)
@@ -413,11 +413,13 @@ def train(args, lbl_loader, unlbl_loader, pseudo_label_dataloader, model, optimi
         logit_scale = model.logit_scale.exp()
         logits_l = logit_scale * (img_feat_l @ text_features_all.T)
         logits_p = logit_scale * (img_feat_p @ text_features_all.T)
-        logits_u = logit_scale * (img_feat_u[mask] @ text_features_all.T)
+        if mask.sum() > 0:
+            logits_u = logit_scale * (img_feat_u[mask] @ text_features_all.T)
         
         logits_l_s = logit_scale * (img_feat_l_s @ text_features_all.T)
         logits_p_s = logit_scale * (img_feat_p_s @ text_features_all.T)
-        logits_u_s = logit_scale * (img_feat_u_s[mask] @ text_features_all.T)
+        if mask.sum() > 0:
+            logits_u_s = logit_scale * (img_feat_u_s[mask] @ text_features_all.T)
         
         # stu_logits_u = logit_scale * (img_feat_u[~mask] @ text_features_all.T)
         # stu_logits_u_s = logit_scale * (img_feat_u_s[~mask] @ text_features_all.T)
@@ -431,6 +433,8 @@ def train(args, lbl_loader, unlbl_loader, pseudo_label_dataloader, model, optimi
         p_ce_loss_s = F.cross_entropy(logits_p_s, targets_p)
         
         loss = l_ce_loss + p_ce_loss + l_ce_loss_s + p_ce_loss_s
+        # loss = l_ce_loss + l_ce_loss_s
+        
 
         if mask.sum() > 0:
             u_ce_loss = F.cross_entropy(logits_u, pseudo_label[mask])

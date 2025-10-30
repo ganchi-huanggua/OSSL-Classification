@@ -54,7 +54,7 @@ def load_clip_to_cpu(backbone_name):
 def adapter_openai(args):
     backbone_name = "ViT-B/16"
     classnames = args.classname
-    low_dim = 10
+    low_dim = args.low_dim
     clip_model = load_clip_to_cpu(backbone_name)
     # clip_model, _ = clip.load("ViT-B/16", device="cuda:5")
     clip_model.float()
