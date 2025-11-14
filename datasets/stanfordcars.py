@@ -46,7 +46,7 @@ def get_stanfordcars(args):
     _convert(split["test"])
     
     # cnames = [lab2cname[k] for k in sorted(lab2cname, key=lambda x: int(x))]
-    PATH_TO_PROMPTS = f'gpt3_prompts/cleaned_CuPL_prompts_stanford_cars.json'
+    PATH_TO_PROMPTS = f'gpt3_prompts/stanford_cars.json'
     with open(PATH_TO_PROMPTS) as f:
         gpt3_prompts = json.load(f)
     cnames = {}

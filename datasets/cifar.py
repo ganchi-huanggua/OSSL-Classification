@@ -36,7 +36,7 @@ def get_cifar10(args):
     base_dataset = datasets.CIFAR10(args.data_root, train=True, download=True)
     # 从CIFAR10数据集中获取类别名称
     # classes = base_dataset.classes
-    PATH_TO_PROMPTS = f'gpt3_prompts/cleaned_CuPL_prompts_cifar10.json'
+    PATH_TO_PROMPTS = f'gpt3_prompts/cifar10.json'
     with open(PATH_TO_PROMPTS) as f:
         gpt3_prompts = json.load(f)
     cnames = {}
@@ -116,7 +116,7 @@ def get_cifar100(args):
     base_dataset = datasets.CIFAR100(args.data_root, train=True, download=True)
     # 从CIFAR100数据集中获取类别名称
     # classes = base_dataset.classes
-    PATH_TO_PROMPTS = f'gpt3_prompts/cleaned_CuPL_prompts_cifar100.json'
+    PATH_TO_PROMPTS = f'gpt3_prompts/cifar100.json'
     with open(PATH_TO_PROMPTS) as f:
         gpt3_prompts = json.load(f)
     cnames = {}

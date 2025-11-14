@@ -30,7 +30,7 @@ def get_cub(args):
 
     # lab2cname = read_json("/home/lhz/data/oxford_flowers/cat_to_name.json")
     # cnames = [lab2cname[k] for k in sorted(lab2cname, key=lambda x: int(x))]
-    PATH_TO_PROMPTS = f'gpt3_prompts/cleaned_CuPL_prompts_cub.json'
+    PATH_TO_PROMPTS = f'gpt3_prompts/cub.json'
     with open(PATH_TO_PROMPTS) as f:
         gpt3_prompts = json.load(f)
     cnames = {}

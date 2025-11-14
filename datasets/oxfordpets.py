@@ -47,7 +47,7 @@ def get_oxfordpets(args):
     _convert(split["test"])
     
     # cnames = [lab2cname[k] for k in sorted(lab2cname, key=lambda x: int(x))]
-    PATH_TO_PROMPTS = f'gpt3_prompts/cleaned_CuPL_prompts_oxfordpets.json'
+    PATH_TO_PROMPTS = f'gpt3_prompts/oxfordpets.json'
     with open(PATH_TO_PROMPTS) as f:
         gpt3_prompts = json.load(f)
     cnames = {}
