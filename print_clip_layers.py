@@ -1,6 +1,6 @@
 import torch
 import open_clip
-
+from models.CoOp import load_clip_to_cpu
 def print_module_structure(module, prefix=''):
     """递归打印模块结构和属性"""
     # 打印当前模块名称和类型
@@ -22,17 +22,17 @@ def print_module_structure(module, prefix=''):
         print_module_structure(child, prefix + '  |-')
 
 # 加载 open-clip-torch==3.2.0 的 ViT-H-14 模型
-clip_model, _, _ = open_clip.create_model_and_transforms(
-    model_name="ViT-H-14",
-    pretrained="laion2B-s32B-b79K",
-    cache_dir="./pretrained",
-    device="cpu"
-)
+# clip_model, _, _ = open_clip.create_model_and_transforms(
+#     model_name="ViT-H-14",
+#     pretrained="laion2B-s32B-b79K",
+#     cache_dir="./pretrained",
+#     device="cpu"
 
+clip_model = load_clip_to_cpu("ViT-B/16")
 # 打印视觉编码器的 Transformer 层结构
 print("="*50)
 print("Vision Transformer 层级结构：")
 print("="*50)
 # print_module_structure(clip_model.visual.transformer)
 
-print(clip_model)
+print(clip_model.visual.transformer.resblocks)
