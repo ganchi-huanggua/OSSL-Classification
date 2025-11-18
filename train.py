@@ -36,7 +36,7 @@ def main():
                                  'aircraft', 'stanfordcars', 'imagenet100', 'herbarium', 'cub'], help='dataset name')
     parser.add_argument('--lbl-percent', type=int, default=50, help='percent of labeled data')
     parser.add_argument('--novel-percent', default=50, type=int, help='percentage of novel classes, default 50')
-    parser.add_argument('--epochs', default=200, type=int, help='number of total epochs to run, deafult 50')
+    parser.add_argument('--epochs', default=100, type=int, help='number of total epochs to run, deafult 100')
     parser.add_argument('--batch-size', default=32, type=int, help='train batchsize, batch_x + batch_u')
     parser.add_argument('--test-batch-size', default=512, type=int, help='test batchsize')
     parser.add_argument('--lr', default=0.0001, type=float, help='learning rate, default 1e-4')
