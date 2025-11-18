@@ -9,6 +9,5 @@ Before running the code, please make sure to:
 ```python
 python train.py --dataset cifar10
 ```
-Lhz
 ## Acknowledgements
 Our code framework refers to TRAILER (CVPR'24). Many thanks.
