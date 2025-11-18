@@ -207,4 +207,3 @@ dependencies:
       - wrapt==1.17.2
       - yacs==0.1.8
       - yapf==0.29.0
-prefix: /home/lhz/.conda/envs/sr
