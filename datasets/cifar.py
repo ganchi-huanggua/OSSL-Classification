@@ -35,13 +35,14 @@ def get_cifar10(args):
         ])
     base_dataset = datasets.CIFAR10(args.data_root, train=True, download=True)
     # 从CIFAR10数据集中获取类别名称
-    # classes = base_dataset.classes
+    # cnames = base_dataset.classes
     PATH_TO_PROMPTS = f'gpt3_prompts/cifar10.json'
     with open(PATH_TO_PROMPTS) as f:
         gpt3_prompts = json.load(f)
     cnames = {}
     for item in gpt3_prompts.items():
         cnames[item[0]] = item[1]
+
     # generate random labeled/unlabeled split or use a saved labeled/unlabeled split
     if not os.path.exists(args.ssl_indexes):
         train_labeled_idxs, train_unlabeled_idxs, train_val_idxs = x_u_split_known_novel(base_dataset.targets, args.lbl_percent, args.no_class, list(range(0,args.no_known)), list(range(args.no_known, args.no_class)))
@@ -115,7 +116,7 @@ def get_cifar100(args):
     # generate random labeled/unlabeled split or use a saved labeled/unlabeled split
     base_dataset = datasets.CIFAR100(args.data_root, train=True, download=True)
     # 从CIFAR100数据集中获取类别名称
-    # classes = base_dataset.classes
+    # cnames = base_dataset.classes
     PATH_TO_PROMPTS = f'gpt3_prompts/cifar100.json'
     with open(PATH_TO_PROMPTS) as f:
         gpt3_prompts = json.load(f)

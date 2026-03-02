@@ -282,7 +282,7 @@ def main():
         test_acc_trans = all_cluster_results_trans
         test_acc_novel_trans = novel_cluster_results_trans
 
-        is_best_trans = test_acc_novel_trans > best_acc_novel_trans
+        is_best_trans = test_acc_trans > best_acc_trans
         best_acc_trans = max(test_acc_trans, best_acc_trans)
         best_acc_novel_trans = max(test_acc_novel_trans,best_acc_novel_trans)
 
@@ -290,14 +290,21 @@ def main():
         logging.info(f'epoch: {epoch + 1}, acc-novel-trans: {test_acc_novel_trans}')
         logging.info(f'epoch: {epoch + 1}, acc-all-trans: {test_acc_trans}, best-acc: {best_acc_trans}, best-acc-novel: {best_acc_novel_trans}')
 
-        # model_to_save = model.module if hasattr(model, "module") else model    
-        # save_checkpoint({
-        #     'epoch': epoch + 1,
-        #     'state_dict': model_to_save,
-        #     'acc': test_acc_trans,
-        #     'best_acc': best_acc_trans,
-        #     'optimizer': optimizer.state_dict()
-        # }, is_best_trans, args.out, tag='base')
+        model_to_save = model.module if hasattr(model, "module") else model
+
+        trainable_state_dict = {
+            k: v.detach().cpu()
+            for k, v in model_to_save.state_dict().items()
+            if k in dict(model_to_save.named_parameters()) and dict(model_to_save.named_parameters())[k].requires_grad
+        }
+
+        save_checkpoint({
+            'epoch': epoch + 1,
+            'state_dict': trainable_state_dict,
+            'acc': test_acc_trans,
+            'best_acc': best_acc_trans,
+            'optimizer': optimizer.state_dict()
+        }, is_best_trans, args.out, tag='base')
 
     writer.close()
 
@@ -485,7 +492,6 @@ def train(args, lbl_loader, unlbl_loader, pseudo_label_dataloader, model, optimi
         f.write(f"Total train time: {total_train_time:.3f}s\n")
     if not args.no_progress:
         p_bar.close()
-    # return train_stat
 
 
 def test_known(args, test_loader, model, epoch):

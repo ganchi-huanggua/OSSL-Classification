@@ -146,7 +146,9 @@ def save_checkpoint(state, is_best, save_path, tag='base'):
     torch.save(state, filepath)
     if is_best:
         shutil.copyfile(filepath, os.path.join(save_path, f'model_best_{tag}.pth.tar'))
-
+# load checkpoint
+# ckpt = torch.load(path, map_location="cpu")
+# model.load_state_dict(ckpt['state_dict'], strict=False)
 
 def set_seed(args):
     random.seed(args.seed)

@@ -12,6 +12,44 @@ import logging
 imgnet_mean, imgnet_std = (0.485, 0.456, 0.406), (0.229, 0.224, 0.225)
 clip_mean, clip_std = (0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711)
 
+
+def read_bird_classes(file_path):
+    bird_classes = []
+    
+    try:
+        # 打开文件并读取所有行
+        with open(file_path, 'r', encoding='utf-8') as file:
+            lines = file.readlines()
+            
+            # 遍历每一行数据
+            for line in lines:
+                # 去除首尾的空白字符（换行符、空格等）
+                clean_line = line.strip()
+                
+                # 跳过空行
+                if not clean_line:
+                    continue
+                
+                # 分割行数据：先按空格分割，然后取除了序号外的部分
+                # 例如 "1 001.Black_footed_Albatross" 会被处理成 "Black_footed_Albatross"
+                parts = clean_line.split()
+                if len(parts) >= 2:
+                    # 提取第二部分并去掉前面的数字和点
+                    class_info = parts[1]
+                    # 分割数字和类名（按点分割）
+                    class_name = class_info.split('.')[-1]
+                    bird_classes.append(class_name)
+        
+        return bird_classes
+    
+    except FileNotFoundError:
+        print(f"错误：找不到文件 {file_path}")
+        return []
+    except Exception as e:
+        print(f"读取文件时发生错误：{e}")
+        return []
+
+
 def get_cub(args):
     # augmentations
     # transform_labeled = transforms.Compose([
@@ -27,21 +65,16 @@ def get_cub(args):
         transforms.ToTensor(),
         transforms.Normalize(mean=imgnet_mean, std=imgnet_std)
     ])
-
-    # lab2cname = read_json("/home/lhz/data/oxford_flowers/cat_to_name.json")
-    # cnames = [lab2cname[k] for k in sorted(lab2cname, key=lambda x: int(x))]
     PATH_TO_PROMPTS = f'gpt3_prompts/cub.json'
     with open(PATH_TO_PROMPTS) as f:
         gpt3_prompts = json.load(f)
     cnames = {}
     for item in gpt3_prompts.items():
         cnames[item[0]] = item[1]
-    # train_classes_textnames = [textnames[i] for i in args.train_classes]
-    # unlabeled_classes_textnames = [textnames[i] for i in args.unlabeled_classes]
-    # textnames = train_classes_textnames + unlabeled_classes_textnames
-    dataset_dir = "/home/lhz/data/CUB_200_2011"
-    # dset = datasets.ImageFolder(dataset_dir)
 
+    # dataset_dir = "/home/lhz/data/CUB_200_2011"
+    # cnames = read_bird_classes(os.path.join(dataset_dir, 'classes.txt'))
+    
     split_file = os.path.join(dataset_dir, 'train_test_split.txt')
     train_indices = []
     test_indices = []
