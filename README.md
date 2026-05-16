@@ -1,5 +1,5 @@
 # SECOS: Semantic Capture for Rigorous Classification in Open-World Semi-Supervised Learning
-This is the implementation of our paper.
+This is the implementation of our CVPR'26 paper ![SECOS](https://arxiv.org/pdf/2604.27596).
 
 Before running the code, please make sure to:
 1. Download and prepare the required datasets;
