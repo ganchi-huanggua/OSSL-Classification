@@ -22,6 +22,7 @@ If you find this repository useful, please consider citing our paper:
   pages={39627--39636},
   year={2026}
 }
+```
 
 ## Acknowledgements
 Our code framework refers to TRAILER (CVPR'24). Many thanks.
